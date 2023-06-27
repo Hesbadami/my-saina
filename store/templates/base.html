@@ -14,6 +14,10 @@
             crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    <script type="text/javascript">var user='{{request.user}}'</script>
+
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,19 +34,47 @@
                 <a class="nav-link" href="{% url 'instruments' %}">Instruments</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Categories</a>
+                <div class="dropdown show">
+                    <a class="nav-link dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Categories</a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        {% for category in categories %}
+                        <a class="dropdown-item" href="{% url 'instruments' %}" style="color: black">{{category.category_name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Manufacturers</a>
+                <div class="dropdown show">
+                    <a class="nav-link dropdown-toggle" id="dropdownMenuLink2" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Manufacturers</a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        {% for manufacturer in manufacturers %}
+                        <a class="dropdown-item" href="{% url 'instruments' %}" style="color: black">{{manufacturer.manufacturer_name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0 d-flex">
-           <a href="#"class="btn btn-warning">Login</a>
+            {% if user.is_authenticated %}
+                <div style="color: white" class="mt-3">Hello {{user.username}}!</div>
+                <div class="mt-2"><a style="color: white" class="btn" href="{% url 'logout' %}">Logout</a></div>
+                <a href="{% url 'shoppingCart' %}" class="mt-3 ml-2 mb-2">
+                    <img id="cart-icon" src="{% static 'images/cart.png' %}">
+                </a>
+                <p id="cart-total">{{cartItems}}</p>
+            {% else %}
+                <div class="m-2">
+                    <a class="btn" href="{% url 'register' %}" style="color: white">Sign Up</a>
+                </div>
+                <div class="m-2">
+                    <a class="btn" href="{% url 'login' %}" style="color: white">Login</a>
+                </div>
 
-	     	<a href="{% url 'shoppingCart' %}">
-	    		<img  id="cart-icon" src="{% static 'images/cart.png' %}">
-	    	</a>
-	    	<p id="cart-total">0</p>
+            {% endif %}
         </form>
     </div>
 </nav>
