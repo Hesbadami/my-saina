@@ -8,11 +8,9 @@ from django.dispatch import receiver
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Customer.objects.create(user=instance)
-        print('Customer created!')
 
 
 @receiver(post_save, sender=User)
 def update_profile(sender, instance, created, **kwargs):
     if created == False:
         instance.profile.save()
-        print('Customer updated!')

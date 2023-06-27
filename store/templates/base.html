@@ -60,7 +60,9 @@
         </ul>
         <form class="form-inline my-2 my-lg-0 d-flex">
             {% if user.is_authenticated %}
-                <div style="color: white" class="mt-3">Hello {{user.username}}!</div>
+                <div class="mt-2">
+                    <a style="color: white" class="btn" href="{% url 'profile' %}">Hello {{user.username}}!</a>
+                </div>
                 <div class="mt-2"><a style="color: white" class="btn" href="{% url 'logout' %}">Logout</a></div>
                 <a href="{% url 'shoppingCart' %}" class="mt-3 ml-2 mb-2">
                     <img id="cart-icon" src="{% static 'images/cart.png' %}">

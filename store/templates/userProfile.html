@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Instrument</th>
+          <th scope="col">Date ordered</th>
+          <th scope="col">Completed</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for order in orders %}
+        <tr>
+          <td></td>
+          <td>{{order.date_ordered}}</td>
+          <td>{{order.complete}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+
+{% endblock content %}
