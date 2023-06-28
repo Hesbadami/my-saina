@@ -11,6 +11,7 @@ class CreateUserForm(UserCreationForm):
 
 
 class AddInstrumentForm(ModelForm):
+
     class Meta:
         model = MusicalInstrument
         fields = '__all__'

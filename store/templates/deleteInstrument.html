@@ -8,7 +8,7 @@
             <form method="POST" action="{% url 'delete_instrument' instrument.id %}">
                 {% csrf_token %}
                 <a class="btn btn-warning" href="{% url 'instruments' %}">Cancel</a>
-                <input class="btn btn-danger" type="submit" name="Confirm">
+                <input class="btn btn-danger" type="submit" value="Delete">
             </form>
         </div>
     </div>

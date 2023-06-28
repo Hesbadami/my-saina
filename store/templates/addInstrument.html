@@ -26,7 +26,6 @@
                     <label class="mb-2">Manufacturer</label>
                     {{form.manufacturer}}
                 </div>
-
                 <button class="btn btn-primary btn-lg" type="submit">Add</button>
             </form>
         </div>
@@ -37,8 +36,6 @@
 		var form_fields = document.getElementsByTagName('input')
 		form_fields[1].placeholder='Instrument name..';
 		form_fields[2].placeholder='Instrument price...';
-		form_fields[3].placeholder='Enter password...';
-		form_fields[4].placeholder='Confirm password...';
 
 		for (var field in form_fields){
 			form_fields[field].className += ' form-control'

@@ -11,11 +11,11 @@
             <br>
             <table class="table">
                 <tr>
-                    <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-                    <th><h5>Total: <strong>${{order.get_cart_total}}</strong></h5></th>
+                    <th><h5>Items: <strong>{{cart.get_cart_items}}</strong></h5></th>
+                    <th><h5>Total: <strong>${{cart.get_cart_total}}</strong></h5></th>
                     <th>
-                        {% if items|length > 0 %}
-                        <form method="POST" action="{% url 'create-checkout-session' order.id %}" style="float: right">
+                        {% if cartitems|length > 0 %}
+                        <form method="POST" action="{% url 'checkout' %}" style="float: right">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success">Checkout</button>
                         </form>
@@ -37,8 +37,8 @@
                 <div style="flex:1"><strong>Total</strong></div>
                 <div style="flex:2"></div>
             </div>
-            {% for item in items %}
-            <div class="cart-row">
+            {% for item in cartitems %}
+            <div class="cart-row f-flex align-items-center">
                 <div style="flex:2"><img class="row-image" src="{{item.instrument.instrument_image.url}}"></div>
                 <div style="flex:2"><p>{{item.instrument.instrument_name}}</p></div>
                 <div style="flex:1"><p>${{item.instrument.instrument_price}}</p></div>
