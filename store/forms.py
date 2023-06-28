@@ -1,10 +1,18 @@
 from django.contrib.auth.forms import UserCreationForm
-from django import forms
 from django.contrib.auth.models import User
-from .models import Customer
+from .models import MusicalInstrument, OrderItem
+from django.forms import ModelForm
 
 
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+
+class AddInstrumentForm(ModelForm):
+    class Meta:
+        model = MusicalInstrument
+        fields = '__all__'
+
+

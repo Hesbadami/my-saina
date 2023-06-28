@@ -13,9 +13,7 @@
 </div>
     {% if user.is_staff %}
     <div class="mt-3">
-         <form method="post" action="">
-                    <button class="btn btn-primary" type="submit">Add new instrument</button>
-         </form>
+             <a class="btn btn-primary" type="submit" href="{% url 'add_instrument' %}">Add new instrument</a>
     </div>
     {% endif %}
 <div class="d-flex justify-content-around mt-5">
@@ -30,11 +28,11 @@
             </div>
             {% if user.is_staff %}
                 <div class="mb-2 d-flex justify-content-between">
-                   <button class="btn btn-outline-primary add-btn">Edit</button>
-                    <button class="btn btn-outline-danger add-btn">Delete</button>
+                    <a class="btn btn-outline-primary add-btn" href="{% url 'edit_instrument' instrument.id %}">Edit</a>
+                    <a class="btn btn-outline-danger edit-btn" href="{% url 'delete_instrument' instrument.id %}">Delete</a>
                 </div>
             {% endif %}
-            <button class="btn btn-outline-warning add-btn">Add to Cart</button>
+            <a class="btn btn-outline-warning add-to-cart-btn" href="{% url 'shoppingCart' %}">Add to Cart</a>
             <a class="btn btn-outline-success" href="#">View</a>
             <h4 style="display: inline-block; float: right; color: white" class="mt-2"><strong>${{instrument.instrument_price}}</strong></h4>
         </div>

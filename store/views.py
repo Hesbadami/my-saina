@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserForm
+from .forms import CreateUserForm, AddInstrumentForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -56,7 +56,15 @@ def logoutUser(request):
 @login_required(login_url='login')
 def userProfile(request):
     orders = request.user.customer.order_set.all()
-    context = {'orders': orders}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cart_items = order.get_cart_items
+    else:
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cart_items = order['get_cart_items']
+
+    context = {'orders': orders, 'cartItems': cart_items}
     return render(request, 'userProfile.html', context)
 
 
@@ -118,3 +126,85 @@ def checkout(request):
 
     context = {'items': items, 'order': order, 'cartItems': cart_items}
     return render(request, 'checkout.html', context)
+
+
+# CRUD FUNCTIONALITY
+@login_required(login_url='login')
+def add_instrument(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cart_items = order.get_cart_items
+        form = AddInstrumentForm()
+
+        if request.method == 'POST':
+            form = AddInstrumentForm(request.POST, files=request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('instruments')
+    else:
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cart_items = order['get_cart_items']
+
+    context = {'form': form, 'cartItems': cart_items}
+    return render(request, 'addInstrument.html', context)
+
+
+@login_required(login_url='login')
+def edit_instrument(request, pk):
+    instrument = MusicalInstrument.objects.get(id=pk)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cart_items = order.get_cart_items
+        form = AddInstrumentForm(instance=instrument)
+
+        if request.method == 'POST':
+            form = AddInstrumentForm(request.POST, instance=instrument)
+            if form.is_valid():
+                form.save()
+                return redirect('/')
+    else:
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cart_items = order['get_cart_items']
+
+    context = {'form': form, 'cartItems': cart_items}
+    return render(request, 'addInstrument.html', context)
+
+
+@login_required(login_url='login')
+def delete_instrument(request, pk):
+    instrument = MusicalInstrument.objects.get(id=pk)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cart_items = order.get_cart_items
+        if request.method == 'POST':
+            instrument.delete()
+            return redirect('instruments')
+    else:
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cart_items = order['get_cart_items']
+
+    context = {'instrument': instrument, 'cartItems': cart_items}
+    return render(request, 'deleteInstrument.html', context)
+
+
+@login_required(login_url='login')
+def add_to_cart(request, pk):
+    instrument = MusicalInstrument.objects.get(id=pk)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        cart_items = order.get_cart_items
+        orderitem = OrderItem(instrument=instrument, order=order)
+        orderitem.quantity += 1
+        OrderItem.save(orderitem)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cart_items = order['get_cart_items']
+
+    context = {'items': items, 'order': order, 'cartItems': cart_items}
+    return render(request, 'shoppingCart.html', context)

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="mb-3">
+    <h2>Add a new instrument</h2>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-outline mb-4 d-flex flex-column">
+                    {{form.instrument_name}}
+                </div>
+                <div class="form-outline mb-4 d-flex flex-column">
+                    {{form.instrument_price}}
+                </div>
+                <div class="form-outline mb-4 d-flex flex-column">
+                    {{form.instrument_image}}
+                </div>
+                <div class="form-outline mb-4 d-flex flex-column">
+                    <label class="mb-2">Category</label>
+                    {{form.category}}
+                </div>
+                <div class="form-outline mb-4 d-flex flex-column">
+                    <label class="mb-2">Manufacturer</label>
+                    {{form.manufacturer}}
+                </div>
+
+                <button class="btn btn-primary btn-lg" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Instrument name..';
+		form_fields[2].placeholder='Instrument price...';
+		form_fields[3].placeholder='Enter password...';
+		form_fields[4].placeholder='Confirm password...';
+
+		for (var field in form_fields){
+			form_fields[field].className += ' form-control'
+		}
+
+
+</script>
+{% endblock content %}
