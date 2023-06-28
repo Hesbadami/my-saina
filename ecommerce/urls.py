@@ -20,6 +20,8 @@ from store import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from store.views import StripeCheckoutSession, SuccessView, CancelView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', views.registerPage, name='register'),
@@ -32,7 +34,17 @@ urlpatterns = [
     path('shoppingCart/', views.shoppingCart, name='shoppingCart'),
     path('checkout/', views.checkout, name='checkout'),
     path('add_instrument/', views.add_instrument, name='add_instrument'),
-    path('edit_instrument/<str:pk>', views.edit_instrument, name='edit_instrument'),
-    path('delete_instrument/<str:pk>', views.delete_instrument, name='delete_instrument'),
-    path('add_to_cart/<str:pk>', views.add_to_cart, name='add_to_cart')
+    path('edit_instrument/<str:pk>/', views.edit_instrument, name='edit_instrument'),
+    path('delete_instrument/<str:pk>/', views.delete_instrument, name='delete_instrument'),
+    path('add_to_cart/<str:pk>/', views.add_to_cart, name='add_to_cart'),
+    path('delete_from_cart/<str:pk>/', views.delete_from_cart, name='delete_from_cart'),
+    path('increase_quantity/<str:pk>', views.increase_quantity, name='increase_quantity'),
+    path('decrease_quantity/<str:pk>', views.decrease_quantity, name='decrease_quantity'),
+    path(
+        "create-checkout-session/<int:pk>/",
+        StripeCheckoutSession.as_view(),
+        name="create-checkout-session",
+    ),
+    path("success/", SuccessView.as_view(), name="success"),
+    path("cancel/", CancelView.as_view(), name="cancel"),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

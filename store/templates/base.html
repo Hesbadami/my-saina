@@ -27,36 +27,13 @@
     </button>
     <div class="collapse navbar-collapse d-flex justify-content-between px-3" id="navbarTogglerDemo01">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="navbar-brand" href="{% url 'instruments' %}">Home</a>
+            <li class="nav-item active mt-2">
+                <a class="navbar-brand" href="{% url 'instruments' %}">MusicShop</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item active" style="font-size: 20px">
                 <a class="nav-link" href="{% url 'instruments' %}">Instruments</a>
             </li>
-            <li class="nav-item">
-                <div class="dropdown show">
-                    <a class="nav-link dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Categories</a>
 
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        {% for category in categories %}
-                        <a class="dropdown-item" href="{% url 'instruments' %}" style="color: black">{{category.category_name}}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="dropdown show">
-                    <a class="nav-link dropdown-toggle" id="dropdownMenuLink2" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Manufacturers</a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        {% for manufacturer in manufacturers %}
-                        <a class="dropdown-item" href="{% url 'instruments' %}" style="color: black">{{manufacturer.manufacturer_name}}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0 d-flex">
             {% if user.is_authenticated %}
@@ -80,7 +57,8 @@
         </form>
     </div>
 </nav>
-
+<!--<div class="d-flex flex-column justify-content-center" style="color: white; padding-left: 20px">-->
+<!--    <img src="store/static/images/bg_image.jpg"><div>-->
 <div class="container">
     <br>
     {% block content %}

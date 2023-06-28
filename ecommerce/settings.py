@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os.path
 from pathlib import Path
 import environ
+from decouple import config
 
 env = environ.Env()
 environ.Env.read_env()
@@ -25,6 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+
+BACKEND_DOMAIN = config("BACKEND_DOMAIN")
+PAYMENT_SUCCESS_URL = config("PAYMENT_SUCCESS_URL")
+PAYMENT_CANCEL_URL = config("PAYMENT_CANCEL_URL")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block script %} <script src="https://js.stripe.com/v3/"></script> {% endblock script%}
 {% block content %}
 <div class="row">
     <div class="col-lg-6">
@@ -33,15 +34,12 @@
                 </div>
 
                 <hr>
-                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+                <a id="form-button" class="btn btn-success btn-block" type="submit">Continue</a
+                >
             </form>
         </div>
 
         <br>
-        <div class="box-element hidden" id="payment-info">
-            <small>Paypal Options</small>
-        </div>
-
     </div>
 
     <div class="col-lg-6">

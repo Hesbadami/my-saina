@@ -26,7 +26,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .bg-dark{
-	background-color: #000080!important;
+	background-color: #003B73! important;
 }
 
 #cart-icon{
@@ -87,6 +87,11 @@ h1,h2,h3,h4,h5,h6{
 	display: block;
 	margin-top: 5px;
 	transition:.1s;
+}
+
+.arrow-btn{
+	border: none;
+	background-color: white;
 }
 
 .chg-quantity:hover{

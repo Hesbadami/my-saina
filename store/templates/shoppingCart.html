@@ -14,22 +14,28 @@
                     <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
                     <th><h5>Total: <strong>${{order.get_cart_total}}</strong></h5></th>
                     <th>
-                        <a style="float:right; margin:5px;" class="btn btn-success"
-                           href="{% url 'checkout' %}">Checkout</a>
+                        {% if items|length > 0 %}
+                        <form method="POST" action="{% url 'create-checkout-session' order.id %}" style="float: right">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Checkout</button>
+                        </form>
+                        {% endif %}
                     </th>
+
                 </tr>
             </table>
 
         </div>
 
         <br>
-        <div class="box-element">
+        <div class="box-element text-center">
             <div class="cart-row">
                 <div style="flex:2"></div>
                 <div style="flex:2"><strong>Item</strong></div>
                 <div style="flex:1"><strong>Price</strong></div>
                 <div style="flex:1"><strong>Quantity</strong></div>
                 <div style="flex:1"><strong>Total</strong></div>
+                <div style="flex:2"></div>
             </div>
             {% for item in items %}
             <div class="cart-row">
@@ -37,14 +43,23 @@
                 <div style="flex:2"><p>{{item.instrument.instrument_name}}</p></div>
                 <div style="flex:1"><p>${{item.instrument.instrument_price}}</p></div>
                 <div style="flex:1">
-                    <p class="quantity">{{item.quantity}}</p>
                     <div class="quantity">
-                        <img class="chg-quantity" src="{% static  'images/arrow-up.png' %}">
-
-                        <img class="chg-quantity" src="{% static  'images/arrow-down.png' %}">
+                        <form method="POST" action="{% url 'increase_quantity' item.id %}">
+                            {% csrf_token %}
+                            <button class="arrow-btn" type="submit"><img class="chg-quantity" src="{% static  'images/arrow-up.png' %}"></button>
+                        </form>
+                         <div class="quantity p-0">{{item.quantity}}</div>
+                        <form method="POST" action="{% url 'decrease_quantity' item.id %}">
+                            {% csrf_token %}
+                            <button class="arrow-btn" type="submit"><img class="chg-quantity" src="{% static  'images/arrow-down.png' %}"></button>
+                        </form>
                     </div>
                 </div>
                 <div style="flex:1"><p>${{item.get_total}}</p></div>
+                <div style="flex:2">
+                     <a class="btn btn-danger rounded" type="submit" href="{% url 'delete_from_cart' item.id %}">Delete</a>
+                </div>
+
             </div>
             {% endfor %}
         </div>
