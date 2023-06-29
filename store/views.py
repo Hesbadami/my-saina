@@ -206,8 +206,7 @@ def delete_from_cart(request, pk):
     items = cart.cartitem_set.all()
     num_cartitems = cart.get_cart_items
 
-    context = {'items': items, 'num_cartitems': num_cartitems, 'cart': cart}
-    return render(request, 'shoppingCart.html', context)
+    return redirect("shoppingCart")
 
 
 def increase_quantity(request, pk):
@@ -276,7 +275,3 @@ def update_order(pk):
 
 class SuccessView(TemplateView):
     template_name = "success.html"
-
-
-class CancelView(TemplateView):
-    template_name = "cancel.html"

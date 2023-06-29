@@ -38,7 +38,7 @@ class Manufacturer(models.Model):
 
 class MusicalInstrument(models.Model):
     instrument_name = models.CharField(max_length=100, null=True, unique=True)
-    instrument_desc = models.CharField(max_length=200, null=True, blank=True)
+    instrument_desc = models.TextField(max_length=300, null=True, blank=True)
     instrument_price = models.IntegerField()
     instrument_image = models.ImageField(upload_to='instruments/')
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
@@ -122,18 +122,3 @@ class CartItem(models.Model):
     def get_total(self):
         total = self.instrument.instrument_price * self.quantity
         return total
-
-
-class ShippingInformation(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    address = models.CharField(max_length=100, null=False)
-    city = models.CharField(max_length=100, null=False)
-    country = models.CharField(max_length=100, null=False)
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        db_table = "shipping_information"
-
-    def __str__(self):
-        return self.address

@@ -20,7 +20,7 @@ from store import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-from store.views import StripeCheckoutSession, SuccessView, CancelView
+from store.views import StripeCheckoutSession, SuccessView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,5 +45,4 @@ urlpatterns = [
         name="create-checkout-session",
     ),
     path("success/", SuccessView.as_view(), name="success"),
-    path("cancel/", CancelView.as_view(), name="cancel"),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

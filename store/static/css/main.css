@@ -102,3 +102,8 @@ h1,h2,h3,h4,h5,h6{
 .hidden{
 	display: none!important;
 }
+
+.card:hover{
+     box-shadow: 4px 4px 4px 4px #a1a0a0 !important;
+    transition: box-shadow 0.3s linear !important;
+}

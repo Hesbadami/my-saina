@@ -27,10 +27,7 @@
                         <input class="form-control" type="text" name="city" placeholder="City..">
                     </div>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="state" placeholder="State..">
-                    </div>
-                    <div class="form-field">
-                        <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                        <input class="form-control" type="text" name="state" placeholder="Country..">
                     </div>
                 </div>
 
@@ -47,6 +44,12 @@
         <div class="box-element">
             <h3>Order Summary</h3>
             <hr>
+            <div class="cart-row">
+                <div style="flex:2"></div>
+                <div style="flex:2" class="fw-bold">Instrument</div>
+                <div style="flex:1" class="fw-bold">Price</div>
+                <div style="flex:1" class="fw-bold">Quantity</div>
+            </div>
             {% for item in orderitems %}
             <div class="cart-row">
                 <div style="flex:2"><img class="row-image" src="{{item.instrument.instrument_image.url}}"></div>
