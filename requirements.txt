@@ -1,0 +1,16 @@
+asgiref==3.7.2
+certifi==2023.5.7
+charset-normalizer==3.1.0
+config==0.5.1
+Django==4.2.2
+django-environ==0.10.0
+django-filter==23.2
+idna==3.4
+Pillow==9.5.0
+python-decouple==3.8
+pytz==2023.3
+requests==2.31.0
+sqlparse==0.4.4
+stripe==5.4.0
+tzdata==2023.3
+urllib3==2.0.3
