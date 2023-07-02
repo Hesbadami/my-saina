@@ -4,10 +4,14 @@ services:
     build: .
     environment:
       MYENV: EXAMPLE
+      SECRET_KEY: django-insecure-8lgy&nxxuhn8yyx+ct60pv&te8vwjwj(irxepund++v+602u6&
+      STRIPE_PUBLISHABLE_KEY: pk_test_51NNKyPLkcNvm45Uvp7a6rzwbKgEtKddkTMM8CxuFC9eLlrQ4M3YmWBhmhnUuFK5s7ukEXSA0Qqd7ofLAlHFAjJSg00IkLnQmzV
+      STRIPE_SECRET_KEY: sk_test_51NNKyPLkcNvm45Uv6GS2K1LJqV0LveQaSWLEr8AxYql9A7PM3yVVr5n7kXZAFlZDc0LYeDCwF2BOCKqXQ6CngNaE000CllRsCJ
+      BACKEND_DOMAIN: http://127.0.0.1:8000
+      PAYMENT_SUCCESS_URL: http://127.0.0.1:8000/success/
+      PAYMENT_CANCEL_URL: http://127.0.0.1:8000/cancel/
     volumes:
       - .:/code
-    ports:
-      - "8000:8000"
 
   web_migrate:
     extends:
@@ -17,5 +21,5 @@ services:
   web_run:
     extends:
       service: web
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver localhost:8000
 

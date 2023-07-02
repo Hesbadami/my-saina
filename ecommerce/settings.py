@@ -35,7 +35,7 @@ PAYMENT_CANCEL_URL = config("PAYMENT_CANCEL_URL")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
