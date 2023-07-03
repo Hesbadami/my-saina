@@ -9,6 +9,7 @@ services:
       DB_PASSWORD: p0stgr3
       DB_HOST: localhost
       DB_PORT: 5432
+      POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432"
   web:
