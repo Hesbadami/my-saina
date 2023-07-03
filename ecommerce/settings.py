@@ -91,11 +91,11 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
+        'DB_NAME': 'MusicStore',
+        'DB_USER': 'postgres',
+        'DB_PASSWORD': 'p0stgr3',
+        'DB_HOST': 'localhost',
+        'DB_PORT': '5432'
     }
 }
 
