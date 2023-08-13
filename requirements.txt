@@ -17,4 +17,7 @@ tzdata==2023.3
 urllib3==2.0.3
 
 environ~=1.0
+<<<<<<< HEAD
 decouple~=0.0.7
+=======
+>>>>>>> origin/master
