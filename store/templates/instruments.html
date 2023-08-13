@@ -33,7 +33,7 @@
                 <a class="btn btn-outline-danger edit-btn" href="{% url 'delete_instrument' instrument.id %}">Delete</a>
             </div>
             {% endif %}
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and instrument.available == True %}
             <a class="btn btn-outline-warning add-to-cart-btn" type="submit"
                href="{% url 'add_to_cart' instrument.id %}">Add to Cart</a>
             {% endif %}

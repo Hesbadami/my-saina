@@ -16,6 +16,9 @@
                     {{form.instrument_price}}
                 </div>
                 <div class="form-outline mb-4 d-flex flex-column">
+                    {{form.instrument_desc}}
+                </div>
+                <div class="form-outline mb-4 d-flex flex-column">
                     {{form.instrument_image}}
                 </div>
                 <div class="form-outline mb-4 d-flex flex-column">
@@ -36,6 +39,7 @@
 		var form_fields = document.getElementsByTagName('input')
 		form_fields[1].placeholder='Instrument name..';
 		form_fields[2].placeholder='Instrument price...';
+		form_fields[3].placeholder='Instrument description...';
 
 		for (var field in form_fields){
 			form_fields[field].className += ' form-control'
