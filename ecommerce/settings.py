@@ -32,6 +32,15 @@ STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 BACKEND_DOMAIN = config("BACKEND_DOMAIN")
 PAYMENT_SUCCESS_URL = config("PAYMENT_SUCCESS_URL")
 PAYMENT_CANCEL_URL = config("PAYMENT_CANCEL_URL")
+
+# Environment variables
+# SECRET_KEY=django-insecure-8lgy&nxxuhn8yyx+ct60pv&te8vwjwj(irxepund++v+602u6&
+# STRIPE_PUBLISHABLE_KEY=pk_test_51NNKyPLkcNvm45Uvp7a6rzwbKgEtKddkTMM8CxuFC9eLlrQ4M3YmWBhmhnUuFK5s7ukEXSA0Qqd7ofLAlHFAjJSg00IkLnQmzV
+# STRIPE_SECRET_KEY=sk_test_51NNKyPLkcNvm45Uv6GS2K1LJqV0LveQaSWLEr8AxYql9A7PM3yVVr5n7kXZAFlZDc0LYeDCwF2BOCKqXQ6CngNaE000CllRsCJ
+# BACKEND_DOMAIN=http://127.0.0.1:8000
+# PAYMENT_SUCCESS_URL=http://127.0.0.1:8000/success/
+# PAYMENT_CANCEL_URL=http://127.0.0.1:8000/cancel/
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -89,13 +98,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'MusicStore',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'p0stgr3',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432'
 }
 
 # Password validation
