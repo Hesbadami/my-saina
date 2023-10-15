@@ -15,9 +15,6 @@ from django.views import View
 
 
 # Create your views here.
-def landing(request):
-    context = {}
-    return render(request, 'landing.html', context)
 
 def registerPage(request):
     if request.user.is_authenticated:

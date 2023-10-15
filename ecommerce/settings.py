@@ -24,15 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = "1a"
 
-STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
-
-BACKEND_DOMAIN = config("BACKEND_DOMAIN")
-PAYMENT_SUCCESS_URL = config("PAYMENT_SUCCESS_URL")
-PAYMENT_CANCEL_URL = config("PAYMENT_CANCEL_URL")
-
+STRIPE_PUBLISHABLE_KEY = "1a2b3c4d5e"
+STRIPE_SECRET_KEY = "1a2b3c4d5e"
 # Environment variables
 # SECRET_KEY=django-insecure-8lgy&nxxuhn8yyx+ct60pv&te8vwjwj(irxepund++v+602u6&
 # STRIPE_PUBLISHABLE_KEY=pk_test_51NNKyPLkcNvm45Uvp7a6rzwbKgEtKddkTMM8CxuFC9eLlrQ4M3YmWBhmhnUuFK5s7ukEXSA0Qqd7ofLAlHFAjJSg00IkLnQmzV

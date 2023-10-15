@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import *
+from .models import MusicalInstrument
 from django.forms import ModelForm
 
 
@@ -12,6 +12,6 @@ class CreateUserForm(UserCreationForm):
 
 class AddInstrumentForm(ModelForm):
     class Meta:
-        # model = MusicalInstrument
+        model = MusicalInstrument
         fields = '__all__'
 
