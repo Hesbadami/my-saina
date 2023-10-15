@@ -9201,7 +9201,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     margin:0
 }
 .doctor-registration-img{
-    background-image:url(/themes/_shared/images/doctor-reg-ilstrr.svg);
+    background-image:url(/static/images/doctor-reg-ilstrr.svg);
     top:-45px;
     left:0
 }
@@ -9216,7 +9216,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     box-shadow:0 7px 10px 0 rgba(237,24,70,.3)
 }
 .user-registration-img{
-    background-image:url(/themes/_shared/images/user-reg-ilstrtr.svg);
+    background-image:url(/static/images/user-reg-ilstrtr.svg);
     top:-45px;
     right:0
 }
@@ -9297,7 +9297,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
         left:0
     }
     #registration{
-        padding:100px 0 150px
+        padding:0 0 150px
     }
     .registration-text-img{
         right:110px
