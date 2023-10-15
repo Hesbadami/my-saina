@@ -16,7 +16,8 @@ from django.views import View
 
 # Create your views here.
 def landing(request):
-    context = {}
+    coaches = ['John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe']
+    context = {'coaches': coaches}
     return render(request, 'landing.html', context)
 
 def registerPage(request):

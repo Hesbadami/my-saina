@@ -14,11 +14,12 @@
         <script id="ua-script-L96PH2Eg" data-analyticsobject="yektanet" async="" type="text/javascript" src="{% static 'js/rg.complete.js' %}"></script>
         <script t gtm="GTM-KHSDNVF" type="text/javascript" async="" src="{% static 'js/optimize.js' %}"></script>
         <script async="" src="{% static 'js/gtm.js' %}"></script>
-        <script src="{% static 'js/jquery.flickity.min.js.gz' %}"></script>
+        <script src="{% static 'js/jquery.flickity.min.js' %}"></script>
+        
 
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
-
+        
         <script defer="" src="{% static 'js/index.min.js.gz' %}"></script>
 
         <script>
@@ -57,7 +58,15 @@
                 </div>
             </div>
             <div class="menu_back_drop_overlay no-display" style="top: 74.1875px;"></div>
-        </header>         
+        </header>
+        
+        <main>
+            {% block content %}
+
+
+            {% endblock content %}
+        </main>
+
         <script type="text/javascript" id="" src="{% static 'js/web-vitals.umd.js' %}"></script>
         <script type="text/javascript" id="">function sendToGTM(a,b,c){dataLayer.push({event:"web-vitals",event_category:"Web Vitals",event_action:a.name,event_value:Math.round("CLS"===a.name?1E3*a.delta:a.delta),event_label:a.id})}webVitals.getCLS(sendToGTM);webVitals.getFID(sendToGTM);webVitals.getLCP(sendToGTM);</script>
         <footer class="container-footer">
@@ -123,7 +132,7 @@
                                                 <li><a href="Pages/%D9%82%D9%88%D8%A7%D9%86%DB%8C%D9%86/?id=4" class="drsaina-services-item" target="_blank" title="Football Coaching Rules"> Rules </a></li>
                                                 <li><a href="Pages/%D8%AD%D8%B1%DB%8C%D9%85-%D8%B4%D8%AE%D8%B5%DB%8C/?id=5" class="drsaina-services-item" target="_blank" title="Football Coaching Privacy Policy"> Privacy Policy </a></li>
                                                 <li><a href="Pages/%D8%B3%D8%A6%D9%88%D8%A7%D9%84%D8%A7%D8%AA-%D9%85%D8%AA%D8%AF%D8%A7%D9%88%D9%84/?id=2" class="drsaina-services-item" target="_blank" title="Football Coaching FAQ"> FAQ </a></li>
-                                                <li><a href="https://career.drsaina.com/" class="drsaina-services-item" target="_blank" title="Collaboration With Us"> Collaboration With Us </a></li>
+                                                <li><a href="Careers" class="drsaina-services-item" target="_blank" title="Collaboration With Us"> Collaboration With Us </a></li>
                                             </ul>
                                         </li>
                                     </ul>

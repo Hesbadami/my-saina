@@ -2755,18 +2755,18 @@ select.form-control:focus::-ms-value{
     transform:translateY(-50%)
 }
 .flickity-prev-next-button.previous{
-    right:10px
+    left:10px
 }
 .flickity-prev-next-button.next{
-    left:10px
+    right:10px
 }
 .flickity-ltr .flickity-prev-next-button.previous{
-    right:auto;
-    left:10px
-}
-.flickity-ltr .flickity-prev-next-button.next{
     left:auto;
     right:10px
+}
+.flickity-ltr .flickity-prev-next-button.next{
+    right:auto;
+    left:10px
 }
 .flickity-prev-next-button .flickity-button-icon{
     position:absolute;
@@ -2928,7 +2928,7 @@ select.form-control:focus::-ms-value{
     width:18px;
     height:20px;
     display:inline-block;
-    margin:0 0 0 6px
+    margin:0 6px 0 0
 }
 .user-login-icon-fill{
     background-image:url(../_shared/images/user-login-icon-fill.svg);
@@ -2974,7 +2974,7 @@ select.form-control:focus::-ms-value{
     font-size:12px;
     color:#042f48!important;
     font-weight:500;
-    margin:7px 0 0 10px;
+    margin:7px 10px 0 0;
     text-overflow:ellipsis;
     white-space:nowrap;
     overflow:hidden;
@@ -3095,7 +3095,7 @@ select.form-control:focus::-ms-value{
     width:20px;
     height:22px;
     float:left;
-    margin:0 0 0 10px
+    margin:0 10px 0 0
 }
 .user-login-item.user-referral span.user-login-item-text{
     color:#ed1846;
@@ -3148,7 +3148,7 @@ select.form-control:focus::-ms-value{
     font-size:17px
 }
 .user-login-item .user-log-out-icon{
-    margin:2px 0 0 10px
+    margin:2px 10px 0 0
 }
 @media screen and (min-width:768px){
     .user-box{
@@ -3203,7 +3203,7 @@ select.form-control:focus::-ms-value{
         width:9px;
         height:9px;
         background-color:#2cae53;
-        margin:0 0 0 10px;
+        margin:0 10px 0 0;
         position:relative;
         top:1px;
         z-index:9;
@@ -3295,7 +3295,7 @@ select.form-control:focus::-ms-value{
         white-space:nowrap
     }
     .consultation-bullet{
-        margin:0 0 0 5px
+        margin:0 5px 0 0
     }
 }
 @media (min-width:360px) and (max-width:575.98px){
@@ -3850,7 +3850,7 @@ i.sideNavDownloadBox-drsaina-icon{
     margin:3px 0 0 0
 }
 .conversations-list-chatInfo-footer-info-text:last-child{
-    margin:0 15px 0 0
+    margin:0 0 0 15px
 }
 .conversations-list-chatInfo-center>.message-count{
     width:16px;
@@ -3955,13 +3955,13 @@ i.sideNavDownloadBox-drsaina-icon{
     -webkit-box-shadow:0 3px 10px 0 rgba(255,187,0,.34);
     -o-box-shadow:0 3px 10px 0 rgba(255,187,0,.34);
     background-color:#fb0;
-    margin:5px 5px 0 0;
+    margin:5px 0 0 5px;
     background-image:url(../_shared/images/white-star.svg);
     font-size:9px;
     font-weight:500;
     text-align:right;
     color:#fff;
-    padding:0 10px 0 6px;
+    padding:0 6px 0 6px;
     width:34px;
     background-size:10px;
     background-position:85% 3px;
@@ -4275,7 +4275,7 @@ i.sideNavDownloadBox-drsaina-icon{
     -webkit-box-shadow:0 3px 10px 0 rgba(25,245,205,.49);
     box-shadow:0 3px 10px 0 rgba(25,245,205,.49);
     background-image:url(../_shared/images/drsaina-down.svg?v=1);
-    margin:4px 0 0 7px;
+    margin:4px 7px 0 0;
     background-size:22px
 }
 .download-title{
@@ -4341,7 +4341,7 @@ i.sideNavDownloadBox-drsaina-icon{
     height:11px;
     display:inline-block;
     float:right;
-    margin:0 8px 0 0;
+    margin:0 0 0 8px;
     font-family:sainaicon!important;
     position:relative;
     top:-3px
@@ -4540,7 +4540,7 @@ i.sideNavDownloadBox-drsaina-icon{
         float:left;
         width:calc(100% - 152px);
         margin:6px 0 0;
-        padding:0 20px 0 0
+        padding:0 0 0 20px
     }
     .accompanist-title{
         font-size:18px;
@@ -4554,7 +4554,7 @@ i.sideNavDownloadBox-drsaina-icon{
     .drsaina-support{
         clear:none;
         border:none;
-        padding:30px 30px 30px 0;
+        padding:30px 0 30px 30px;
         justify-content:center
     }
     .drsaina-comrade{
@@ -4658,7 +4658,7 @@ i.sideNavDownloadBox-drsaina-icon{
         margin:0
     }
     .download-link-box:first-child{
-        margin:0 0 0 7px!important
+        margin:0 7px 0 0!important
     }
     .drsaina-licensefooter{
         text-align:left;
@@ -4688,7 +4688,7 @@ i.sideNavDownloadBox-drsaina-icon{
         width:35px;
         height:40px;
         background-size:34px;
-        margin:4px 0 0 7px
+        margin:4px 7px 0 0
     }
     .download-title{
         font-size:10px;
@@ -4716,7 +4716,7 @@ i.sideNavDownloadBox-drsaina-icon{
 }
 @media screen and (min-width:1024px){
     .drsaina-support{
-        padding:30px 0 30px 30px
+        padding:30px 30px 30px 0
     }
     .accompanist-title{
         white-space:nowrap
@@ -4730,7 +4730,7 @@ i.sideNavDownloadBox-drsaina-icon{
     height:55px;
     background-color:#ccf3ea;
     width:100%;
-    padding:0 20px 0 16px
+    padding:0 16px 0 20px
 }
 .info-top-app i{
     line-height:0!important
@@ -5302,7 +5302,7 @@ i{
     font-weight:300;
     color:#5e7582;
     position:relative;
-    padding:0 0 0 5px
+    padding:0 5px 0 0
 }
 .site-navigation>li:first-child>.site-navigation-link>span{
     display:none
@@ -5341,7 +5341,7 @@ i{
     overflow-y:hidden
 }
 .flickity-ltr .flickity-prev-next-button.next{
-    right:-20px
+    left:-20px
 }
 .flickity-prev-next-button .flickity-button-icon{
     width:18px;
@@ -5359,7 +5359,7 @@ i{
     background-color:#fff
 }
 .flickity-ltr .flickity-prev-next-button.previous{
-    left:-22px
+    right:-22px
 }
 .flickity-page-dots .dot{
     width:14px;
@@ -5385,10 +5385,10 @@ i{
 }
 @media screen and (max-width:1200px){
     .flickity-ltr .flickity-prev-next-button.next{
-        right:0
+        left:0
     }
     .flickity-ltr .flickity-prev-next-button.previous{
-        left:0
+        right:0
     }
 }
 @media screen and (max-width:992px){
@@ -5446,14 +5446,14 @@ i{
 }
 .section-body{
     width:100%;
-    padding:0 20px 0 0
+    padding:0 0 0 20px
 }
 section#bank-drug .section-title-main,section#bank-germ .section-title-main{
     margin-top:60px
 }
 @media screen and (max-width:350px){
     .section-header{
-        padding:0 20px 0 5px
+        padding:0 5px 0 20px
     }
     .section-explain{
         font-size:11px
@@ -5599,7 +5599,7 @@ section#bank-drug .section-title-main,section#bank-germ .section-title-main{
     display:inline-block;
     position:relative;
     top:3px;
-    margin:0 0 0 10px
+    margin:0 10px 0 0
 }
 .red-primary-btn>i:before{
     color:#fff
@@ -5610,7 +5610,7 @@ section#bank-drug .section-title-main,section#bank-germ .section-title-main{
 .show-more{
     text-align:left;
     position:relative;
-    padding:2px 10px 2px 7px
+    padding:2px 7px 2px 10px
 }
 .show-more-icon{
     width:10px;
@@ -5629,7 +5629,7 @@ section#bank-drug .section-title-main,section#bank-germ .section-title-main{
 }
 @media screen and (max-width:350px){
     .show-more{
-        padding:2px 10px 2px 5px
+        padding:2px 5px 2px 10px
     }
     .show-more-icon{
         right:0
@@ -5762,7 +5762,7 @@ section#bank-drug .section-title-main,section#bank-germ .section-title-main{
     -webkit-border-radius:50%;
     border-radius:50%;
     position:relative;
-    margin:0 0 0 8px
+    margin:0 8px 0 0
 }
 .msg-box>span>i{
     text-align:center;
@@ -5835,7 +5835,7 @@ section#bank-drug .section-title-main,section#bank-germ .section-title-main{
     height:11px;
     float:left;
     position:relative;
-    margin:7px 0 0 5px
+    margin:7px 5px 0 0
 }
 @media screen and (min-width:1300px){
     .container{
@@ -5913,7 +5913,7 @@ section#bank-drug .section-title-main,section#bank-germ .section-title-main{
 .flickity-spacing-banner-position{
     width:80%;
     height:auto;
-    padding:0 10px 25px 7px
+    padding:0 7px 25px 10px
 }
 @media screen and (min-width:768px){
     .flickity-spacing-banner-position{
@@ -6509,7 +6509,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     border:1px dashed #fff;
     padding:5px 8px;
     height:32px;
-    margin:0 0 8px 8px;
+    margin:0 8px 8px 0;
     -ms-border-radius:50px;
     -moz-border-radius:50px;
     -o-border-radius:50px;
@@ -6782,7 +6782,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     color:#03273c;
     font-size:14px;
     font-weight:700;
-    margin:0 0 0 .3rem;
+    margin:0 .3rem 0 0;
     white-space:nowrap;
     float:left;
     overflow:hidden;
@@ -6884,7 +6884,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     color:#032133;
     font-size:13px;
     font-weight:700;
-    margin:0 0 0 .3rem;
+    margin:0 .3rem 0 0;
     white-space:nowrap;
     float:left;
     overflow:hidden
@@ -6898,7 +6898,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 .show-more-expertise{
     width:7px;
     height:7px;
-    margin:0 5px 0 0;
+    margin:0 0 0 5px;
     display:inline-block;
     position:relative;
     top:-5px
@@ -6983,7 +6983,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 .search-box-opacity .srch-input-box{
     width:calc(100% - 50px);
     position:relative;
-    padding:0 0 0 15px;
+    padding:0 15px 0 0;
     margin:15px 0 0 0;
     margin:0 auto
 }
@@ -7368,7 +7368,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     }
     .content-search-name{
         min-width:calc(100% - 70px);
-        padding:0 15px 0 0;
+        padding:0 0 0 15px;
         justify-content:center
     }
     .content-search-name>span{
@@ -7402,7 +7402,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     .show-more-expertise{
         width:8px;
         height:8px;
-        margin:0 8px 0 0;
+        margin:0 0 0 8px;
         top:-6px
     }
     .search-box-opacity{
@@ -7506,7 +7506,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     background-repeat:no-repeat
 }
 #services .section-body{
-    padding:0 16px 27px 0
+    padding:0 0 27px 16px
 }
 #services .section-body::-webkit-scrollbar{
     display:none;
@@ -7615,7 +7615,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 @media screen and (min-width:768px){
     #services .section-body{
         text-align:center;
-        padding:0 8px 27px 0
+        padding:0 0 27px 8px
     }
     .sevice-list-item{
         -ms-border-radius:50px;
@@ -7648,11 +7648,11 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     margin-left:0;
     height:auto;
     margin-top:28px;
-    padding:0 15px 30px 7px;
+    padding:0 7px 30px 15px;
     cursor:auto
 }
 #best-doctor .section-body{
-    padding:0 8px 0 0
+    padding:0 0 0 8px
 }
 .doctor-list-item,.doctor-list-item-fast-call{
     background-color:#fff;
@@ -7724,7 +7724,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     font-weight:500;
     text-align:center;
     color:#fff;
-    padding:0 4px 0 6px;
+    padding:0 6px 0 4px;
     width:40px;
     height:16px;
     position:relative
@@ -7854,7 +7854,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
         font-size:12px;
         min-width:60px;
         height:22px;
-        padding:1px 8px 1px 10px
+        padding:1px 10px 1px 8px
     }
     .doctor-rate:before{
         font-size:12px
@@ -7877,7 +7877,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     .question-number{
         width:12px;
         height:12px;
-        margin:0 0 0 5px
+        margin:0 5px 0 0
     }
     .question-number.icon-question-chat:before{
         font-size:14px
@@ -7952,12 +7952,12 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     }
 }
 #call-consultation .section-body{
-    padding:0 8px 0 0
+    padding:0 0 0 8px
 }
 .flickity-spacing-call-doctor{
     width:25%;
     height:auto;
-    padding:0 15px 25px 7px
+    padding:0 7px 25px 15px
 }
 .call-doctor-list-item{
     -ms-border-radius:20px;
@@ -8091,12 +8091,12 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     }
 }
 #health-blog .section-body{
-    padding:0 8px 0 0
+    padding:0 0 0 8px
 }
 .flickity-spacing-health-blog{
     width:33.33%;
     height:auto;
-    padding:0 15px 25px 7px
+    padding:0 7px 25px 15px
 }
 .flickity-spacing-health-blog:hover{
     cursor:auto
@@ -8246,7 +8246,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     height:11px;
     float:left;
     position:relative;
-    margin:0 0 0 5px
+    margin:0 5px 0 0
 }
 .dark-clock.icon-fill-clock:before{
     font-size:11px
@@ -8502,7 +8502,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     box-shadow:0 6px 20px 0 rgba(51,51,51,.33);
     border:1px solid #fff;
     width:100%;
-    padding:6px 6px 6px 110px;
+    padding:6px 110px 6px 6px;
     height:40px;
     text-align:right;
     font-size:14px;
@@ -8540,7 +8540,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     height:27px;
     background-image:url(/themes/_shared/images/google-play.svg);
     background-size:24px;
-    margin:8px 0 0 7px
+    margin:8px 7px 0 0
 }
 .download-drsaina{
     width:32px;
@@ -8553,7 +8553,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     -webkit-box-shadow:0 3px 10px 0 rgba(25,245,205,.49);
     box-shadow:0 3px 10px 0 rgba(25,245,205,.49);
     background-image:url(/themes/_shared/images/drsaina-down.svg?v=1);
-    margin:4px 0 0 7px
+    margin:4px 7px 0 0
 }
 .download-img{
     width:130px;
@@ -8571,7 +8571,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 }
 .download-img>img{
     width:103%;
-    margin:0 -2px 0 0
+    margin:0 0 0 -2px
 }
 .download-img-double-phone{
     width:460px;
@@ -8583,7 +8583,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 }
 .download-img-double-phone>img{
     width:100%;
-    margin:0 -2px 0 0;
+    margin:0 0 0 -2px0;
     -ms-transform:rotate(-23deg);
     -moz-transform:rotate(-23deg);
     -webkit-transform:rotate(-23deg);
@@ -8625,7 +8625,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
         width:35px;
         height:40px;
         background-size:34px;
-        margin:4px 0 0 7px
+        margin:4px 7px 0 0
     }
     .download-title{
         font-size:10px;
@@ -8702,13 +8702,13 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     }
     .drsaina-values-item{
         display:inline-block;
-        margin:0 0 0 60px
+        margin:0 60px 0 0
     }
     .value-icon{
         width:45px;
         height:45px;
         float:left;
-        margin:0 0 0 10px;
+        margin:0 10px 0 0;
         background-size:43px
     }
     .value-title{
@@ -8719,10 +8719,10 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     }
 }
 #user-comments .flickity-ltr .flickity-prev-next-button.previous{
-    left:20px
+    right:20px
 }
 #user-comments .flickity-ltr .flickity-prev-next-button.next{
-    right:20px
+    left:20px
 }
 #user-comments .flickity-prev-next-button{
     background-color:#fff
@@ -8742,7 +8742,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 .flickity-spacing-user-comment{
     width:50%;
     height:auto;
-    padding:25px 15px 45px 7px
+    padding:25px 7px 45px 15px
 }
 .flickity-spacing-user-comment.is-selected .user-comment-item.carousel-cell{
     opacity:1
@@ -8870,7 +8870,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     -webkit-border-radius:20px;
     border-radius:20px;
     background-color:#fff;
-    padding:18px 18px 18px 0
+    padding:18px 0 18px 18px
 }
 .health-bank-item{
     grid-template-columns:repeat(8,95px);
@@ -8954,7 +8954,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 }
 .bank-result-header{
     margin:0 0 15px;
-    padding:0 0 0 15px
+    padding:0 15px 0 0
 }
 .bank-result-header>.show-more{
     text-align:center
@@ -8988,7 +8988,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
 .bank-result-item-info{
     display:inline-block;
     text-align:left;
-    padding:5px 13px 0 0;
+    padding:5px 0 0 13px;
     max-width:calc(100% - 58px)
 }
 .bank-result-item-caption{
@@ -9021,7 +9021,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     position:relative;
     display:inline-block;
     top:2px;
-    margin:0 0 0 4px
+    margin:0 4px 0 0
 }
 @media screen and (min-width:768px){
     .health-bank-result{
@@ -9517,7 +9517,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     background-color:#fff;
     height:344px;
     padding:16px;
-    border-radius:25px 25px 0 0
+    border-radius:25px 0 0 25px
 }
 .jrny-modal .jrny-home-modal-menuContainer>a{
     display:flex;
@@ -9526,7 +9526,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     align-items:center;
     background:#f4f5f7;
     border-radius:8px;
-    padding:8px 8px 8px 16px
+    padding:8px 16px 8px 8px
 }
 .jrny-modal .jrny-home-modal-menuContainer>a>span{
     color:#032133;
@@ -10306,7 +10306,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     justify-content:center
 }
 .jrny-modal-doctorSuggestion-animated-text-container>.jrny-modal-doctorSuggestion-animated-text{
-    padding:8px 10px 8px 11px;
+    padding:8px 11px 8px 10px;
     border-radius:50px;
     background-color:#e6f9f4;
     margin-top:16px;
@@ -10465,7 +10465,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     background-color:#f4f5f7;
     border-radius:8px;
     margin-bottom:16px;
-    padding:0 8px 0 16px
+    padding:0 16px 0 8px
 }
 .jrny-modal .jrny-modal-homeLab-main>.jrny-modal-homeLab-footer>a>span{
     color:#032133;
@@ -10541,7 +10541,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     background-color:#f4f5f7;
     border-radius:8px;
     margin-bottom:16px;
-    padding:0 8px 0 16px
+    padding:0 16px 0 8px
 }
 .jrny-modal .jrny-modal-mental-health-main>.jrny-modal-mental-health-footer>a>span{
     color:#032133;
@@ -10645,7 +10645,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     align-items:center;
     background:#f4f5f7;
     border-radius:8px;
-    padding:8px 8px 8px 16px
+    padding:8px 16px 8px 8px
 }
 .video-c-jrny-modal .jrny-home-modal-menuContainer>a>span{
     color:#032133;
@@ -11185,7 +11185,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     justify-content:center
 }
 .video-c-jrny-modal-doctorSuggestion-animated-text-container>.video-c-jrny-modal-doctorSuggestion-animated-text{
-    padding:8px 10px 8px 11px;
+    padding:8px 11px 8px 10px;
     border-radius:50px;
     background-color:#e6f9f4;
     margin-top:16px;
