@@ -11348,3 +11348,403 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
         transform:rotate(360deg)
     }
 }
+
+.login-process-bg{
+    background-color:#f8fafd
+}
+.login-process-bg .container-header{
+    -o-box-shadow:0 3px 15px 0 rgba(0,0,0,.13);
+    -moz-box-shadow:0 3px 15px 0 rgba(0,0,0,.13);
+    -webkit-box-shadow:0 3px 15px 0 rgba(0,0,0,.13);
+    box-shadow:0 3px 15px 0 rgba(0,0,0,.13)
+}
+.saina-form-box-bg .msg-box{
+    margin:0 0 16px 0
+}
+.section-login{
+    padding:10px 16px 48px 16px
+}
+.saina-form-info{
+    text-align:left;
+    margin:0 0 16px 0
+}
+.saina-form-info-title{
+    font-size:16px;
+    font-weight:700;
+    color:#032133;
+    margin:0 0 4px 0;
+
+    display:block
+}
+.saina-form-info-explain{
+
+    font-size:14px;
+    font-weight:300;
+    line-height:1.7em;
+    color:#5e7582;
+    margin-bottom:0;
+    min-height:40px
+
+}
+.saina-form-box-bg{
+    background-color:#fff;
+    -ms-box-shadow:0 6px 10px 0 rgba(0,0,0,.09);
+    -moz-box-shadow:0 6px 10px 0 rgba(0,0,0,.09);
+    -webkit-box-shadow:0 6px 10px 0 rgba(0,0,0,.09);
+    box-shadow:0 6px 10px 0 rgba(0,0,0,.09);
+    -ms-border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+    padding:16px;
+
+    width:100%;
+    float:left
+}
+.saina-form{
+
+    margin:0;
+    list-style:none;
+    width:100%;
+    float:right
+}
+.saina-form>li{
+    display:block;
+
+    width:100%;
+    float:left;
+    margin:0 0 12px;
+
+    position:relative
+}
+.saina-form>li:last-child{
+    margin:0
+}
+.saina-form-user-number{
+    font-size:16px;
+    color:#03273c;
+    font-weight:400;
+    float:left
+}
+.saina-form-change-num-lnk{
+    font-size:11px;
+    color:#032133;
+    font-weight:400;
+
+    float:right;
+    position:relative;
+    top:5px
+
+}
+.saina-form-change-num{
+    margin:0 0 25px
+}
+.saina-form-title{
+    font-size:14px;
+
+    font-weight:300;
+    color:#03273c;
+    margin:0 0 4px 0;
+
+    display:block
+}
+.saina-form-input{
+    background-color:#fff;
+    -ms-border-radius:8px;
+
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+    border:solid 1px #e5e9f0;
+    color:#03273c;
+    display:block;
+    width:100%;
+    height:48px;
+    padding:10px 15px;
+    font-size:14px;
+    font-weight:300
+}
+.saina-form-input-num{
+    text-align:left;
+    direction:ltr
+}
+.saina-form-input::-webkit-input-placeholder{
+    font-size:14px;
+    font-weight:300;
+    color:#c7ced2
+}
+.saina-form-input::-moz-placeholder{
+    font-size:14px;
+    font-weight:300;
+    color:#c7ced2
+}
+.saina-form-input:-ms-input-placeholder{
+    font-size:14px;
+    font-weight:300;
+    color:#c7ced2
+
+}
+.saina-form-input:-moz-placeholder{
+
+    font-size:14px;
+    font-weight:300;
+    color:#c7ced2
+
+}
+.saina-form-input-num::-webkit-input-placeholder{
+    text-align:left
+}
+.saina-form-input-num::-moz-placeholder{
+    text-align:left
+}
+.saina-form-input-num:-ms-input-placeholder{
+    text-align:left
+}
+.saina-form-input:-moz-placeholder{
+    text-align:left
+}
+.saina-form-social-proof{
+    text-align:center
+}
+.saina-form-social-proof-text{
+    font-size:12px;
+    color:#5e7582;
+    font-weight:300
+}
+.saina-form-social-proof-bold-text{
+    font-size:12px;
+    color:#5e7582;
+    font-weight:400
+}
+.saina-form-item-validation .saina-form-input{
+    border:1px solid #ed1846
+}
+.saina-form-validation-text{
+    font-size:12px;
+    color:#ed1846;
+    display:block;
+    margin:5px 0 0 0
+}
+.saina-form-timer{
+    display:inline-block;
+    float:right;
+    font-size:12px;
+
+    font-weight:400;
+    line-height:1.73;
+    color:#03273c;
+    direction:ltr;
+    text-align:left
+}
+.show-pass{
+    width:20px;
+    height:15px;
+    display:inline-block;
+    position:absolute;
+    right:15px;
+    top:45px
+}
+.show-pass-icon{
+    background-size:17px;
+    display:block;
+    width:20px;
+    height:15px
+}
+.show-pass-hide{
+    background-image:url(../_shared/images/show-pass-hide.svg)
+}
+.is-typing .show-pass-hide{
+    background-image:url(../_shared/images/show-pass-type.svg)
+}
+.active .show-pass-hide{
+    background-image:url(../_shared/images/show-pass-visible.svg)
+}
+.saina-form-link{
+    margin:0 0 25px
+}
+.saina-form-link-text{
+
+    font-size:12px;
+    font-weight:300;
+    color:#ed1846;
+    border-bottom:1px solid #ed1846;
+
+    display:inline-block;
+    float:left;
+    margin:5px 0
+
+}
+.saina-form-input-pass::-webkit-input-placeholder{
+    font-size:16px
+}
+.saina-form-input-pass::-moz-placeholder{
+    font-size:16px
+}
+.saina-form-input-pass::-ms-input-placeholder{
+    font-size:16px
+}
+.saina-form-input-pass::-moz-placeholder{
+    font-size:16px
+}
+.saina-form-input-verification-code::-webkit-input-placeholder{
+    text-align:left
+}
+.saina-form-input-verification-code::-moz-placeholder{
+    text-align:left
+}
+.saina-form-input-verification-code::-ms-input-placeholder{
+    text-align:left
+}
+.saina-form-input-verification-code::-moz-placeholder{
+    text-align:left
+}
+.captchCTRL input[type=number]{
+    background-color:#fff;
+    color:#03273c;
+    display:inline-block;
+    width:calc(100% - 150px);
+
+    height:48px;
+    font-size:16px;
+
+    font-weight:400;
+    -moz-border-radius:8px;
+    -ms-border-radius:8px;
+    -o-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+    border:1px solid #c5ccd1;
+    padding:10px 15px;
+    float:left;
+
+    text-align:center;
+    direction:ltr
+}
+.captchCTRL input[type=tel]{
+    background-color:#fff;
+    color:#03273c;
+    display:inline-block;
+    width:calc(100% - 150px);
+
+    height:48px;
+
+    font-size:16px;
+    font-weight:400;
+    -moz-border-radius:8px;
+    -ms-border-radius:8px;
+    -o-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+    border:1px solid #c5ccd1;
+    padding:10px 15px;
+    float:left;
+
+    text-align:center;
+    direction:ltr
+
+}
+.captchCTRL>img{
+    display:inline-block;
+    width:115px;
+    max-height:48px;
+    margin:0 1px 0 5px;
+    position:relative;
+    top:1px;
+    -moz-border-radius:8px;
+    -ms-border-radius:8px;
+    -o-border-radius:8px;
+    -webkit-border-radius:8px;
+
+    border-radius:8px;
+    border:1px solid #c5ccd1
+
+}
+.captchCTRL>span{
+    -ms-border-radius:50px;
+    -o-border-radius:50px;
+    -moz-border-radius:50px;
+    -webkit-border-radius:50px;
+    border-radius:50px;
+    background-color:#ececec;
+    display:inline-block;
+    width:25px;
+    height:25px;
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size:11px;
+    background-image:url(../_shared/images/captcha-refresh.svg);
+    display:inline-block;
+    position:relative;
+    top:9px
+
+}
+.saina-form-item-validation .captchCTRL input[type=number]{
+    border:1px solid #ed1846
+}
+.saina-form-item-validation .captchCTRL input[type=tel]{
+    border:1px solid #ed1846
+}
+.msg-box.box-success i::before{
+    color:#fff!important
+}
+.box-error:empty{
+    display:none
+}
+@media (min-width:768px){
+    .section-login{
+        padding:32px 24px 48px
+    }
+    .saina-form-box-bg{
+        padding:24px
+    }
+    .saina-box{
+        padding:1.5rem
+    }
+    .saina-form-input{
+        padding:.7rem 1rem
+    }
+    .saina-form-link-text{
+        font-size:12px
+    }
+}
+@media (max-width:325px){
+    .saina-form-box-bg{
+        padding:.8em
+
+    }
+}
+.successful-login__layout{
+    height:200px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center
+}
+.successful-login__container{
+    border-radius:0!important
+
+}
+.successful-login__snack-message{
+    background:#032133;
+    box-shadow:0 -1px 5px rgba(0,0,0,.05);
+    border-radius:8px;
+    min-height:48px;
+    min-width:320px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center
+
+}
+.successful-login__snack-message__caption{
+    color:#fcfcfc;
+    font-weight:400;
+    font-size:12px
+}
+.MainModal .successful-login__snack-message{
+    margin:7em auto!important;
+    display:flex!important;
+    background-color:#032133!important;
+    border-radius:8px!important
+
+}

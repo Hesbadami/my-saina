@@ -1,0 +1,482 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+    <style>.loaderBG{position:absolute;left:0;top:0;width:100%;height:100%;background-color:rgba(255,255,255,0.4)}.saina-form-box-bg{position:relative}</style>
+    <section class=section-login id=sign-in-sign-up>
+        <form action="{% url 'registerlogin' %}" method=post>
+            {% csrf_token %}
+            {% if phase == 'phone' %}
+            <div style=display:block>
+                <div class=container>
+                    <div class=row>
+                        <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
+                            <div class=saina-form-box>
+                                <div class=saina-form-info>
+                                    <span class=saina-form-info-title> Log in/Sign up </span>
+                                    <p class=saina-form-info-explain>Please enter your mobile phone number</p>
+                                </div>
+                                <div class="saina-form-box-bg myFormStartHear">
+                                    <ul class=saina-form>
+                                        <li class=saina-form-item><label class=saina-form-title> Mobile phone number </label> <input autocomplete=off class="saina-form-input saina-form-input-num" name=PhoneNumber type=tel placeholder=07712345670 autofocus></li>
+                                        <li><a onclick="return checkIfUserExistOrNot(this)" class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition"> Continue to talk to a coach </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if phase == 'verify' %}
+            <div style=display:block id=getUserMoreInfo>
+                <div class=container>
+                    <div class=row>
+                        <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
+                            <div class=saina-form-box>
+                                <div class=saina-form-info><span class=saina-form-info-title> Additional Information </span></div>
+                                <div class="saina-form-box-bg myFormStartHear">
+                                    <div class="msg-box box-info">
+                                        <span> <i class="fa fa-info"></i> </span>
+                                        <p>Please enter the 6 digit code sent to your mobile phone.</p>
+                                    </div>
+                                    <ul class=saina-form>
+                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> {{ PhoneNumber }} </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change number </a></li>
+                                        <li class=saina-form-item><label class=saina-form-title> Verification code </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-verification-code" type=tel name=confirmCode placeholder="6 digit verification code"></li>
+                                        <li class=saina-form-item id="timer"></li>
+                                        <li class=saina-form-item><label class=saina-form-title> First and last name </label> <input autocomplete=off class="saina-form-input saina-form-input-pass" name=fullName placeholder="First and last name"></li>
+                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return createLogin(this)" title="ورود به دکتر ساینا"> ادامه </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                let timerOn = true;
+                function timer(remaining) {
+                var m = Math.floor(remaining / 60);
+                var s = remaining % 60;
+                
+                m = m < 10 ? '0' + m : m;
+                s = s < 10 ? '0' + s : s;
+                document.getElementById('timer').innerHTML = m + ':' + s;
+                remaining -= 1;
+                
+                if(remaining >= 0 && timerOn) {
+                    setTimeout(function() {
+                        timer(remaining);
+                    }, 1000);
+                    return;
+                }
+
+                if(!timerOn) {
+                    // Do validate stuff here
+                    return;
+                }
+                
+                // Do timeout stuff here
+                document.getElementById('timer').innerHTML = '<a class="saina-form-link-text" onclick="return sendSmsAgain(this)" title="Send Again">Send again</a>'
+
+                }
+
+                timer(6);
+            </script>
+
+            {% endif %}
+            
+            <div style=display:none>
+                <div class=container>
+                    <div class=row>
+                        <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
+                            <div class=saina-form-box>
+                                <div class=saina-form-info>
+                                    <span class=saina-form-info-title> کلمه عبور </span>
+                                    <p class=saina-form-info-explain>کلمه عبور خود را وارد کنید</p>
+                                </div>
+                                <div class=saina-form-box-bg>
+                                    <ul class=saina-form>
+                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> تغییر شماره موبایل </a></li>
+                                        <li class=saina-form-item>
+                                            <label class=saina-form-title> کلمه عبور </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password name=Password placeholder="کلمه عبور" autofocus>
+                                            <div class=show-pass><a class="show-pass-icon show-pass-hide img-bg"></a></div>
+                                        </li>
+                                        <li class="saina-form-item saina-form-link"><a class=saina-form-link-text onclick="return moveToForgetPasword(this)" title="فراموشی کلمه عبور"> دریافت کلمه عبور با پیامک </a></li>
+                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="ورود به دکتر ساینا"> ادامه </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style=display:none>
+                <div class=container>
+                    <div class=row>
+                        <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
+                            <div class=saina-form-box>
+                                <div class=saina-form-info><span class=saina-form-info-title> یادآوری کلمه عبور </span></div>
+                                <div class=saina-form-box-bg>
+                                    <div class="msg-box box-success">
+                                        <span> <i class="fa fa-success"></i> </span>
+                                        <p>کلمه عبور به شماره ارسال شد.</p>
+                                    </div>
+                                    <ul class=saina-form>
+                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> تغییر شماره موبایل </a></li>
+                                        <li class=saina-form-item>
+                                            <label class=saina-form-title> کلمه عبور </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password2 name=Password2 placeholder="کلمه عبور" autofocus>
+                                            <div class=show-pass><a class="show-pass-icon show-pass-hide img-bg"></a></div>
+                                        </li>
+                                        <li class=saina-form-item>
+                                            <div class="form-timer saina-form-timer form-timer"><span class="timer-mint saina-form-timer-num saina-form-timer-min">1</span> <span class=saina-form-timer-space>:</span> <span class="saina-form-timer-num saina-form-timer-sec">00</span></div>
+                                        </li>
+                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="ورود به دکتر ساینا"> ادامه </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <script>
+        $('.saina-form-box input').keypress(function(e) {
+            if (e.charCode == 13) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).closest('.saina-form-box').find('.red-primary-btn').click();
+            }
+        });
+
+        function moveToForgetPasword(curObj) {
+            $(curObj).closest('form').find('input[name=action]').val('forgetPassword');
+            $(curObj).closest('form').submit();
+        }
+
+        function isUnicodeFunc(strContent) {
+            if (!strContent)
+                return false;
+            var result = false;
+            var english = /^[0-9]*$/;
+            for (var i = 0; i < strContent.length; i++) {
+                if (!english.test(strContent[i])) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+
+        function doLogin(curObj) {
+            var passWord = $(curObj).closest('.saina-form-box').find('input[name=Password]').val();
+            if (!passWord)
+                passWord = $(curObj).closest('.saina-form-box').find('input[name=Password2]').val();
+            var isValidForm = true;
+            if (!passWord) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password]'), 'Enter password');
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password2]'), 'Enter password');
+                isValidForm = false;
+            }
+            var secretCode = $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]').val();
+            if (!secretCode)
+                secretCode = $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]').val();
+            if (!secretCode && ($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]').length > 0 || $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]').length > 0)) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]'), 'Enter security code');
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]'), 'Enter security code');
+                isValidForm = false;
+            }
+            if (secretCode && isUnicodeFunc(secretCode) == true) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]'), 'Security code must be typed with english keyboard');
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]'), 'Security code must be typed with english keyboard');
+                isValidForm = false;
+            }
+            if (isValidForm == false)
+                return false;
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]'));
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]'));
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password]'));
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password2]'));
+            $(curObj).closest('form').submit();
+        }
+
+        function createLogin(curObj) {
+            var fullNameSelector = $(curObj).closest('.saina-form-box').find('input[name=fullName]');
+            var confirmCodeSelector = $(curObj).closest('.saina-form-box').find('input[name=confirmCode]');
+            var fullName = fullNameSelector.val();
+            var confirmCode = confirmCodeSelector.val();
+            if (!confirmCode) {
+                showErrorForInput(confirmCodeSelector, 'Enter verification code texted to you');
+                return false;
+            }
+            if (isUnicodeFunc(confirmCode) == true) {
+                showErrorForInput(confirmCodeSelector, 'Verification code must be typed with english keyboard');
+                return false;
+            }
+            hideErrorForInput(confirmCodeSelector);
+            if (!fullName) {
+                showErrorForInput(fullNameSelector, 'Enter your first and last name');
+                return false;
+            }
+            var secretCode = $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer]').val();
+            if (!secretCode && $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer]').length > 0) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer]'), 'Enter security code');
+                return false;
+            }
+            if (isUnicodeFunc(secretCode) == true && $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer]').length > 0) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer]'), 'Please use english keyboard to type security code');
+                return false;
+            }
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer]'));
+            hideErrorForInput(fullNameSelector);
+            $(curObj).closest('form').submit();
+        }
+
+        function showErrorForInput(inputSelectorObj, message) {
+            inputSelectorObj.addClass('saina-form-input-num');
+            inputSelectorObj.closest('.saina-form-item').addClass('saina-form-item-validation');
+            var findLabel = inputSelectorObj.closest('.saina-form-item').find('.saina-form-validation-text');
+            if (findLabel.length == 0) {
+                inputSelectorObj.closest('.saina-form-item').append('<lable class="saina-form-validation-text">' + message + '</lable>');
+            } else {
+                findLabel.html(message);
+            }
+        }
+
+        function hideErrorForInput(inputSelectorObj) {
+            inputSelectorObj.removeClass('saina-form-input-num');
+            inputSelectorObj.closest('.saina-form-item').removeClass('saina-form-item-validation');
+            inputSelectorObj.closest('.saina-form-item').find('.saina-form-validation-text').remove();
+        }
+
+        function checkIfUserExistOrNot(curObj) {
+            var phoneNumberSelector = $(curObj).closest('.saina-form-box').find('input[name=PhoneNumber]');
+            var phoneNumber = phoneNumberSelector.val();
+            var isValid = true;
+            if (!phoneNumber) {
+                showErrorForInput(phoneNumberSelector, 'Enter mobile phone number ');
+                isValid = false;
+            }
+            if (phoneNumber && isUnicodeFunc(phoneNumber) == true) {
+                showErrorForInput(phoneNumberSelector, 'Mobile phone number should be typed with english keyboard');
+                isValid = false;
+            }
+            if (phoneNumber && phoneNumber.length != 11) {
+                showErrorForInput(phoneNumberSelector, 'Mobile phone number must be 11 digits');
+                isValid = false;
+            }
+            if (phoneNumber && phoneNumber.substr(0, 2) != '07') {
+                showErrorForInput(phoneNumberSelector, 'Mobile phone number has incorrect format');
+                isValid = false;
+            }
+            if (isValid == false)
+                return false;
+            hideErrorForInput(phoneNumberSelector);
+            if (phoneNumber) {
+                $(curObj).closest('form').submit();
+            }
+        }
+
+        function createAjaxRequest(curObj) {
+            showLoader($(curObj).closest('form'));
+            var postData = {}
+            $('form').find('input').each(function() {
+                var inputName = $(this).attr('name');
+                if (inputName && $(this).val()) {
+                    postData[inputName] = $(this).val();
+                }
+            });
+            $.ajax({
+                headers: {
+                    "X-XSRF-Token": $('input[name="__RequestVerificationToken"]').val()
+                },
+                url: '/register_customer',
+                type: 'post',
+                data: postData,
+                success: function(res) {
+                    if (res == true) {
+                        $('#loginCreateAcountModal').removeClass('MainModalBlock');
+                        $('#successful-login__container').addClass('MainModalBlock');
+                        setTimeout(function() {
+                            if (window.tempReturnUrlAfterLogin) {
+                                window.location.href = window.tempReturnUrlAfterLogin
+                            } else {
+                                window.location.reload();
+                            }
+                        }, 10)
+                    } else {
+                        $(".saina-form-box").css('display', 'block !important');
+                        $('.loginUc-div').html(res);
+                    }
+                },
+                error: function() {
+                    console.log('error');
+                }
+            });
+        }
+
+        function accessCookie(cookieName) {
+            var name = cookieName + "=";
+            var allCookieArray = document.cookie.split(';');
+            for (var i = 0; i < allCookieArray.length; i++) {
+                var temp = allCookieArray[i].trim();
+                if (temp.indexOf(name) == 0)
+                    return temp.substring(name.length, temp.length);
+            }
+            return "";
+        }
+
+        function initCaptchCTRL(cSelector) {
+            cSelector.each(function() {
+                if ($(this).attr('url') && !$(this)[0].refresh) {
+                    $(this)[0].refresh = function() {
+                        var src = $(this).attr('url');
+                        createRequest(src, function(res) {
+                            if (res && res.uniqId) {
+                                $(this).find('input[type=hidden]').val(res.uniqId);
+                                $(this).find('img').attr('src', src + 'Image/' + res.uniqId);
+                            }
+                        }.bind(this));
+                    }
+                    $(this)[0].refresh();
+                    $(this).find('span').click(function() {
+                        $(this).closest('.captchCTRL')[0].refresh();
+                    });
+                }
+            });
+        }
+        initCaptchCTRL($('.captchCTRL'));
+
+        function showLoader(curObj) {
+            $(curObj).find('.saina-form-box-bg').append('<div class="loaderBG"></div>');
+            $(curObj).find('.saina-form-box-bg').find('.x-lg-drsaina-btn').css('text-align', 'center').html('<img style="display:inline-block;height:100%;" src="/Images/ajax-loader.gif" />');
+        }
+        $.fn.initLoader = function() {
+            return this.each(function() {
+                $(this).submit(function() {
+                    showLoader(this);
+                });
+            });
+        }
+        $('form').initLoader();
+
+        function createRequest(url, whatToDoSuccess, postData) {
+            var strPostData = JSON.stringify(postData);
+            ajaxOption = {
+                url: url,
+                type: 'post',
+                contentType: 'application/json',
+                data: strPostData,
+                success: function(data) {
+                    if (whatToDoSuccess) {
+                        whatToDoSuccess(data);
+                    }
+                },
+                error: function(data) {}
+            }
+            $.ajax(ajaxOption);
+        }
+        $.fn.initTimer = function(secound, whatToDoNext) {
+            return this.each(function() {
+                var ctrlSecound = secound % 60;
+                var ctrlMin = Math.floor(secound / 60);
+                $(this).find('.saina-form-timer-sec').html(ctrlSecound);
+                $(this).find('.saina-form-timer-min').html(ctrlMin);
+                $(this)[0].secound = secound;
+                $(this)[0].timerPointer = setInterval(function() {
+                    if ($(this)[0].curSecound == $(this)[0].secound) {
+                        clearInterval($(this)[0].timerPointer);
+                        if (whatToDoNext && window[whatToDoNext]) {
+                            window[whatToDoNext](this);
+                        }
+                        return;
+                    }
+                    if (!$(this)[0].curSecound && $(this)[0].curSecound != 0)
+                        $(this)[0].curSecound = 0
+                    $(this)[0].curSecound = $(this)[0].curSecound + 1;
+                    var ctrlSecound = Number.parseInt($(this).find('.saina-form-timer-sec').html());
+                    if (ctrlSecound > 0) {
+                        ctrlSecound--;
+                        $(this).find('.saina-form-timer-sec').html(ctrlSecound);
+                    } else if (ctrlSecound <= 0) {
+                        ctrlSecound = 59;
+                        $(this).find('.saina-form-timer-sec').html(ctrlSecound);
+                        var ctrlMinut = Number.parseInt($(this).find('.saina-form-timer-min').html());
+                        ctrlMinut--;
+                        if (ctrlMinut >= 0) {
+                            $(this).find('.saina-form-timer-min').html(ctrlMinut);
+                        }
+                    }
+                }.bind(this), 1000);
+            });
+        }
+        $.fn.initAllShowHidePass = function() {
+            return this.each(function() {
+                $(this).closest('.saina-form-item').find('input').keyup(function() {
+                    if (!$(this).val()) {
+                        $(this).closest('.saina-form-item').removeClass('is-typing');
+                        $(this).closest('.saina-form-item').find('.show-pass').removeClass('active');
+                    } else {
+                        $(this).closest('.saina-form-item').addClass('is-typing');
+                    }
+                });
+                $(this).find('>a').click(function() {
+                    var allClass = $(this).closest('.show-pass').attr('class');
+                    if (allClass == 'show-pass') {
+                        $(this).closest('.saina-form-item').find('input').attr('type', 'text');
+                        $(this).closest('.show-pass').addClass('active');
+                    } else {
+                        $(this).closest('.saina-form-item').find('input').attr('type', 'password');
+                        $(this).closest('.show-pass').removeClass('active');
+                    }
+                });
+            });
+        }
+        $('.show-pass').initAllShowHidePass();
+
+        function moveToFirstStep() {
+            $('form input[name=action]').val('checkIfUserExistOrNot');
+            location.href = location.href.replace('#', '');
+            return false;
+        }
+
+        function loadModalFirstStepContent() {
+            $.ajax({
+                url: '/register_customer/true',
+                type: 'GET',
+                success: function(res) {
+                    $('#loginSectionModal').html(res);
+                    $('#loginCreateAcountModal').addClass('MainModalBlock');
+                    $('#txtQuestionText').keypress(function(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        return false;
+                    });
+                },
+                error: function() {}
+            });
+        }
+
+        function showCaptch(curElement) {
+            $(curElement).closest('li').replaceWith('<li><a class="saina-form-link-text" onclick="return moveToForgetPasword(this)" title="ارسال مجدد">ارسال مجدد</a></li>');
+        }
+
+        function moveToFistStep(curElement) {
+            $(curElement).closest('li').replaceWith('<li><a class="saina-form-link-text" onclick="return sendSmsAgain(this)" title="ارسال مجدد" >ارسال مجدد</a></li>');
+        }
+
+        function sendSmsAgain() {
+            $('form input[name=action]').val('checkIfUserExistOrNot');
+            $('form').append('<input type="hidden" name="PhoneNumber" value="{{ PhoneNumber }}">')
+            $('form').submit();
+            return false;
+        }
+
+    </script>
+</main>
+
+{% endblock content %}

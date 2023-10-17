@@ -24,7 +24,7 @@ from store.views import StripeCheckoutSession, SuccessView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', views.registerPage, name='register'),
+    path('registerlogin/', views.registerlogin, name='registerlogin'),
     path('login/', views.loginPage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
     path('profile/', views.userProfile, name='profile'),

@@ -20,22 +20,31 @@ def landing(request):
     context = {'coaches': coaches}
     return render(request, 'landing.html', context)
 
-def registerPage(request):
+def registerlogin(request, data={}):
     if request.user.is_authenticated:
-        return redirect('instruments')
+        return redirect('landing')
     else:
-        form = CreateUserForm()
         if request.method == 'POST':
-            form = CreateUserForm(request.POST)
-            if form.is_valid():
-                userform = form.save()
-                user = form.cleaned_data.get('username')
-                Customer.objects.create(user=userform, name=user, email=userform.email)
-                messages.success(request, 'Account was created for ' + user)
-                return redirect('login')
+            data['PhoneNumber'] = request.POST['PhoneNumber']
+            print(request.POST)
+            if 'confirmCode' not in request.POST:
+                context = {'phase': 'verify', 'PhoneNumber': data['PhoneNumber']}
+                return render(request, 'registerlogin.html', context)
 
-    context = {'form': form}
-    return render(request, 'register.html', context)
+            elif request.POST['confirmCode'] == '':
+                context = {'phase': 'verify', 'PhoneNumber': data['PhoneNumber']}
+                return render(request, 'registerlogin.html', context)
+
+            # form = CreateUserForm(request.POST)
+            # if form.is_valid():
+            #     userform = form.save()
+            #     user = form.cleaned_data.get('username')
+            #     Customer.objects.create(user=userform, name=user, email=userform.email)
+            #     messages.success(request, 'Account was created for ' + user)
+            #     return redirect('login')
+
+    context = {'phase': 'phone'}
+    return render(request, 'registerlogin.html', context)
 
 
 def loginPage(request):
