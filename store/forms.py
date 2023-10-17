@@ -7,7 +7,7 @@ from django.forms import ModelForm
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['phone', 'full_name', 'password1', 'password2']
 
 
 class AddInstrumentForm(ModelForm):

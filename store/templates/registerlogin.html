@@ -44,14 +44,14 @@
                                     </div>
                                     <ul class=saina-form>
                                         <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> {{ data.PhoneNumberr }} </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change number </a></li>
-                                        {% if incorrect_otp %}
+                                        {% if error == 'incorrect_otp' %}
                                         <li class="saina-form-item saina-form-item-validation">
                                         {% else %}
                                         <li class=saina-form-item>
                                         {% endif %}
                                             <label class=saina-form-title> Verification code </label>
                                             <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-verification-code" type=number name=confirmCode placeholder="6 digit verification code">
-                                            {% if incorrect_otp %}
+                                            {% if error == 'incorrect_otp' %}
                                                 <lable class="saina-form-validation-text">Entered code is incorrect or expired</lable>
                                             {% endif %}
                                         </li>
@@ -112,11 +112,25 @@
                                 <div class=saina-form-box-bg>
                                     <ul class=saina-form>
                                         <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change mobile phone number </a></li>
-                                        <li class=saina-form-item>
+                                        {% if error == 'incorrect_password' %}
+                                            <li class="saina-form-item saina-form-item-validation">
+                                        {% else %}
+                                            <li class=saina-form-item>
+                                        {% endif %}
                                             <label class=saina-form-title> Password </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password name=Password placeholder="Password" autofocus>
                                             <div class=show-pass><a class="show-pass-icon show-pass-hide img-bg"></a></div>
+                                            {% if error == 'incorrect_password' %}
+                                                <lable class="saina-form-validation-text">Incorrect password.</lable>
+                                            {% endif %}
                                         </li>
-                                        <li class="saina-form-item saina-form-link"><a class=saina-form-link-text onclick="return moveToForgetPasword(this)" title="Forgot Password"> Receive password via SMS </a></li>
+                                        <li class="saina-form-item saina-form-link">
+                                            <a class=saina-form-link-text onclick="return moveToForgetPasword(this)" title="Forgot Password"> Receive password via SMS </a>
+                                        </li>
+                                        <li class="saina-form-item">
+                                            {% if error == 'not_a_user' %}
+                                            <lable class="saina-form-validation-text">This is your first time entering Football Coaching, please choose a password.</lable>
+                                            {% endif %}
+                                        </li>
                                         <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="Enter Football Coaching"> Continue </a></li>
                                     </ul>
                                 </div>
@@ -248,6 +262,9 @@
             hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]'));
             hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password]'));
             hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password2]'));
+            $(curObj).closest('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="fullName" value="{{ data.fullName }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="confirmCode" value="{{ data.confirmCode }}">');
             $(curObj).closest('form').submit();
         }
 
@@ -401,7 +418,7 @@
 
         function showLoader(curObj) {
             $(curObj).find('.saina-form-box-bg').append('<div class="loaderBG"></div>');
-            $(curObj).find('.saina-form-box-bg').find('.x-lg-drsaina-btn').css('text-align', 'center').html('<img style="display:inline-block;height:100%;" src="/Images/ajax-loader.gif" />');
+            $(curObj).find('.saina-form-box-bg').find('.x-lg-drsaina-btn').css('text-align', 'center').html('<img style="display:inline-block;height:100%;" src="{% static 'images/ajax-loader.gif' %}" />');
         }
         $.fn.initLoader = function() {
             return this.each(function() {

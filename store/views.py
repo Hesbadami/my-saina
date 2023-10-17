@@ -4,10 +4,10 @@ from django.views.generic import TemplateView
 
 from ecommerce.settings import STRIPE_SECRET_KEY
 from .models import *
-from .forms import CreateUserForm, AddInstrumentForm
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .forms import *
+from django.contrib import messages
 from .filters import InstrumentFilter
 import stripe
 from django.conf import settings
@@ -17,10 +17,12 @@ from django.views import View
 import secrets
 import string
 
-def sendsms(number):
+User = get_user_model()
+
+def sendsms(phone):
     otp = randint(1e5, 1e6)
 
-    obj, created = OTP.objects.get_or_create(phonenumber=number)
+    obj, created = OTP.objects.get_or_create(phonenumber=phone)
 
     if not created:
         if datetime.now(timezone.utc) - obj.otp_datetime < timedelta(minutes=2):
@@ -32,11 +34,15 @@ def sendsms(number):
     obj.save()
     print("Greetings, Here's your verification code sent by Football Coaching:\n", otp)
 
-def sendpassword(number):
+def sendpassword(phone):
     alphabet = string.ascii_letters + string.digits
-    password = ''.join(secrets.choice(alphabet) for i in range(20))
+    password = ''.join(secrets.choice(alphabet) for i in range(12))
 
-    
+    user = User.objects.get(phone=phone)
+    user.set_password(password)
+
+    user.save()
+    print("Greetings, Here's your new password for entering Football Coaching:\n", password)
 
 # Create your views here.
 def landing(request):
@@ -53,72 +59,71 @@ def registerlogin(request, data={}):
             if 'PhoneNumber' in request.POST and 'confirmCode' not in request.POST:
                 data['PhoneNumber'] = request.POST['PhoneNumber']
                 sendsms(data['PhoneNumber'])
-                context = {'phase': 'verify', 'data': data, 'incorrect_otp': False}
+                context = {'phase': 'verify', 'data': data, 'error': ''}
                 return render(request, 'registerlogin.html', context)
 
-            elif 'PhoneNumber' in request.POST and request.POST['confirmCode'] == '':
-                data['PhoneNumber'] = request.POST['PhoneNumber']
-                sendsms(data['PhoneNumber'])
-                context = {'phase': 'verify', 'data': data, 'incorrect_otp': False}
-                return render(request, 'registerlogin.html', context)
+            elif 'PhoneNumber' in request.POST and (('Password' not in request.POST and 'Password2' not in request.POST) or ):
+                if request.POST['confirmCode'] == '':
+                    data['PhoneNumber'] = request.POST['PhoneNumber']
+                    sendsms(data['PhoneNumber'])
+                    context = {'phase': 'verify', 'data': data, 'error': ''}
+                    return render(request, 'registerlogin.html', context)
 
-            elif 'PhoneNumber' in request.POST and 'confirmCode' in request.POST and request.POST['confirmCode'] != '':
-                data['PhoneNumber'] = request.POST['PhoneNumber']
-                data['confirmCode'] = request.POST['confirmCode']
-                data['fullName'] = request.POST['fullName']
+                if request.POST['confirmCode'] != '':
+                    data['PhoneNumber'] = request.POST['PhoneNumber']
+                    data['confirmCode'] = request.POST['confirmCode']
+                    data['fullName'] = request.POST['fullName']
+                    
+                    otp_obj = OTP.objects.get(phonenumber=data['PhoneNumber'])
+
+                    if 'forgotPassword' in request.POST:
+                        
+                        if User.objects.filter(phone=data['PhoneNumber']).exists():
+                            sendpassword(data['PhoneNumber'])
+                            context = {'phase': 'forgotpassword', 'data': data, 'error': ''}
+                            return render(request, 'registerlogin.html', context)
+                        
+                        else:
+                            context = {'phase': 'password', 'data': data, 'error': 'not_a_user'}
+                            return render(request, 'registerlogin.html', context)
+
+
+                    if otp_obj.otp_value != int(data['confirmCode']) or (datetime.now(timezone.utc) - otp_obj.otp_datetime > timedelta(minutes=2)):
+                        context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
+                        return render(request, 'registerlogin.html', context)
+
+                    context = {'phase': 'password', 'data': data, 'error': ''}
+                    return render(request, 'registerlogin.html', context)
+            
+            # elif 'PhoneNumber' in request.POST and 'fullName' in request.POST:
+
                 
-                otp_obj = OTP.objects.get(phonenumber=data['PhoneNumber'])
 
-                if 'forgotPassword' in request.POST:
-                    sendpassword(data['PhoneNumber'])
-                    context = {'phase': 'forgotpassword', 'data': data, 'incorrect_otp': False}
+                data['PhoneNumber'] = request.POST['PhoneNumber']
+                data['confirmCode'] = ''
+                data['fullName'] = request.POST['fullName']
+
+                if not User.objects.filter(phone=request.POST['PhoneNumber']).exists():
+                    User.objects.create_user(
+                        phone=request.POST['PhoneNumber'],
+                        password=request.POST['Password'],
+                        full_name=request.POST['fullName']
+                    )
+
+                user = authenticate(request, username=request.POST['PhoneNumber'], password=request.POST['Password'])
+                if user is not None:
+                    login(request, user)
+                    return redirect('landing')
+                else:
+                    context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
                     return render(request, 'registerlogin.html', context)
-
-                if otp_obj.otp_value != int(data['confirmCode']) or (datetime.now(timezone.utc) - otp_obj.otp_datetime > timedelta(minutes=2)):
-                    context = {'phase': 'verify', 'data': data, 'incorrect_otp': True}
-                    return render(request, 'registerlogin.html', context)
-
-                context = {'phase': 'password', 'data': data, 'incorrect_otp': False}
-                return render(request, 'registerlogin.html', context)
-
-
-
-            # form = CreateUserForm(request.POST)
-            # if form.is_valid():
-            #     userform = form.save()
-            #     user = form.cleaned_data.get('username')
-            #     Customer.objects.create(user=userform, name=user, email=userform.email)
-            #     messages.success(request, 'Account was created for ' + user)
-            #     return redirect('login')
 
     context = {'phase': 'phone'}
     return render(request, 'registerlogin.html', context)
 
-
-def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('instruments')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                login(request, user)
-                return redirect('instruments')
-            else:
-                messages.info(request, 'Username or password is incorrect')
-
-    context = {}
-    return render(request, 'login.html', context)
-
-
 def logoutUser(request):
     logout(request)
-    return redirect('login')
-
+    return redirect('registerlogin')
 
 @login_required(login_url='login')
 def userProfile(request):

@@ -56,7 +56,11 @@
                     <nav class="user-box-nav col-6 col-md-3 float-right p-0" xmlns="http://www.w3.org/1999/html">
                         <ul class="user-box float-right">
                             <li id="patientProfileMenuParent" class="user-login-option user-login-state float-left">
+                                {% if user.is_authenticated %}
+                                <a href="{% url 'logout' %}" id="logout" class="login-menu float-right" title="Log out"> <i class="fa fa-right-to-bracket"></i> <span>Log out</span> </a><script async="" src="./landing_files/UserLogin.min.js.gz"></script>
+                                {% else %}
                                 <a href="{% url 'registerlogin' %}" id="register" class="login-menu float-right" title="Log in"> <i class="fa fa-right-to-bracket"></i> <span>Log in</span> </a><script async="" src="./landing_files/UserLogin.min.js.gz"></script>
+                                {% endif %}
                             </li>
                         </ul>
                     </nav>
