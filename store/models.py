@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class OTP(models.Model):
+    phonenumber = models.IntegerField(unique=True)
+    otp_datetime = models.DateTimeField(null=True)
+    otp_value = models.IntegerField(null=True)
 
 # Create your models here.
 

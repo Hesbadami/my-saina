@@ -43,11 +43,21 @@
                                         <p>Please enter the 6 digit code sent to your mobile phone.</p>
                                     </div>
                                     <ul class=saina-form>
-                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> {{ PhoneNumber }} </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change number </a></li>
-                                        <li class=saina-form-item><label class=saina-form-title> Verification code </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-verification-code" type=tel name=confirmCode placeholder="6 digit verification code"></li>
+                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> {{ data.PhoneNumberr }} </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change number </a></li>
+                                        {% if incorrect_otp %}
+                                        <li class="saina-form-item saina-form-item-validation">
+                                        {% else %}
+                                        <li class=saina-form-item>
+                                        {% endif %}
+                                            <label class=saina-form-title> Verification code </label>
+                                            <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-verification-code" type=number name=confirmCode placeholder="6 digit verification code">
+                                            {% if incorrect_otp %}
+                                                <lable class="saina-form-validation-text">Entered code is incorrect or expired</lable>
+                                            {% endif %}
+                                        </li>
                                         <li class=saina-form-item id="timer"></li>
                                         <li class=saina-form-item><label class=saina-form-title> First and last name </label> <input autocomplete=off class="saina-form-input saina-form-input-pass" name=fullName placeholder="First and last name"></li>
-                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return createLogin(this)" title="ورود به دکتر ساینا"> ادامه </a></li>
+                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return createLogin(this)" title="Enter Football Coaching"> Continue </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -84,29 +94,30 @@
 
                 }
 
-                timer(6);
+                timer(120);
             </script>
 
             {% endif %}
             
-            <div style=display:none>
+            {% if phase == 'password' %}
+            <div style=display:block>
                 <div class=container>
                     <div class=row>
                         <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
                             <div class=saina-form-box>
                                 <div class=saina-form-info>
-                                    <span class=saina-form-info-title> کلمه عبور </span>
-                                    <p class=saina-form-info-explain>کلمه عبور خود را وارد کنید</p>
+                                    <span class=saina-form-info-title> Password </span>
+                                    <p class=saina-form-info-explain>Please enter your password</p>
                                 </div>
                                 <div class=saina-form-box-bg>
                                     <ul class=saina-form>
-                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> تغییر شماره موبایل </a></li>
+                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change mobile phone number </a></li>
                                         <li class=saina-form-item>
-                                            <label class=saina-form-title> کلمه عبور </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password name=Password placeholder="کلمه عبور" autofocus>
+                                            <label class=saina-form-title> Password </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password name=Password placeholder="Password" autofocus>
                                             <div class=show-pass><a class="show-pass-icon show-pass-hide img-bg"></a></div>
                                         </li>
-                                        <li class="saina-form-item saina-form-link"><a class=saina-form-link-text onclick="return moveToForgetPasword(this)" title="فراموشی کلمه عبور"> دریافت کلمه عبور با پیامک </a></li>
-                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="ورود به دکتر ساینا"> ادامه </a></li>
+                                        <li class="saina-form-item saina-form-link"><a class=saina-form-link-text onclick="return moveToForgetPasword(this)" title="Forgot Password"> Receive password via SMS </a></li>
+                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="Enter Football Coaching"> Continue </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -114,27 +125,27 @@
                     </div>
                 </div>
             </div>
-            <div style=display:none>
+            {% endif %}
+            {% if phase == 'forgotpassword' %}
+            <div style=display:block>
                 <div class=container>
                     <div class=row>
                         <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
                             <div class=saina-form-box>
-                                <div class=saina-form-info><span class=saina-form-info-title> یادآوری کلمه عبور </span></div>
+                                <div class=saina-form-info><span class=saina-form-info-title> Forgotten Password </span></div>
                                 <div class=saina-form-box-bg>
                                     <div class="msg-box box-success">
-                                        <span> <i class="fa fa-success"></i> </span>
-                                        <p>کلمه عبور به شماره ارسال شد.</p>
+                                        <span> <i class="fa fa-check"></i> </span>
+                                        <p>One time password has been sent to you.</p>
                                     </div>
                                     <ul class=saina-form>
-                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> تغییر شماره موبایل </a></li>
+                                        <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change mobile phone number </a></li>
                                         <li class=saina-form-item>
-                                            <label class=saina-form-title> کلمه عبور </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password2 name=Password2 placeholder="کلمه عبور" autofocus>
+                                            <label class=saina-form-title> Password </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password2 name=Password2 placeholder="Password" autofocus>
                                             <div class=show-pass><a class="show-pass-icon show-pass-hide img-bg"></a></div>
                                         </li>
-                                        <li class=saina-form-item>
-                                            <div class="form-timer saina-form-timer form-timer"><span class="timer-mint saina-form-timer-num saina-form-timer-min">1</span> <span class=saina-form-timer-space>:</span> <span class="saina-form-timer-num saina-form-timer-sec">00</span></div>
-                                        </li>
-                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="ورود به دکتر ساینا"> ادامه </a></li>
+                                        <li class=saina-form-item id="timer"></li>
+                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="Enter Football Coaching"> Continue </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -142,6 +153,38 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+                let timerOn = true;
+                function timer(remaining) {
+                var m = Math.floor(remaining / 60);
+                var s = remaining % 60;
+                
+                m = m < 10 ? '0' + m : m;
+                s = s < 10 ? '0' + s : s;
+                document.getElementById('timer').innerHTML = m + ':' + s;
+                remaining -= 1;
+                
+                if(remaining >= 0 && timerOn) {
+                    setTimeout(function() {
+                        timer(remaining);
+                    }, 1000);
+                    return;
+                }
+
+                if(!timerOn) {
+                    // Do validate stuff here
+                    return;
+                }
+                
+                // Do timeout stuff here
+                document.getElementById('timer').innerHTML = '<a class="saina-form-link-text" onclick="return moveToForgetPasword(this)" title="Send Again">Send again</a>'
+                }
+
+                timer(120);
+            </script>
+
+            {% endif %}
         </form>
     </section>
     <script>
@@ -155,6 +198,10 @@
 
         function moveToForgetPasword(curObj) {
             $(curObj).closest('form').find('input[name=action]').val('forgetPassword');
+            $(curObj).closest('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="confirmCode" value="{{ data.confirmCode }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="fullName" value="{{ data.fullName }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="forgotPassword" value=1>');
             $(curObj).closest('form').submit();
         }
 
@@ -233,6 +280,7 @@
             }
             hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer]'));
             hideErrorForInput(fullNameSelector);
+            $(curObj).closest('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
             $(curObj).closest('form').submit();
         }
 
@@ -471,7 +519,7 @@
 
         function sendSmsAgain() {
             $('form input[name=action]').val('checkIfUserExistOrNot');
-            $('form').append('<input type="hidden" name="PhoneNumber" value="{{ PhoneNumber }}">')
+            $('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
             $('form').submit();
             return false;
         }

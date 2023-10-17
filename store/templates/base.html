@@ -39,7 +39,13 @@
         <header id="container-header" class="container-header">
             <div class="container">
                 <div class="row">
-                    <span title="امکانات" onclick="openPatientProfileMenu(event);return false" class="col-2 d-xl-none d-lg-none d-md-none d-block"> <i class="hamburger-menu-icon"> </i> </span> <a href="" title="دکترساینا | مشاوره تلفنی و آنلاین پزشکی" id="header-logo-link" class="main-logo col-4 col-md-2 float-left p-0"> <img id="site-logo" class="site-logo site-logo-desktop d-none d-sm-block" src="{% static 'images/logo-v2.svg' %}" alt="دکترساینا | مشاوره تلفنی و آنلاین پزشکی" title="دکترساینا | مشاوره تلفنی و آنلاین پزشکی"> <img id="site-logo-mobile" class="site-logo d-block d-sm-none site-logo-mobile" src="{% static 'images/logo-type-mobile.svg' %}" alt="دکترساینا | مشاوره تلفنی و آنلاین پزشکی" title="دکترساینا | مشاوره تلفنی و آنلاین پزشکی"> </a> 
+                    <span title="امکانات" onclick="openPatientProfileMenu(event);return false" class="col-2 d-xl-none d-lg-none d-md-none d-block"> 
+                        <i class="hamburger-menu-icon"> </i> 
+                    </span> 
+                    <a href="{% url 'landing' %}" title="Football Coaching" id="header-logo-link" class="main-logo col-4 col-md-2 float-left p-0">
+                        <img id="site-logo" class="site-logo site-logo-desktop d-none d-sm-block" src="{% static 'images/logo-v2.svg' %}" alt="Football Coaching" title="Football Coaching">
+                        <img id="site-logo-mobile" class="site-logo d-block d-sm-none site-logo-mobile" src="{% static 'images/logo-type-mobile.svg' %}" alt="Football Coaching" title="Football Coaching"> 
+                    </a> 
                     <nav class="d-xl-block d-md-block d-none col-md-6 float-left p-0">
                         <ul class="main-menu">
                             <li class="psychologist"><a href="" title="Coaching"> Coaching </a></li>
@@ -50,7 +56,7 @@
                     <nav class="user-box-nav col-6 col-md-3 float-right p-0" xmlns="http://www.w3.org/1999/html">
                         <ul class="user-box float-right">
                             <li id="patientProfileMenuParent" class="user-login-option user-login-state float-left">
-                                <a href="" id="register" class="login-menu float-right" title="Log in"> <i class="fa fa-right-to-bracket"></i> <span>Log in</span> </a><script async="" src="./landing_files/UserLogin.min.js.gz"></script>
+                                <a href="{% url 'registerlogin' %}" id="register" class="login-menu float-right" title="Log in"> <i class="fa fa-right-to-bracket"></i> <span>Log in</span> </a><script async="" src="./landing_files/UserLogin.min.js.gz"></script>
                             </li>
                         </ul>
                     </nav>

@@ -75,7 +75,7 @@ from .models import *
 #         return False
 
 
-# admin.site.register(Customer)
+admin.site.register(OTP)
 # admin.site.register(Category, CategoryAdmin)
 # admin.site.register(Manufacturer, ManufacturerAdmin)
 # admin.site.register(MusicalInstrument, MusicalInstrumentAdmin)
