@@ -21,7 +21,7 @@ from twilio.rest import Client
 User = get_user_model()
 
 twilio_account_sid = "AC5537bc9eccc68e9b994ea838e3a9036b"
-twilio_auth_token = "1a91c497ea600fa6d1d7761b91986746"
+twilio_auth_token = "390ddcae02fc26852363727acaf9fd15"
 twilio_verify_sid = "VAab9851b6895dfdcf74db8262f15f768f"
 client = Client(twilio_account_sid, twilio_auth_token)
 
@@ -38,10 +38,10 @@ def sendsms(phone):
     verification = client.verify.v2.services(twilio_verify_sid) \
         .verifications \
         .create(to=verified_number, channel="sms")
-    print(verification.status)
 
 # Create your views here.
 def landing(request):
+    print(request.user)
     coaches = ['John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe']
     context = {'coaches': coaches}
     return render(request, 'landing.html', context)
@@ -52,25 +52,67 @@ def registerlogin(request, data={}):
     else:
         if request.method == 'POST':
             print(request.POST)
-            if 'PhoneNumber' in request.POST and 'confirmCode' not in request.POST:
+            if 'PhoneNumber' in request.POST and ('confirmCode' not in request.POST and 'Password' not in request.POST and 'Password2' not in request.POST):
                 data['PhoneNumber'] = request.POST['PhoneNumber']
+
+                if User.objects.filter(phone=data['PhoneNumber']).exists():
+                    context = {'phase': 'password', 'data': data, 'error': ''}
+                    return render(request, 'registerlogin.html', context)
+
                 sendsms(data['PhoneNumber'])
                 context = {'phase': 'verify', 'data': data, 'error': ''}
                 return render(request, 'registerlogin.html', context)
 
             elif 'PhoneNumber' in request.POST and 'confirmCode' in request.POST:
-                if request.POST['confirmCode'] == '':
-                    data['PhoneNumber'] = request.POST['PhoneNumber']
-                    sendsms(data['PhoneNumber'])
-                    context = {'phase': 'verify', 'data': data, 'error': ''}
-                    return render(request, 'registerlogin.html', context)
+                # if request.POST['confirmCode'] == '':
+                #     data['PhoneNumber'] = request.POST['PhoneNumber']
+                #     sendsms(data['PhoneNumber'])
+                #     context = {'phase': 'verify', 'data': data, 'error': ''}
+                #     return render(request, 'registerlogin.html', context)
 
-                if request.POST['confirmCode'] != '':
-                    data['PhoneNumber'] = request.POST['PhoneNumber']
-                    data['confirmCode'] = request.POST['confirmCode']
-                    data['fullName'] = request.POST['fullName']
+                # if request.POST['confirmCode'] != '':
+                data['PhoneNumber'] = request.POST['PhoneNumber']
+                data['confirmCode'] = request.POST['confirmCode']
+                data['fullName'] = request.POST['fullName']
+
+                if 'forgotPassword' in request.POST:
+                    print("HELLO")
+                    if User.objects.filter(phone=data['PhoneNumber']).exists():
+                        print("USER EXISTS")
+                        sendsms(data['PhoneNumber'])
+                        context = {'phase': 'forgotpassword', 'data': data, 'error': ''}
+                        return render(request, 'registerlogin.html', context)
+                    
+                    else:
+                        context = {'phase': 'password', 'data': data, 'error': 'not_a_user'}
+                        return render(request, 'registerlogin.html', context)
+
+                try:
+                    verified_number = "+44" + str(data['PhoneNumber'])[1:]
+                    verification_check = client.verify.v2.services(twilio_verify_sid) \
+                        .verification_checks \
+                        .create(to=verified_number, code=data['confirmCode'])
+
+                    if verification_check.status != 'approved':
+                        context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
+                        return render(request, 'registerlogin.html', context)
                     
                     otp_obj = OTP.objects.get(phonenumber=data['PhoneNumber'])
+                    otp_obj.delete()
+
+                except Exception as e:
+                    print(e)
+                    context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
+                    return render(request, 'registerlogin.html', context)
+
+                context = {'phase': 'password', 'data': data, 'error': ''}
+                return render(request, 'registerlogin.html', context)
+            
+            elif 'PhoneNumber' in request.POST and 'Password2' in request.POST:
+                    data['PhoneNumber'] = request.POST['PhoneNumber']
+                    data['fullName'] = request.POST['fullName']
+                    data['Password2'] = request.POST['Password2']
+                    data['Password'] = request.POST['Password2']
 
                     if 'forgotPassword' in request.POST:
                         
@@ -87,25 +129,47 @@ def registerlogin(request, data={}):
                         verified_number = "+44" + str(data['PhoneNumber'])[1:]
                         verification_check = client.verify.v2.services(twilio_verify_sid) \
                             .verification_checks \
-                            .create(to=verified_number, code=data['confirmCode'])
+                            .create(to=verified_number, code=data['Password2'])
 
                         if verification_check.status != 'approved':
-                            context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
+                            context = {'phase': 'forgotpassword', 'data': data, 'error': 'incorrect_otp'}
                             return render(request, 'registerlogin.html', context)
+                        
+                        otp_obj = OTP.objects.get(phonenumber=data['PhoneNumber'])
+                        otp_obj.delete()
 
                     except Exception as e:
                         print(e)
-                        if otp_obj.otp_value != int(data['confirmCode']) or (datetime.now(timezone.utc) - otp_obj.otp_datetime > timedelta(minutes=2)):
-                            context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
-                            return render(request, 'registerlogin.html', context)
+                        context = {'phase': 'forgotpassword', 'data': data, 'error': 'incorrect_otp'}
+                        return render(request, 'registerlogin.html', context)
 
-                    context = {'phase': 'password', 'data': data, 'error': ''}
-                    return render(request, 'registerlogin.html', context)
+                    user = User.objects.get(phone=data['PhoneNumber'])
+                    user.set_password(data['Password'])
+
+                    login(request, user)
+                    return redirect('landing')
             
-            elif 'PhoneNumber' in request.POST and 'Password2' in request.POST:
+            elif 'PhoneNumber' in request.POST and 'Password' in request.POST:
                     data['PhoneNumber'] = request.POST['PhoneNumber']
-                    data['confirmCode'] = request.POST['confirmCode']
                     data['fullName'] = request.POST['fullName']
+                    data['Password'] = request.POST['Password']
+
+                    if not User.objects.filter(phone=data['PhoneNumber']).exists():
+                        User.objects.create_user(
+                            phone=data['PhoneNumber'],
+                            password=data['Password'],
+                            full_name=data['fullName']
+                        )
+
+                    user = authenticate(request, username=data['PhoneNumber'], password=data['Password'])
+
+                    if user is not None:
+                        login(request, user)
+                        return redirect('landing')
+                    else:
+                        context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
+                        return render(request, 'registerlogin.html', context)
+
 
                 
 

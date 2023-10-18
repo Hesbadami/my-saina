@@ -75,6 +75,7 @@ from .models import *
 
 
 admin.site.register(OTP)
+admin.site.register(User)
 # admin.site.register(Category, CategoryAdmin)
 # admin.site.register(Manufacturer, ManufacturerAdmin)
 # admin.site.register(MusicalInstrument, MusicalInstrumentAdmin)

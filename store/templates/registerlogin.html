@@ -166,7 +166,11 @@
                                             {% endif %}
                                         </li>
                                         <li class=saina-form-item id="timer"></li>
-                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="Enter Football Coaching"> Continue </a></li>
+                                        <li class=saina-form-item>
+                                            <label class=saina-form-title> New password </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password name=Password placeholder="Password" autofocus>
+                                            <div class=show-pass><a class="show-pass-icon show-pass-hide img-bg"></a></div>
+                                        </li>
+                                        <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return dochangepassLogin(this)" title="Enter Football Coaching"> Continue </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -199,7 +203,7 @@
                 }
                 
                 // Do timeout stuff here
-                document.getElementById('timer').innerHTML = '<a class="saina-form-link-text" onclick="return moveToForgetPasword(this)" title="Send Again">Send again</a>'
+                document.getElementById('timer').innerHTML = '<a class="saina-form-link-text" onclick="return moveToForgetPasword2(this)" title="Send Again">Send again</a>'
                 }
 
                 timer(120);
@@ -221,6 +225,15 @@
             $(curObj).closest('form').find('input[name=action]').val('forgetPassword');
             $(curObj).closest('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
             $(curObj).closest('form').append('<input type="hidden" name="confirmCode" value="{{ data.confirmCode }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="fullName" value="{{ data.fullName }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="forgotPassword" value=1>');
+            $(curObj).closest('form').submit();
+        }
+
+        function moveToForgetPasword2(curObj) {
+            $(curObj).closest('form').find('input[name=action]').val('forgetPassword');
+            $(curObj).closest('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="Password2" value="{{ data.Password2 }}">');
             $(curObj).closest('form').append('<input type="hidden" name="fullName" value="{{ data.fullName }}">');
             $(curObj).closest('form').append('<input type="hidden" name="forgotPassword" value=1>');
             $(curObj).closest('form').submit();
@@ -248,6 +261,47 @@
             if (!passWord) {
                 showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password]'), 'Enter password');
                 showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password2]'), 'Enter password');
+                isValidForm = false;
+            }
+            var secretCode = $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]').val();
+            if (!secretCode)
+                secretCode = $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]').val();
+            if (!secretCode && ($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]').length > 0 || $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]').length > 0)) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]'), 'Enter security code');
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]'), 'Enter security code');
+                isValidForm = false;
+            }
+            if (secretCode && isUnicodeFunc(secretCode) == true) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]'), 'Security code must be typed with english keyboard');
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]'), 'Security code must be typed with english keyboard');
+                isValidForm = false;
+            }
+            if (isValidForm == false)
+                return false;
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]'));
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer3]'));
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password]'));
+            hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password2]'));
+            $(curObj).closest('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
+            $(curObj).closest('form').append('<input type="hidden" name="fullName" value="{{ data.fullName }}">');
+            $(curObj).closest('form').submit();
+        }
+
+        function dochangepassLogin(curObj) {
+            var confirmCodeSelector = $(curObj).closest('.saina-form-box').find('input[name=Password2]');
+            var confirmCode = confirmCodeSelector.val();
+            var passWord = $(curObj).closest('.saina-form-box').find('input[name=Password]').val();
+            var isValidForm = true;
+            if (!passWord) {
+                showErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password]'), 'Enter password');
+                isValidForm = false;
+            }
+            if (!confirmCode) {
+                showErrorForInput(confirmCodeSelector, 'Enter verification code texted to you');
+                isValidForm = false;
+            }
+            if (isUnicodeFunc(confirmCode) == true) {
+                showErrorForInput(confirmCodeSelector, 'Verification code must be typed with english keyboard');
                 isValidForm = false;
             }
             var secretCode = $(curObj).closest('.saina-form-box').find('input[name=SecretCodeAnswer2]').val();
