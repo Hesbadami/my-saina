@@ -16,33 +16,29 @@ from datetime import datetime, timezone, timedelta
 from django.views import View
 import secrets
 import string
+from twilio.rest import Client
 
 User = get_user_model()
 
+twilio_account_sid = "AC5537bc9eccc68e9b994ea838e3a9036b"
+twilio_auth_token = "1a91c497ea600fa6d1d7761b91986746"
+twilio_verify_sid = "VAab9851b6895dfdcf74db8262f15f768f"
+client = Client(twilio_account_sid, twilio_auth_token)
+
 def sendsms(phone):
     otp = randint(1e5, 1e6)
-
     obj, created = OTP.objects.get_or_create(phonenumber=phone)
-
     if not created:
         if datetime.now(timezone.utc) - obj.otp_datetime < timedelta(minutes=2):
             return
-    
     obj.otp_datetime = datetime.now(timezone.utc)
-    obj.otp_value = otp
-
     obj.save()
-    print("Greetings, Here's your verification code sent by Football Coaching:\n", otp)
 
-def sendpassword(phone):
-    alphabet = string.ascii_letters + string.digits
-    password = ''.join(secrets.choice(alphabet) for i in range(12))
-
-    user = User.objects.get(phone=phone)
-    user.set_password(password)
-
-    user.save()
-    print("Greetings, Here's your new password for entering Football Coaching:\n", password)
+    verified_number = "+44" + str(phone)[1:]
+    verification = client.verify.v2.services(twilio_verify_sid) \
+        .verifications \
+        .create(to=verified_number, channel="sms")
+    print(verification.status)
 
 # Create your views here.
 def landing(request):
@@ -62,7 +58,7 @@ def registerlogin(request, data={}):
                 context = {'phase': 'verify', 'data': data, 'error': ''}
                 return render(request, 'registerlogin.html', context)
 
-            elif 'PhoneNumber' in request.POST and (('Password' not in request.POST and 'Password2' not in request.POST) or ):
+            elif 'PhoneNumber' in request.POST and 'confirmCode' in request.POST:
                 if request.POST['confirmCode'] == '':
                     data['PhoneNumber'] = request.POST['PhoneNumber']
                     sendsms(data['PhoneNumber'])
@@ -79,7 +75,7 @@ def registerlogin(request, data={}):
                     if 'forgotPassword' in request.POST:
                         
                         if User.objects.filter(phone=data['PhoneNumber']).exists():
-                            sendpassword(data['PhoneNumber'])
+                            sendsms(data['PhoneNumber'])
                             context = {'phase': 'forgotpassword', 'data': data, 'error': ''}
                             return render(request, 'registerlogin.html', context)
                         
@@ -87,36 +83,50 @@ def registerlogin(request, data={}):
                             context = {'phase': 'password', 'data': data, 'error': 'not_a_user'}
                             return render(request, 'registerlogin.html', context)
 
+                    try:
+                        verified_number = "+44" + str(data['PhoneNumber'])[1:]
+                        verification_check = client.verify.v2.services(twilio_verify_sid) \
+                            .verification_checks \
+                            .create(to=verified_number, code=data['confirmCode'])
 
-                    if otp_obj.otp_value != int(data['confirmCode']) or (datetime.now(timezone.utc) - otp_obj.otp_datetime > timedelta(minutes=2)):
-                        context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
-                        return render(request, 'registerlogin.html', context)
+                        if verification_check.status != 'approved':
+                            context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
+                            return render(request, 'registerlogin.html', context)
+
+                    except Exception as e:
+                        print(e)
+                        if otp_obj.otp_value != int(data['confirmCode']) or (datetime.now(timezone.utc) - otp_obj.otp_datetime > timedelta(minutes=2)):
+                            context = {'phase': 'verify', 'data': data, 'error': 'incorrect_otp'}
+                            return render(request, 'registerlogin.html', context)
 
                     context = {'phase': 'password', 'data': data, 'error': ''}
                     return render(request, 'registerlogin.html', context)
             
-            # elif 'PhoneNumber' in request.POST and 'fullName' in request.POST:
+            elif 'PhoneNumber' in request.POST and 'Password2' in request.POST:
+                    data['PhoneNumber'] = request.POST['PhoneNumber']
+                    data['confirmCode'] = request.POST['confirmCode']
+                    data['fullName'] = request.POST['fullName']
 
                 
 
-                data['PhoneNumber'] = request.POST['PhoneNumber']
-                data['confirmCode'] = ''
-                data['fullName'] = request.POST['fullName']
+                # data['PhoneNumber'] = request.POST['PhoneNumber']
+                # data['confirmCode'] = ''
+                # data['fullName'] = request.POST['fullName']
 
-                if not User.objects.filter(phone=request.POST['PhoneNumber']).exists():
-                    User.objects.create_user(
-                        phone=request.POST['PhoneNumber'],
-                        password=request.POST['Password'],
-                        full_name=request.POST['fullName']
-                    )
+                # if not User.objects.filter(phone=request.POST['PhoneNumber']).exists():
+                #     User.objects.create_user(
+                #         phone=request.POST['PhoneNumber'],
+                #         password=request.POST['Password'],
+                #         full_name=request.POST['fullName']
+                #     )
 
-                user = authenticate(request, username=request.POST['PhoneNumber'], password=request.POST['Password'])
-                if user is not None:
-                    login(request, user)
-                    return redirect('landing')
-                else:
-                    context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
-                    return render(request, 'registerlogin.html', context)
+                # user = authenticate(request, username=request.POST['PhoneNumber'], password=request.POST['Password'])
+                # if user is not None:
+                #     login(request, user)
+                #     return redirect('landing')
+                # else:
+                #     context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
+                #     return render(request, 'registerlogin.html', context)
 
     context = {'phase': 'phone'}
     return render(request, 'registerlogin.html', context)

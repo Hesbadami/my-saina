@@ -150,13 +150,20 @@
                                 <div class=saina-form-box-bg>
                                     <div class="msg-box box-success">
                                         <span> <i class="fa fa-check"></i> </span>
-                                        <p>One time password has been sent to you.</p>
+                                        <p>Please enter the 6 digit code sent to your mobile phone.</p>
                                     </div>
                                     <ul class=saina-form>
                                         <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change mobile phone number </a></li>
+                                        {% if error == 'incorrect_otp' %}
+                                        <li class="saina-form-item saina-form-item-validation">
+                                        {% else %}
                                         <li class=saina-form-item>
-                                            <label class=saina-form-title> Password </label> <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-pass" type=password id=Password2 name=Password2 placeholder="Password" autofocus>
-                                            <div class=show-pass><a class="show-pass-icon show-pass-hide img-bg"></a></div>
+                                        {% endif %}
+                                            <label class=saina-form-title> Verification code </label>
+                                            <input autocomplete=off class="saina-form-input saina-form-input-num saina-form-input-verification-code" type=number id=Password2 name=Password2 placeholder="6 digit verification code" autofocus>
+                                            {% if error == 'incorrect_otp' %}
+                                                <lable class="saina-form-validation-text">Entered code is incorrect or expired</lable>
+                                            {% endif %}
                                         </li>
                                         <li class=saina-form-item id="timer"></li>
                                         <li class=saina-form-item><a class="wide-bnt corner-btn red-primary-btn x-lg-drsaina-btn red-primary-dark-btn fill-btn-transition" onclick="return doLogin(this)" title="Enter Football Coaching"> Continue </a></li>
@@ -264,7 +271,6 @@
             hideErrorForInput($(curObj).closest('.saina-form-box').find('input[name=Password2]'));
             $(curObj).closest('form').append('<input type="hidden" name="PhoneNumber" value="{{ data.PhoneNumber }}">');
             $(curObj).closest('form').append('<input type="hidden" name="fullName" value="{{ data.fullName }}">');
-            $(curObj).closest('form').append('<input type="hidden" name="confirmCode" value="{{ data.confirmCode }}">');
             $(curObj).closest('form').submit();
         }
 
