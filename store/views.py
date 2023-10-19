@@ -41,7 +41,6 @@ def sendsms(phone):
 
 # Create your views here.
 def landing(request):
-    print(request.user)
     coaches = ['John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe']
     context = {'coaches': coaches}
     return render(request, 'landing.html', context)
@@ -51,7 +50,6 @@ def registerlogin(request, data={}):
         return redirect('landing')
     else:
         if request.method == 'POST':
-            print(request.POST)
             if 'PhoneNumber' in request.POST and ('confirmCode' not in request.POST and 'Password' not in request.POST and 'Password2' not in request.POST):
                 data['PhoneNumber'] = request.POST['PhoneNumber']
 
@@ -76,7 +74,6 @@ def registerlogin(request, data={}):
                 data['fullName'] = request.POST['fullName']
 
                 if 'forgotPassword' in request.POST:
-                    print("HELLO")
                     if User.objects.filter(phone=data['PhoneNumber']).exists():
                         print("USER EXISTS")
                         sendsms(data['PhoneNumber'])
@@ -109,69 +106,66 @@ def registerlogin(request, data={}):
                 return render(request, 'registerlogin.html', context)
             
             elif 'PhoneNumber' in request.POST and 'Password2' in request.POST:
-                    data['PhoneNumber'] = request.POST['PhoneNumber']
-                    data['fullName'] = request.POST['fullName']
-                    data['Password2'] = request.POST['Password2']
-                    data['Password'] = request.POST['Password2']
+                data['PhoneNumber'] = request.POST['PhoneNumber']
+                data['fullName'] = request.POST['fullName']
+                data['Password2'] = request.POST['Password2']
+                data['Password'] = request.POST['Password']
 
-                    if 'forgotPassword' in request.POST:
-                        
-                        if User.objects.filter(phone=data['PhoneNumber']).exists():
-                            sendsms(data['PhoneNumber'])
-                            context = {'phase': 'forgotpassword', 'data': data, 'error': ''}
-                            return render(request, 'registerlogin.html', context)
-                        
-                        else:
-                            context = {'phase': 'password', 'data': data, 'error': 'not_a_user'}
-                            return render(request, 'registerlogin.html', context)
+                if 'forgotPassword' in request.POST:
+                    
+                    if User.objects.filter(phone=data['PhoneNumber']).exists():
+                        sendsms(data['PhoneNumber'])
+                        context = {'phase': 'forgotpassword', 'data': data, 'error': ''}
+                        return render(request, 'registerlogin.html', context)
+                    
+                    else:
+                        context = {'phase': 'password', 'data': data, 'error': 'not_a_user'}
+                        return render(request, 'registerlogin.html', context)
 
-                    try:
-                        verified_number = "+44" + str(data['PhoneNumber'])[1:]
-                        verification_check = client.verify.v2.services(twilio_verify_sid) \
-                            .verification_checks \
-                            .create(to=verified_number, code=data['Password2'])
+                try:
+                    verified_number = "+44" + str(data['PhoneNumber'])[1:]
+                    verification_check = client.verify.v2.services(twilio_verify_sid) \
+                        .verification_checks \
+                        .create(to=verified_number, code=data['Password2'])
 
-                        if verification_check.status != 'approved':
-                            context = {'phase': 'forgotpassword', 'data': data, 'error': 'incorrect_otp'}
-                            return render(request, 'registerlogin.html', context)
-                        
-                        otp_obj = OTP.objects.get(phonenumber=data['PhoneNumber'])
-                        otp_obj.delete()
-
-                    except Exception as e:
-                        print(e)
+                    if verification_check.status != 'approved':
                         context = {'phase': 'forgotpassword', 'data': data, 'error': 'incorrect_otp'}
                         return render(request, 'registerlogin.html', context)
+                    
+                    otp_obj = OTP.objects.get(phonenumber=data['PhoneNumber'])
+                    otp_obj.delete()
 
-                    user = User.objects.get(phone=data['PhoneNumber'])
-                    user.set_password(data['Password'])
+                except Exception as e:
+                    print(e)
+                    context = {'phase': 'forgotpassword', 'data': data, 'error': 'incorrect_otp'}
+                    return render(request, 'registerlogin.html', context)
 
-                    login(request, user)
-                    return redirect('landing')
+                user = User.objects.get(phone=data['PhoneNumber'])
+                user.set_password(data['Password'])
+                user.save()
+
+                login(request, user)
+                return redirect('landing')
             
             elif 'PhoneNumber' in request.POST and 'Password' in request.POST:
-                    data['PhoneNumber'] = request.POST['PhoneNumber']
-                    data['fullName'] = request.POST['fullName']
-                    data['Password'] = request.POST['Password']
+                data['PhoneNumber'] = request.POST['PhoneNumber']
+                data['fullName'] = request.POST['fullName']
+                data['Password'] = request.POST['Password']
 
-                    if not User.objects.filter(phone=data['PhoneNumber']).exists():
-                        User.objects.create_user(
-                            phone=data['PhoneNumber'],
-                            password=data['Password'],
-                            full_name=data['fullName']
-                        )
+                if not User.objects.filter(phone=data['PhoneNumber']).exists():
+                    User.objects.create_user(
+                        phone=data['PhoneNumber'],
+                        password=data['Password'],
+                        full_name=data['fullName'].strip()
+                    )
 
-                    user = authenticate(request, username=data['PhoneNumber'], password=data['Password'])
-
-                    if user is not None:
-                        login(request, user)
-                        return redirect('landing')
-                    else:
-                        context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
-                        return render(request, 'registerlogin.html', context)
-
-
-                
+                user = authenticate(request, username=data['PhoneNumber'], password=data['Password'])
+                if user is not None:
+                    login(request, user)
+                    return redirect('landing')
+                else:
+                    context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
+                    return render(request, 'registerlogin.html', context)
 
                 # data['PhoneNumber'] = request.POST['PhoneNumber']
                 # data['confirmCode'] = ''

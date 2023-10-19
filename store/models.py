@@ -50,14 +50,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         '''
         Returns the full_name.
         '''
-        full_name = self.full_name
-        return full_name.strip()
+        return self.full_name
 
     def get_short_name(self):
         '''
         Returns the short name for the user.
         '''
-        return self.full_name.strip()
+        return self.full_name
+
+    def __str__(self):
+        return self.full_name
     
 class OTP(models.Model):
     phonenumber = models.IntegerField(unique=True)
