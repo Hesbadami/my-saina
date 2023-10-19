@@ -16,32 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from store import views
+from store import views as store_views
+from CoachContracts import views as cc_views
 from django.conf import settings
 from django.conf.urls.static import static
-
-from store.views import StripeCheckoutSession, SuccessView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('registerlogin/', views.registerlogin, name='registerlogin'),
-    path('logout/', views.logoutUser, name='logout'),
-    path('profile/', views.userProfile, name='profile'),
-    path('', views.landing, name='landing'),
-    path('shoppingCart/', views.shoppingCart, name='shoppingCart'),
-    path('checkout/', views.checkout, name='checkout'),
-    path('add_instrument/', views.add_instrument, name='add_instrument'),
-    path('edit_instrument/<str:pk>/', views.edit_instrument, name='edit_instrument'),
-    path('delete_instrument/<str:pk>/', views.delete_instrument, name='delete_instrument'),
-    path('view_instrument/<str:pk>/', views.view_instrument, name='view_instrument'),
-    path('add_to_cart/<str:pk>/', views.add_to_cart, name='add_to_cart'),
-    path('delete_from_cart/<str:pk>/', views.delete_from_cart, name='delete_from_cart'),
-    path('increase_quantity/<str:pk>', views.increase_quantity, name='increase_quantity'),
-    path('decrease_quantity/<str:pk>', views.decrease_quantity, name='decrease_quantity'),
+    path('registerlogin/', store_views.registerlogin, name='registerlogin'),
+    path('logout/', store_views.logoutUser, name='logout'),
+    path('profile/', store_views.userProfile, name='profile'),
+    path('', store_views.landing, name='landing'),
+    path('CoachContracts/Consulation', cc_views.consulation, name='cc_consulation'),
+    path('CoachContracts/Contracts/Register', cc_views.register, name='coach_register'),
     path(
         "create-checkout-session/<int:pk>/",
-        StripeCheckoutSession.as_view(),
+        store_views.StripeCheckoutSession.as_view(),
         name="create-checkout-session",
     ),
-    path("success/", SuccessView.as_view(), name="success"),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("success/", store_views.SuccessView.as_view(), name="success"),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

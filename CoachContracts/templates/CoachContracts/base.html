@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Football Couching</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'CoachContracts/images/websiteLogo.svg' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0 , user-scalable=no ,shrink-to-fit=no,minimal-ui">
+        <meta name="Content-Type" content="text/html; charset=utf-8">
+        <meta name="robots" content="index, follow">
+        <meta name="theme-color" content="#ffffff">
+
+        <script type="text/javascript" src="{% static 'CoachContracts/js/main.js' %}"></script>
+        <script id="ua-script-L96PH2Eg" data-analyticsobject="yektanet" async="" type="text/javascript" src="{% static 'CoachContracts/js/rg.complete.js' %}"></script>
+        <script t gtm="GTM-KHSDNVF" type="text/javascript" async="" src="{% static 'CoachContracts/js/optimize.js' %}"></script>
+        <script async="" src="{% static 'CoachContracts/js/gtm.js' %}"></script>
+        <script src="{% static 'CoachContracts/js/jquery.flickity.min.js' %}"></script>
+        
+
+        <link rel="stylesheet" type="text/css" href="{% static 'CoachContracts/css/main.css' %}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+        
+        <script defer="" src="{% static 'CoachContracts/js/index.min.js.gz' %}"></script>
+
+        <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KHSDNVF');
+        </script>
+        <script async="" defer="" type="text/javascript" src="{% static 'CoachContracts/js/client.js' %}"></script>
+        <script async="" src="{% static 'CoachContracts/js/vwbmg-affili-js.js' %}"></script>
+
+        <style>body{visibility:hidden}</style>
+
+        <script type="text/javascript" src="{% static 'CoachContracts/js/affili-v2.js' %}"></script>
+        <script type="text/javascript" async="" src="{% static 'CoachContracts/js/f.txt' %}"></script>
+        <script src="{% static 'CoachContracts/js/detector.js' %}"></script>
+    </head>
+    <body class="main-bg" ng-controller="UserMenuController" style="visibility: visible;">
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KHSDNVF" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript>
+        <header id="container-header" class="container-header">
+            <div class="container">
+                <div class="row">
+                    <span title="امکانات" onclick="openPatientProfileMenu(event);return false" class="col-2 d-xl-none d-lg-none d-md-none d-block"> 
+                        <i class="hamburger-menu-icon"> </i> 
+                    </span> 
+                    <a href="{% url 'landing' %}" title="Football Coaching" id="header-logo-link" class="main-logo col-4 col-md-2 float-left p-0">
+                        <img id="site-logo" class="site-logo site-logo-desktop d-none d-sm-block" src="{% static 'CoachContracts/images/logo-v2.svg' %}" alt="Football Coaching" title="Football Coaching">
+                        <img id="site-logo-mobile" class="site-logo d-block d-sm-none site-logo-mobile" src="{% static 'CoachContracts/images/logo-type-mobile.svg' %}" alt="Football Coaching" title="Football Coaching"> 
+                    </a> 
+                    <nav class="d-xl-block d-md-block d-none col-md-6 float-left p-0">
+                        <ul class="main-menu">
+                            <li class="psychologist"><a href="" title="Coaching"> Coaching </a></li>
+                            <li class="home-lab"><a href="" title="آزمایش در محل"> Online Coaching </a></li>
+                            <li class="booking"><a href="" title="Book Meeting"> Book Meeting </a></li>
+                        </ul>
+                    </nav>
+                    <nav class="user-box-nav col-6 col-md-3 float-right p-0" xmlns="http://www.w3.org/1999/html">
+                        <ul class="user-box float-right">
+                            <li id="patientProfileMenuParent" class="user-login-option user-login-state float-left">
+                                {% if user.is_authenticated %}
+                                <a href="{% url 'logout' %}" id="logout" class="login-menu float-right" title="Log out"> <i class="fa fa-right-to-bracket"></i> <span>Log out</span> </a><script async="" src="./landing_files/UserLogin.min.js.gz"></script>
+                                {% else %}
+                                <a href="{% url 'registerlogin' %}" id="register" class="login-menu float-right" title="Log in"> <i class="fa fa-right-to-bracket"></i> <span>Log in</span> </a><script async="" src="./landing_files/UserLogin.min.js.gz"></script>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </nav>
+                    <script>const userLogin=0;</script>
+                </div>
+            </div>
+            <div class="menu_back_drop_overlay no-display" style="top: 74.1875px;"></div>
+        </header>
+        
+        <main>
+            {% block content %}
+
+
+            {% endblock content %}
+        </main>
+
+        <script type="text/javascript" id="" src="{% static 'CoachContracts/js/web-vitals.umd.js' %}"></script>
+        <script type="text/javascript" id="">function sendToGTM(a,b,c){dataLayer.push({event:"web-vitals",event_category:"Web Vitals",event_action:a.name,event_value:Math.round("CLS"===a.name?1E3*a.delta:a.delta),event_label:a.id})}webVitals.getCLS(sendToGTM);webVitals.getFID(sendToGTM);webVitals.getLCP(sendToGTM);</script>
+        <footer class="container-footer">
+            <section id="footer-content" class="section">
+                <div class="drsaina-accompanist">
+                    <div class="container">
+                        <div class="row">
+                            <div class="drsaina-comrade col-12 col-md-8 float-left">
+                                <label class="accompanist-title"> Football Coaching Partners: </label> 
+                                <nav class="comrade-list-nav">
+                                    <ul class="comrade-list">
+                                        <li><i class="filimo-logo img-bg lazy"></i></li>
+                                        <li><i class="aparat-logo img-bg lazy"></i></li>
+                                        <li><i class="takhfifan-logo img-bg lazy"></i></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="drsaina-support col-12 col-md-4 float-right"><label class="accompanist-title"> Need Help? </label> <a class="drsaina-support-phone rounded-btn float-right" href="tel:02191005838" title="Contact Football Coaching Support Unit">021-91005838</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-link">
+                    <div class="container">
+                        <div class="row">
+                            <div class="footer-col first-col col-12 col-md-3 float-left">
+                                <a class="footer-logo img-bg" href=""> <img class="lazyload" src="{% static 'CoachContracts/images/logo.svg' %}" alt="دکترساینا، مشاوره آنلاین پزشکی" title="دکتر ساینا، مشاوره آنلاین پزشکی"> </a> 
+                            </div>
+                            <div class="footer-col fourth-col col-12 col-md-5 mt-2 float-left">
+                                <div class="footer__download__content">
+                                    <div class="footer__download__content-text">
+                                        <h5> Download Football Coaching Application</h5>
+                                        <p>Easier and faster access to coaches, you can download Football Coaching app by selecting the following buttons.</p>
+                                    </div>
+                                    <div class="footer__download__content-actions">
+                                        <div><a href="" target="_blank"> <img loading="lazy" src="{% static 'CoachContracts/images/applestoreDownload.svg' %}" alt="apple-store"> </a></div>
+                                        <div><a href="" target="_blank"> <img loading="lazy" src="{% static 'CoachContracts/images/googlePlayDownload.svg' %}" alt="google-play"> </a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footer-col socond-col col-12 col-md-2 float-left">
+                                <nav class="drsaina-services-nav">
+                                    <ul class="footer-accordion">
+                                        <li>
+                                            <input type="checkbox" checked=""> <i></i> <label class="drsaina-services-title">Services</label>
+                                            <ul>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="مشاوره پزشکی"> Coaching </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="سلامت روان"> Online Coaching </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="آزمایش در محل"> Book Meeting </a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="footer-col third-col col-12 col-md-2 float-left">
+                                <nav class="drsaina-services-nav more-services-nav">
+                                    <ul class="footer-accordion">
+                                        <li>
+                                            <input type="checkbox" checked=""> <i></i> <label class="drsaina-services-title">Pages</label>
+                                            <ul>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="Coach Signup"> Coach Signup </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="Contact Us"> Contact Us </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="About Us"> About Us </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="Football Coaching Rules"> Rules </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="Football Coaching Privacy Policy"> Privacy Policy </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="Football Coaching FAQ"> FAQ </a></li>
+                                                <li><a href="" class="drsaina-services-item" target="_blank" title="Collaboration With Us"> Collaboration With Us </a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="footer-allright">
+                <div class="container">
+                    <div class="drsaina-allright float-left col-12 col-md-10 p-0"  style="padding-left: 15px !important; padding-top: 15px !important">
+                        <p class="allright-text">All rights belong to Football Coaching.</p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+        <script>document.addEventListener("DOMContentLoaded",function(){var lazyloadImages;if("IntersectionObserver"in window){lazyloadImages=document.querySelectorAll(".lazy");var imageObserver=new IntersectionObserver(function(entries,observer){entries.forEach(function(entry){if(entry.isIntersecting){var image=entry.target;image.classList.remove("lazy");imageObserver.unobserve(image);}});});lazyloadImages.forEach(function(image){imageObserver.observe(image);});}else{var lazyloadThrottleTimeout;lazyloadImages=document.querySelectorAll(".lazy");function lazyload(){if(lazyloadThrottleTimeout){clearTimeout(lazyloadThrottleTimeout);}
+            lazyloadThrottleTimeout=setTimeout(function(){var scrollTop=window.pageYOffset;lazyloadImages.forEach(function(img){if(img.offsetTop<(window.innerHeight+scrollTop)){img.src=img.dataset.src;img.classList.remove('lazy');}});if(lazyloadImages.length==0){document.removeEventListener("scroll",lazyload);window.removeEventListener("resize",lazyload);window.removeEventListener("orientationChange",lazyload);}},20);}
+            document.addEventListener("scroll",lazyload);window.addEventListener("resize",lazyload);window.addEventListener("orientationChange",lazyload);}})
+        </script>
+        <link rel="preload" href="themes/_shared/fonts/iransans5/woff2/IRANSansWeb_Bold.woff2" as="font" type="font/woff2" crossorigin="">
+        <link rel="preload" href="themes/_shared/fonts/iransans5/woff2/IRANSansWeb_Medium.woff2" as="font" type="font/woff2" crossorigin="">
+        <link rel="preload" href="themes/_shared/fonts/iransans5/woff2/IRANSansWeb_Light.woff2" as="font" type="font/woff2" crossorigin="">
+        <link rel="preload" href="themes/_shared/fonts/iransans5/woff2/IRANSansWeb_UltraLight.woff2" as="font" type="font/woff2" crossorigin="">
+        <link rel="preload" href="themes/_shared/fonts/iransans5/woff2/IRANSansWeb.woff2" as="font" type="font/woff2" crossorigin="">
+        <link rel="preload" href="themes/_shared/fonts/SAINAFont/sainaiconV1.15.ttf?dw7q6t" as="font" crossorigin="">
+        <link rel="stylesheet preload" as="style" href="themes/_shared/font_IRANSans_drsaina.min.css.gz?v=xr8HFYbRvKk88PqNnQPGmn7KMz1vGGBU8grmz982rJQ">
+        <script async="" src="{% static 'CoachContracts/js/lazysizes.min.js.gz' %}"></script>
+        <script async="" src="{% static 'CoachContracts/js/jquery.waypoints.min.js' %}"></script>
+        <script async="" src="{% static 'CoachContracts/js/coach-list-in-home-impressions-click.js' %}"></script>
+        <script async="" type="module" src="{% static 'CoachContracts/js/home-page-ga4.js' %}"></script>
+        <script async="" src="{% static 'CoachContracts/js/promotions-view-click.js' %}"></script>
+        <script>if(location.pathname!='/')
+            document.querySelectorAll("header li.consultation").forEach(function(el){el.classList.add('selected');});
+        </script>
+    </body>
+</html>

@@ -6,7 +6,6 @@ from ecommerce.settings import STRIPE_SECRET_KEY
 from .models import *
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import *
 from django.contrib import messages
 from .filters import InstrumentFilter
 import stripe
@@ -40,6 +39,7 @@ def sendsms(phone):
         .create(to=verified_number, channel="sms")
 
 # Create your views here.
+
 def landing(request):
     coaches = ['John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe', 'John Doe']
     context = {'coaches': coaches}
@@ -62,13 +62,6 @@ def registerlogin(request, data={}):
                 return render(request, 'registerlogin.html', context)
 
             elif 'PhoneNumber' in request.POST and 'confirmCode' in request.POST:
-                # if request.POST['confirmCode'] == '':
-                #     data['PhoneNumber'] = request.POST['PhoneNumber']
-                #     sendsms(data['PhoneNumber'])
-                #     context = {'phase': 'verify', 'data': data, 'error': ''}
-                #     return render(request, 'registerlogin.html', context)
-
-                # if request.POST['confirmCode'] != '':
                 data['PhoneNumber'] = request.POST['PhoneNumber']
                 data['confirmCode'] = request.POST['confirmCode']
                 data['fullName'] = request.POST['fullName']
@@ -167,25 +160,6 @@ def registerlogin(request, data={}):
                     context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
                     return render(request, 'registerlogin.html', context)
 
-                # data['PhoneNumber'] = request.POST['PhoneNumber']
-                # data['confirmCode'] = ''
-                # data['fullName'] = request.POST['fullName']
-
-                # if not User.objects.filter(phone=request.POST['PhoneNumber']).exists():
-                #     User.objects.create_user(
-                #         phone=request.POST['PhoneNumber'],
-                #         password=request.POST['Password'],
-                #         full_name=request.POST['fullName']
-                #     )
-
-                # user = authenticate(request, username=request.POST['PhoneNumber'], password=request.POST['Password'])
-                # if user is not None:
-                #     login(request, user)
-                #     return redirect('landing')
-                # else:
-                #     context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
-                #     return render(request, 'registerlogin.html', context)
-
     context = {'phase': 'phone'}
     return render(request, 'registerlogin.html', context)
 
@@ -204,163 +178,6 @@ def userProfile(request):
 
     context = {'orders': orders, 'num_cartitems': num_cartitems, 'cart': cart}
     return render(request, 'userProfile.html', context)
-
-
-def instruments(request):
-    num_cartitems = 0
-    instruments = MusicalInstrument.objects.all()
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-        num_cartitems = cart.get_cart_items
-
-    instrument_filter = InstrumentFilter(request.GET, queryset=instruments)
-    instruments = instrument_filter.qs
-
-    context = {'instruments': instruments, 'num_cartitems': num_cartitems, 'instrument_filter': instrument_filter}
-    return render(request, 'instruments.html', context)
-
-
-@login_required(login_url='login')
-def shoppingCart(request):
-    customer = request.user.customer
-    cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-    num_cartitems = cart.get_cart_items
-    cartitems = cart.cartitem_set.all()
-
-    context = {'cartitems': cartitems, 'num_cartitems': num_cartitems, 'cart': cart}
-    return render(request, 'shoppingCart.html', context)
-
-
-@login_required(login_url='login')
-def checkout(request):
-    customer = request.user.customer
-    cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-
-    for cart_item in cart.cartitem_set.all():
-        order_item = OrderItem.objects.create(instrument=cart_item.instrument, quantity=cart_item.quantity, order=order)
-        order_item.save()
-
-    cart.cartitem_set.all().delete()
-
-    orderitems = order.orderitem_set.all()
-
-    context = {'orderitems': orderitems, 'order': order, 'num_cartitems': 0}
-    return render(request, 'checkout.html', context)
-
-
-# CRUD FUNCTIONALITY
-@login_required(login_url='login')
-def add_instrument(request):
-    customer = request.user.customer
-    cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-    num_cartitems = cart.get_cart_items
-    form = AddInstrumentForm()
-
-    if request.method == 'POST':
-        form = AddInstrumentForm(request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('instruments')
-
-    context = {'form': form, 'num_cartitems': num_cartitems}
-    return render(request, 'addInstrument.html', context)
-
-
-@login_required(login_url='login')
-def edit_instrument(request, pk):
-    instrument = MusicalInstrument.objects.get(id=pk)
-    customer = request.user.customer
-    cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-    num_cartitems = cart.get_cart_items
-    items = cart.cartitem_set.all()
-    form = AddInstrumentForm(instance=instrument)
-
-    if request.method == 'POST':
-        form = AddInstrumentForm(request.POST, instance=instrument)
-        if form.is_valid():
-            form.save()
-            return redirect('instruments')
-
-    context = {'form': form, 'num_cartitems': num_cartitems, 'cart': 'cart', 'items': items}
-    return render(request, 'addInstrument.html', context)
-
-
-@login_required(login_url='login')
-def delete_instrument(request, pk):
-    instrument = MusicalInstrument.objects.get(id=pk)
-    customer = request.user.customer
-    cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-    num_cartitems = cart.get_cart_items
-    if request.method == 'POST':
-        instrument.delete()
-        return redirect('instruments')
-
-    context = {'instrument': instrument, 'num_cartitems': num_cartitems}
-    return render(request, 'deleteInstrument.html', context)
-
-
-def view_instrument(request, pk):
-    num_cartitems = 0
-    instrument = MusicalInstrument.objects.get(id=pk)
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-        num_cartitems = cart.get_cart_items
-
-    context = {'instrument': instrument, 'num_cartitems': num_cartitems}
-    return render(request, 'instrumentDetails.html', context)
-
-
-@login_required(login_url='login')
-def add_to_cart(request, pk):
-    instrument = MusicalInstrument.objects.get(id=pk)
-    customer = request.user.customer
-    cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-    items = cart.cartitem_set.all()
-
-    cart_item = items.filter(instrument=instrument).first()
-    if cart_item:
-        cart_item.quantity += 1
-        cart_item.save()
-    else:
-        cart_item = CartItem(instrument=instrument, quantity=1, cart=cart)
-        cart_item.save()
-
-    return redirect("/")
-
-
-def delete_from_cart(request, pk):
-    customer = request.user.customer
-    cart, created = ShoppingCart.objects.get_or_create(customer=customer)
-    item = CartItem.objects.get(id=pk)
-    item.delete()
-
-    items = cart.cartitem_set.all()
-    num_cartitems = cart.get_cart_items
-
-    return redirect("shoppingCart")
-
-
-def increase_quantity(request, pk):
-    if request.method == 'POST':
-        cart_item = CartItem.objects.get(id=pk)
-        cart_item.quantity += 1
-        cart_item.save()
-    return redirect('shoppingCart')
-
-
-def decrease_quantity(request, pk):
-    if request.method == 'POST':
-        cart_item = CartItem.objects.get(id=pk)
-        if cart_item.quantity > 1:
-            cart_item.quantity -= 1
-            cart_item.save()
-        else:
-            cart_item.delete()
-    return redirect('shoppingCart')
-
 
 class StripeCheckoutSession(View):
     def post(self, request, *args, **kwargs):
@@ -398,14 +215,6 @@ class StripeCheckoutSession(View):
             orderitems.delete()
 
         return redirect(checkout_session.url)
-
-
-def update_order(pk):
-    order = Order.objects.get(id=pk)
-    order.complete = True
-    order.date_ordered = Now()
-    order.save()
-
 
 class SuccessView(TemplateView):
     template_name = "success.html"

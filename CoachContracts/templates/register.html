@@ -1,0 +1,196 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class=main-bg>
+    <div id=DoctorRegister class=section-login>
+        <form id=DoctorRegister_form>
+            <div class=container>
+                <div class=d-flex>
+                    <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
+                        <div class=DoctorRegister__section>
+                            <div class=DoctorRegister__info>
+                                <h1>Coach Sign up</h1>
+                                <p>Welcome to Football Coaching registration</p>
+                            </div>
+                            <div class=DoctorRegister__box>
+                                <div class="DoctorRegister_form-group form-group"><label class=DoctorRegister__box_title>First and last name*</label> <input name=fullName class=DoctorRegister__box__input placeholder="First and last name"></div>
+                                <div class="DoctorRegister_form-group form-group"><label class=DoctorRegister__box_title>Share code*</label> <input type=tel name=shareCode class="DoctorRegister__box__input DoctorRegister__box__input_ltr" placeholder=""></div>
+                                <div class="DoctorRegister_form-group form-group">
+                                    <label class=DoctorRegister__box_title>Speciality*</label> 
+                                    <select name=CategorySpeciality id=CategorySpeciality-id onmousedown=ChangeSubCategory() class="DoctorRegister__box__input DoctorRegister__box__input_ltr">
+                                        <option id=please-choose value=0>Please choose</option>
+                                        {% for choice in expertise %}
+                                            <option value="{{ choice }}">{{ choice }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="DoctorRegister_form-group form-group"><label class=DoctorRegister__box_title>Town/City*</label> <input class=DoctorRegister__box__input name=cityTitle placeholder=London></div>
+                                <div class="DoctorRegister_form-group form-group"><label class=DoctorRegister__box_title>Mobile phone number*</label> <input type=number class="DoctorRegister__box__input DoctorRegister__box__input_ltr" placeholder=07712345670 name=MobileNumber></div>
+                                <div class="DoctorRegister_form-group form-group"><label class=DoctorRegister__box_title>Coaching experience (years)*</label> <input type=number name=CoachingYear class=DoctorRegister__box__input placeholder="20 years"></div>
+                                <div class="DoctorRegister_form-group form-group">
+                                    <label class=DoctorRegister__box_title>Security code*</label>
+                                    <div class="captchCTRL d-flex"><input name=SecurityCaptchaCodeId type=hidden> <input type=number name=SecurityCaptchaCode> <img src="{% static 'CoachContracts/captcha/'|add:captcha|add:'.jpg' %}"> <span class="fa fa-refresh" id=refreshRegCaptchButton></span></div>
+                                </div>
+                                <a onclick="submitForm(this);return false" class="DoctorRegister__box_form_btn wide-bnt corner-btn red-primary-btn lg-drsaina-btn mt-5 red-primary-dark-btn fill-btn-transition">Save</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+    
+    var isProcess = false;
+
+        function ChangeSubCategory() {
+            $('#please-choose').remove()
+            $('#CategorySpeciality-id').innerHTML("<option id=please-choose disabled=disabled value=0>Please choose</option>")
+        }
+
+        function showErrorForInput(inputSelectorObj, message) {
+            inputSelectorObj.addClass('DoctorRegister_form-group-validation-input');
+            inputSelectorObj.closest('.DoctorRegister_form-group').addClass('saina-form-item-validation');
+            var findLabel = inputSelectorObj.closest('.DoctorRegister_form-group').find('.saina-form-validation-text');
+            if (findLabel.length == 0) {
+                inputSelectorObj.closest('.DoctorRegister_form-group').append('<lable class="saina-form-validation-text">' + message + '</lable>');
+            } else {
+                findLabel.html(message);
+            }
+        }
+
+        function submitForm(curObj) {
+            
+            var fullNameSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=fullName]');
+            var fullName = fullNameSelector.val();
+
+            if (!fullName) {
+                showErrorForInput(fullNameSelector, 'Enter your first and last name');
+                return false;
+            }
+
+            var shareCodeSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=shareCode]');
+            var shareCode = shareCodeSelector.val();
+
+            if (!shareCode) {
+                showErrorForInput(shareCodeSelector, 'Enter your share code');
+                return false;
+            }
+
+            $(curObj).closest('form').submit();
+            $('#refreshRegCaptchButton').click();
+
+        }
+
+        function addValidationError(ctrlSelector, message, IsSelect) {
+            console.log(ctrlSelector);
+            removeValidationError(ctrlSelector);
+            var isSelect = IsSelect;
+            $(ctrlSelector).addClass('DoctorRegister_form-group-validation-input');
+            $(ctrlSelector).closest('.form-group').addClass('saina-form-item-validation');
+            var errMessage = 'Please ' + (isSelect === true ? 'enter ' : 'select ') + $(ctrlSelector).closest('.form-group').find('label').html();
+            if (message)
+                errMessage = message;
+            errMessage = errMessage.replace('*', '');
+            if ($(ctrlSelector).closest('.form-group').find('.DoctorRegister_form-group-validation-text').length == 0) {
+                $(ctrlSelector).closest('.form-group').append('<lable class="DoctorRegister_form-group-validation-text">' + errMessage + '</lable>');
+            }
+            $(ctrlSelector).focus();
+        }
+
+        function removeValidationError(ctrlSelector) {
+            $(ctrlSelector).removeClass('DoctorRegister_form-group-validation-input');
+            $(ctrlSelector).closest('.form-group').removeClass('saina-form-item-validation');
+            $(ctrlSelector).closest('.form-group').find('.DoctorRegister_form-group-validation-text').remove();
+        }
+
+        function validateForm(curButton, postData) {
+            var IsSelect = false;
+            var isFormValid = true;
+            var formSelector = $(curButton).closest('form');
+            if (postData) {
+                for (por in postData) {
+                    var ctrlSelector = $(formSelector).find('input[name=' + por + '],select[name=' + por + ']');
+                    if (ctrlSelector.length > 0) {
+                        IsSelect = true;
+                        var isSelect = ctrlSelector.find('option').length;
+                        var curValue = '';
+                        if (isSelect > 0) {
+                            IsSelect = false;
+                            curValue = $(ctrlSelector).find('option:selected').val();
+                        } else {
+                            curValue = $(ctrlSelector).val();
+                        }
+                        if (!curValue) {
+                            isFormValid = false;
+                            addValidationError(ctrlSelector, "", IsSelect);
+                        } else {
+                            removeValidationError(ctrlSelector);
+                        }
+                    }
+                }
+            }
+            return isFormValid;
+        }
+
+        function getFormData(selector) {
+            var postData = {};
+            $(selector).find('input[name]').each(function() {
+                postData[$(this).attr('name')] = $(this).val();
+            });
+            $(selector).find('select[name]').each(function() {
+                postData[$(this).attr('name')] = $(this).find('option:selected').val();
+            })
+            return postData;
+        }
+
+        function initCaptchCTRL(cSelector) {
+            cSelector.each(function() {
+                if ($(this).attr('url') && !$(this)[0].refresh) {
+                    $(this)[0].refresh = function() {
+                        $(this).find('input[type=tel]').val('');
+                        var src = $(this).attr('url');
+                        createRequest(src, function(res) {
+                            if (res && res.uniqId) {
+                                $(this).find('input[type=hidden]').val(res.uniqId);
+                                $(this).find('img').attr('src', src + 'Image/' + res.uniqId);
+                            }
+                        }.bind(this));
+                    }
+                    $(this)[0].refresh();
+                    $(this).find('span').click(function() {
+                        $(this).closest('.captchCTRL')[0].refresh();
+                    });
+                }
+            });
+        }
+
+        initCaptchCTRL($('.captchCTRL'));
+        $('input[name],select[name]').blur(function() {
+            console.log(1);
+            var IsSelect = false;
+            var name = $(this).attr('name');
+            var ctrlSelector = $(this);
+            console.log(ctrlSelector);
+            console.log(name);
+            var isSelect = ctrlSelector.find('option').length;
+            var curValue = '';
+            if (isSelect > 0) {
+                IsSelect = true;
+                curValue = $(ctrlSelector).find('option:selected').val();
+            } else {
+                IsSelect = false;
+                curValue = $(ctrlSelector).val();
+            }
+            if (!curValue) {
+                addValidationError(name, IsSelect);
+            } else {
+                removeValidationError(name);
+            }
+        });
+
+    </script>
+</div>
+
+{% endblock content %}

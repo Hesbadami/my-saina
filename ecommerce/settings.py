@@ -13,6 +13,8 @@ import os.path
 from pathlib import Path
 import environ
 from decouple import config
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 
 env = environ.Env()
 environ.Env.read_env()
@@ -51,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store',
+    'accounts',
+    'CoachContracts',
     'django_filters',
 ]
 
@@ -98,7 +102,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-AUTH_USER_MODEL = 'store.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -130,6 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'data/')
 MEDIA_URL = '/data/'
 
