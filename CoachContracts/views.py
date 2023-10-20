@@ -24,22 +24,52 @@ with open('CoachContracts/static/CoachContracts/css/test', 'w') as f:
     f.write("Hello World")
     captcha_path = os.path.join(BASE_DIR, 'data/')
 
-def consulation(request):
-    context = {}
-    return render(request, 'consulation.html', context)
-
 def register(request):
-    image = ImageCaptcha()
-    code = randint(1e3, 1e4)
-    date = datetime.now(timezone.utc)
-    captcha_path = os.path.join(BASE_DIR, 'CoachContracts', 'static', 'CoachContracts', 'captcha', f'{str(date.timestamp())}.jpg')
-    image.write(str(code), captcha_path)
-    captcha.objects.create(
-        captcha_code=code,
-        captcha_date=date,
-        captcha_img=captcha_path
-    )
-    expertise_options = expertise.objects.all()
+    if request.user.is_authenticated:
+        return redirect('landing')
+    else:
+        image = ImageCaptcha()
+        code = randint(1e3, 1e4)
+        date = datetime.now(timezone.utc)
+        captcha_path = os.path.join(BASE_DIR, 'CoachContracts', 'static', 'CoachContracts', 'captcha', f'{str(date.timestamp())}.jpg')
+        image.write(str(code), captcha_path)
+        captcha.objects.create(
+            captcha_code=code,
+            captcha_date=date,
+            captcha_img=captcha_path
+        )
+        expertise_options = expertise.objects.all()
 
-    context = {'expertise': expertise_options, 'captcha': str(date.timestamp())}
-    return render(request, 'register.html', context)
+        if request.method == 'POST':
+            captcha_validate_obj = captcha.objects.get(captcha_date=datetime.fromtimestamp(float(request.POST['captchatimestamp'])))
+            
+            if captcha_validate_obj.captcha_code != int(request.POST['SecurityCaptchaCode']):
+                try:
+                    os.remove(captcha_validate_obj.captcha_img)
+                except:
+                    pass
+                context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_captcha'}
+                return render(request, 'register.html', context)
+            
+            if not expertise.objects.filter(expertise_name=request.POST['CategorySpeciality']).exists():
+                context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_speciality'}
+                return render(request, 'register.html', context)
+
+            coach_req, created = coach_requests.objects.get_or_create(coach_phone_number=request.POST['MobileNumber'])
+            
+            if created:
+                coach_req.coach_fullname = request.POST['fullName']
+                coach_req.coach_sharecode = request.POST['shareCode']
+                coach_req.coach_specialty = expertise.objects.get(expertise_name=request.POST['CategorySpeciality'])
+                coach_req.coach_city = request.POST['cityTitle']
+                coach_req.coach_experience = request.POST['CoachingYear']
+                coach_req.save()
+
+            return redirect('coach_register_successfull')
+
+        context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error': ''}
+        return render(request, 'register.html', context)
+
+def register_successfull(request):
+    context = {}
+    return render(request, 'register_successfull.html', context)

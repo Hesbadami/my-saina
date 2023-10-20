@@ -28,8 +28,8 @@ urlpatterns = [
     path('logout/', store_views.logoutUser, name='logout'),
     path('profile/', store_views.userProfile, name='profile'),
     path('', store_views.landing, name='landing'),
-    path('CoachContracts/Consulation', cc_views.consulation, name='cc_consulation'),
     path('CoachContracts/Contracts/Register', cc_views.register, name='coach_register'),
+    path('CoachContracts/Contracts/RegisterSuccessFull', cc_views.register_successfull, name='coach_register_successfull'),
     path(
         "create-checkout-session/<int:pk>/",
         store_views.StripeCheckoutSession.as_view(),

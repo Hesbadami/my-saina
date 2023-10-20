@@ -5745,7 +5745,7 @@ section#bank-drug .section-title-main,section#bank-germ .section-title-main{
 .msg-box{
     clear:both;
     width:100%;
-    float:left;
+    float:none;
     padding:8px;
     -moz-border-radius:8px;
     -o-border-radius:8px;
@@ -9201,7 +9201,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     margin:0
 }
 .doctor-registration-img{
-    background-image:url(/static/images/doctor-reg-ilstrr.svg);
+    background-image:url(/static/store/images/doctor-reg-ilstrr.svg);
     top:-45px;
     left:0
 }
@@ -9216,7 +9216,7 @@ section.drsaina_nw_modal-content>p>span.insurance-label>img{
     box-shadow:0 7px 10px 0 rgba(237,24,70,.3)
 }
 .user-registration-img{
-    background-image:url(/static/images/user-reg-ilstrtr.svg);
+    background-image:url(/static/store/images/user-reg-ilstrtr.svg);
     top:-45px;
     right:0
 }
@@ -11770,7 +11770,7 @@ div#section-one{
     right:calc(63% - 104px);
     width:8em;
     height:3em;
-    background-image:url(/static/images/main-pack.png);
+    background-image:url(/static/store/images/main-pack.png);
     background-position:-81px -161px;
     z-index:9999
 }
@@ -11813,7 +11813,7 @@ div#section-one{
     -o-border-radius:50px;
     -webkit-border-radius:50px;
     border-radius:50px;
-    background-image:url(/static/images/main-pack.png);
+    background-image:url(/static/store/images/main-pack.png);
     position:absolute;
     top:-40px;
     left:40%;
@@ -11865,7 +11865,7 @@ div#section-one{
     padding:3rem 0 0
 }
 .container-fluid.container-fluid-section2-two .right-content{
-    background-image:url(/static/images/Shape-1-copy-16.png);
+    background-image:url(/static/store/images/Shape-1-copy-16.png);
     background-repeat:no-repeat;
     background-position:top right;
     position:relative;
@@ -11926,7 +11926,7 @@ div#section-one{
     -o-border-radius:50px;
     -webkit-border-radius:50px;
     border-radius:50px;
-    background-image:url(/static/images/main-pack.png);
+    background-image:url(/static/store/images/main-pack.png);
     -o-box-shadow:0 4px 12px 2px #f5f5f5;
     -webkit-box-shadow:0 4px 12px 2px #f5f5f5;
     box-shadow:0 4px 12px 2px #f5f5f5
@@ -11938,25 +11938,25 @@ div#section-one{
     background-position:-417px 1px
 }
 .possibilities-box>.contentCenter>.row-box.other-ftr>i{
-    background-image:url(/static/images/another.png);
+    background-image:url(/static/store/images/another.png);
     background-repeat:no-repeat;
     background-position:center center;
     background-size:34px
 }
 .possibilities-box>.contentCenter>.row-box.income i{
-    background-image:url(/static/images/growth.png);
+    background-image:url(/static/store/images/growth.png);
     background-repeat:no-repeat;
     background-position:center center;
     background-size:34px
 }
 .possibilities-box>.contentCenter>.row-box.close-cns>i{
-    background-image:url(/static/images/padlock.png);
+    background-image:url(/static/store/images/padlock.png);
     background-repeat:no-repeat;
     background-position:center center;
     background-size:32px
 }
 .possibilities-box>.contentCenter>.row-box.online-offline>i{
-    background-image:url(/static/images/onoff.png);
+    background-image:url(/static/store/images/onoff.png);
     background-repeat:no-repeat;
     background-position:center center;
     background-size:34px
@@ -12026,7 +12026,7 @@ figure.cost-img>img{
     opacity:1;
     -webkit-transition:all .5s ease-in 3s;
     transition:all .5s ease-in 3s;
-    background-image:url(/static/images/main-pack.png);
+    background-image:url(/static/store/images/main-pack.png);
     background-position:-197px -369px;
     position:absolute;
     bottom:30px;
@@ -12064,14 +12064,14 @@ figure.cost-img>img{
 @media (min-width:768px) and (max-width:860px){
     .container-fluid.container-fluid-section-one:after{
         content:"";
-        background-image:url(/static/images/bg.svg);
+        background-image:url(/static/store/images/bg.svg);
         background-repeat:no-repeat;
         background-position:right center
     }
     .container-fluid.container-fluid-section-one{
         clear:both;
         padding:0;
-        background-image:url(/static/images/Shape-1-copy-7.png);
+        background-image:url(/static/store/images/Shape-1-copy-7.png);
         background-position:top center;
         background-size:170%;
         background-repeat:no-repeat
@@ -12082,7 +12082,7 @@ figure.cost-img>img{
         content:"";
         position:absolute;
         right:0;
-        background-image:url(/static/images/consultationai.svg);
+        background-image:url(/static/store/images/consultationai.svg);
         background-repeat:no-repeat;
         width:50%;
         height:570px;
@@ -12128,7 +12128,7 @@ figure.cost-img>img{
         content:"";
         position:absolute;
         left:0;
-        background-image:url(/static/images/Shape-1-copy-9.png);
+        background-image:url(/static/store/images/Shape-1-copy-9.png);
         background-repeat:no-repeat;
         width:226px;
         height:180px;
@@ -12140,7 +12140,7 @@ figure.cost-img>img{
         content:"";
         position:absolute;
         right:0;
-        background-image:url(/static/images/Shape-1-copy-8.png);
+        background-image:url(/static/store/images/Shape-1-copy-8.png);
         background-repeat:no-repeat;
         width:49%;
         height:264px;
@@ -12216,14 +12216,14 @@ figure.cost-img>img{
 @media (min-width:601px){
     .container-fluid.container-fluid-section-one:after{
         content:"";
-        background-image:url(/static/images/bg.svg);
+        background-image:url(/static/store/images/bg.svg);
         background-repeat:no-repeat;
         background-position:right center
     }
     .container-fluid.container-fluid-section-one{
         clear:both;
         padding:0;
-        background-image:url(/static/images/Shape-1-copy-7.png);
+        background-image:url(/static/store/images/Shape-1-copy-7.png);
         background-position:top center;
         background-size:170%;
         background-repeat:no-repeat
@@ -12234,7 +12234,7 @@ figure.cost-img>img{
         content:"";
         position:absolute;
         right:0;
-        background-image:url(/static/images/consultationai.svg);
+        background-image:url(/static/store/images/consultationai.svg);
         background-repeat:no-repeat;
         width:50%;
         height:570px;
@@ -12280,7 +12280,7 @@ figure.cost-img>img{
         content:"";
         position:absolute;
         left:0;
-        background-image:url(/static/images/Shape-1-copy-9.png);
+        background-image:url(/static/store/images/Shape-1-copy-9.png);
         background-repeat:no-repeat;
         width:226px;
         height:180px;
@@ -12292,7 +12292,7 @@ figure.cost-img>img{
         content:"";
         position:absolute;
         right:0;
-        background-image:url(/static/images/Shape-1-copy-8.png);
+        background-image:url(/static/store/images/Shape-1-copy-8.png);
         background-repeat:no-repeat;
         width:49%;
         height:264px;
@@ -12966,4 +12966,269 @@ figure.cost-img>img{
         position:relative
     }
 }
+}
+
+.msg-box {
+    clear: both;
+    width: 100%;
+    float: none;
+    border: 1px dashed #0072bc;
+    padding: 1rem;
+    background-color: #edf4f8;
+    -ms-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 0 auto 1rem auto;
+    -ms-box-shadow: 0 1px 5px 0 rgba(0,0,0,.17);
+    -moz-box-shadow: 0 1px 5px 0 rgba(0,0,0,.17);
+    -webkit-box-shadow: 0 1px 5px 0 rgba(0,0,0,.17);
+    box-shadow: 0 1px 5px 0 rgba(0,0,0,.17);
+    max-width: 320px;
+    overflow: hidden
+}
+
+.msg-box>span {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    float: left;
+    background-color: #0072bc;
+    -ms-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    position: relative
+}
+
+.msg-box>p {
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: #0072bc;
+    width: calc(100% - 35px);
+    float: right
+}
+
+.msg-box.box-success {
+    border: 1px dashed #3bbea2;
+    background-color: #f0faf8
+}
+
+.msg-box.box-success>span {
+    background-color: #3bbea2
+}
+
+.msg-box.box-success>span>i {
+    width: 15px;
+    height: 9px;
+    border: 1px solid #fff;
+    position: absolute;
+    top: 7px;
+    left: 6.7px;
+    border-top: none;
+    border-left: none;
+    -ms-transform: rotate(-50deg);
+    -webkit-transform: rotate(-50deg);
+    transform: rotate(-50deg)
+}
+
+.msg-box.box-success>p {
+    color: #3bbea2
+}
+
+.msg-box.box-info>span>i {
+    display: block;
+    width: 1.5px;
+    height: 8px;
+    background-color: #fff;
+    position: absolute;
+    top: 6px;
+    left: 13.5px;
+    right: 13.5px;
+    -ms-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%
+}
+
+.msg-box.box-info>span>i:after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    bottom: -7px;
+    left: 0;
+    right: 0;
+    display: block;
+    background-color: #fff;
+    -ms-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%
+}
+
+.msg-box.box-warning {
+    border: 1px dashed #ecaa1b;
+    background-color: #fcf1d9
+}
+
+.msg-box.box-warning>span {
+    background-color: transparent;
+    width: 0;
+    height: 0;
+    border-radius: 0;
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    border-bottom: 33px solid #ecaa1b
+}
+
+.msg-box.box-warning>span>i {
+    display: block;
+    width: 2px;
+    height: 13px;
+    background-color: #fff;
+    position: absolute;
+    top: 8px;
+    left: -1px;
+    right: 0;
+    -ms-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%
+}
+
+.msg-box.box-warning>p {
+    color: #ecaa1b;
+    width: calc(100% - 51px)
+}
+
+.msg-box.box-warning>span>i:after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    bottom: -7px;
+    left: 0;
+    right: 0;
+    display: block;
+    background-color: #fff;
+    -ms-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%
+}
+
+.msg-box.box-error {
+    background-color: #fbd4dd;
+    border: 1px dashed #ec1b48
+}
+
+.msg-box.box-error>span {
+    background-color: #ec1b48
+}
+
+.msg-box.box-error>p {
+    color: #ec1b48
+}
+
+.msg-box.box-error>span>i {
+    width: 2px;
+    height: 18px;
+    display: block;
+    background-color: #fff;
+    position: absolute;
+    left: 13px;
+    right: 10px;
+    transform: rotate(50deg);
+    top: 5px
+}
+
+.msg-box.box-error>span>i:after {
+    content: "";
+    height: 18px;
+    display: block;
+    background-color: #fff;
+    left: 28px;
+    right: 28px;
+    transform: rotate(80deg);
+    top: 5px
+}
+
+.msg-box.box-success {
+    border: 1px dashed #47ce6f;
+    background-color: #f0faf8
+}
+
+.msg-box.box-success>span {
+    background-color: #47ce6f
+}
+
+.msg-box.box-success>p {
+    color: #34c15e
+}
+
+.msg-box.box-success {
+    border: 1px dashed #3bbea2;
+    background-color: #f0faf8
+}
+
+.msg-box.box-success>span {
+    background-color: #3bbea2
+}
+
+.msg-box.box-success>span>i {
+    width: 15px;
+    height: 9px;
+    border: 1px solid #fff;
+    position: absolute;
+    top: 7px;
+    right: 6.7px;
+    border-top: none;
+    border-right: none;
+    -ms-transform: rotate(-50deg);
+    -webkit-transform: rotate(-50deg);
+    transform: rotate(-50deg)
+}
+
+.msg-box.box-success>p {
+    color: #3bbea2
+}
+
+
+.main-bg {
+    background-image: url(/static/store/images/bg.png);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 135% 160px
+}
+
+
+.container-fluid.container-fluid-payment-page>.main-bg {
+    background-position: center -25px;
+    padding-top: 1.5em
+}
+
+@media(min-width: 550px) {
+    .container-fluid.container-fluid-payment-page>.main-bg {
+        background-position:center -120px
+    }
+
+    .main-bg {
+        background-image: url(/static/store/images/bg.png);
+        background-position: center -30px;
+        background-repeat: no-repeat;
+        background-size: auto
+    }
+}
+
+@media(min-width: 340px) and (max-width:549px) {
+    .main-bg {
+        background-size:135% 140px
+    }
 }

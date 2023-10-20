@@ -4,7 +4,8 @@
 
 <div class=main-bg>
     <div id=DoctorRegister class=section-login>
-        <form id=DoctorRegister_form>
+        <form action="{% url 'coach_register' %}" method=post id=DoctorRegister_form>
+            {% csrf_token %}
             <div class=container>
                 <div class=d-flex>
                     <div class="m-auto col-12 col-md-6 col-lg-4 p-0">
@@ -30,7 +31,7 @@
                                 <div class="DoctorRegister_form-group form-group"><label class=DoctorRegister__box_title>Coaching experience (years)*</label> <input type=number name=CoachingYear class=DoctorRegister__box__input placeholder="20 years"></div>
                                 <div class="DoctorRegister_form-group form-group">
                                     <label class=DoctorRegister__box_title>Security code*</label>
-                                    <div class="captchCTRL d-flex"><input name=SecurityCaptchaCodeId type=hidden> <input type=number name=SecurityCaptchaCode> <img src="{% static 'CoachContracts/captcha/'|add:captcha|add:'.jpg' %}"> <span class="fa fa-refresh" id=refreshRegCaptchButton></span></div>
+                                    <div id="captchCTRL" class="captchCTRL d-flex"><input name=SecurityCaptchaCodeId type=hidden> <input type=number name=SecurityCaptchaCode> <img src="{% static 'CoachContracts/captcha/'|add:captcha|add:'.jpg' %}"> <span class="fa fa-refresh" id=refreshRegCaptchButton></span></div>
                                 </div>
                                 <a onclick="submitForm(this);return false" class="DoctorRegister__box_form_btn wide-bnt corner-btn red-primary-btn lg-drsaina-btn mt-5 red-primary-dark-btn fill-btn-transition">Save</a>
                             </div>
@@ -44,151 +45,225 @@
     
     var isProcess = false;
 
-        function ChangeSubCategory() {
-            $('#please-choose').remove()
-            $('#CategorySpeciality-id').innerHTML("<option id=please-choose disabled=disabled value=0>Please choose</option>")
+    {% if error == 'invalid_captcha' %}
+        var SecurityCaptchaCodeIdSelector = $("#captchCTRL").closest('.DoctorRegister__box').find('input[name=SecurityCaptchaCode]');
+        showErrorForInput(SecurityCaptchaCodeIdSelector, 'Invalid security captcha code');
+    {% endif %}
+
+    {% if error == 'invalid_speciality' %}
+        var CategorySpecialitySelector = $(curObj).closest('.DoctorRegister__box').find('select[name=CategorySpeciality]');
+        showErrorForInput(CategorySpecialitySelector, 'Invalid speciality');
+    {% endif %}
+
+    function ChangeSubCategory() {
+        $('#please-choose').remove()
+        $('#CategorySpeciality-id').innerHTML("<option id=please-choose disabled=disabled value=0>Please choose</option>")
+    }
+
+    function showErrorForInput(inputSelectorObj, message) {
+        inputSelectorObj.addClass('DoctorRegister_form-group-validation-input');
+        inputSelectorObj.closest('.DoctorRegister_form-group').addClass('saina-form-item-validation');
+        var findLabel = inputSelectorObj.closest('.DoctorRegister_form-group').find('.saina-form-validation-text');
+        if (findLabel.length == 0) {
+            inputSelectorObj.closest('.DoctorRegister_form-group').append('<lable class="saina-form-validation-text">' + message + '</lable>');
+        } else {
+            findLabel.html(message);
+        }
+    }
+
+    function hideErrorForInput(inputSelectorObj) {
+        inputSelectorObj.removeClass('DoctorRegister_form-group-validation-input');
+        inputSelectorObj.closest('.DoctorRegister_form-group').removeClass('saina-form-item-validation');
+        inputSelectorObj.closest('.DoctorRegister_form-group').find('.saina-form-validation-text').remove();
+    }
+
+    function submitForm(curObj) {
+        
+        var form_valid = true;
+        var fullNameSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=fullName]');
+        var fullName = fullNameSelector.val();
+        if (!fullName) {
+            showErrorForInput(fullNameSelector, 'Enter your first and last name');
+            var form_valid = false;
+        }
+        else {hideErrorForInput(fullNameSelector);}
+
+        var shareCodeSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=shareCode]');
+        var shareCode = shareCodeSelector.val();
+        if (!shareCode) {
+            showErrorForInput(shareCodeSelector, 'Enter your share code');
+            var form_valid = false;
+        }
+        else {hideErrorForInput(shareCodeSelector);}
+
+        var CategorySpecialitySelector = $(curObj).closest('.DoctorRegister__box').find('select[name=CategorySpeciality]');
+        var CategorySpeciality = CategorySpecialitySelector.val();
+        if (CategorySpeciality == 0) {
+            showErrorForInput(CategorySpecialitySelector, 'Choose your speciality');
+            var form_valid = false;
+        }
+        else {hideErrorForInput(CategorySpecialitySelector);}
+
+        var cityTitleSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=cityTitle]');
+        var cityTitle = cityTitleSelector.val();
+        if (!cityTitle) {
+            showErrorForInput(cityTitleSelector, 'Enter your city name');
+            var form_valid = false;
+        }
+        else {hideErrorForInput(cityTitleSelector);}
+
+        var MobileNumberSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=MobileNumber]');
+        var MobileNumber = MobileNumberSelector.val();
+        if (!MobileNumber) {
+            showErrorForInput(MobileNumberSelector, 'Enter your mobile phone number');
+            var form_valid = false;
+        }
+        else if (MobileNumber && MobileNumber.substr(0, 2) != '07') {
+            showErrorForInput(MobileNumberSelector, 'Mobile phone number has incorrect format');
+            isValid = false;
+        }
+        else if (MobileNumber && MobileNumber.length != 11) {
+            showErrorForInput(MobileNumberSelector, 'Mobile phone number must be 11 digits');
+            isValid = false;
+        }
+        else {
+            hideErrorForInput(MobileNumberSelector);
         }
 
-        function showErrorForInput(inputSelectorObj, message) {
-            inputSelectorObj.addClass('DoctorRegister_form-group-validation-input');
-            inputSelectorObj.closest('.DoctorRegister_form-group').addClass('saina-form-item-validation');
-            var findLabel = inputSelectorObj.closest('.DoctorRegister_form-group').find('.saina-form-validation-text');
-            if (findLabel.length == 0) {
-                inputSelectorObj.closest('.DoctorRegister_form-group').append('<lable class="saina-form-validation-text">' + message + '</lable>');
-            } else {
-                findLabel.html(message);
-            }
+        var CoachingYearSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=CoachingYear]');
+        var CoachingYear = CoachingYearSelector.val();
+        if (!CoachingYear) {
+            showErrorForInput(CoachingYearSelector, 'Enter your coaching experience');
+            var form_valid = false;
+        }
+        else {
+            hideErrorForInput(CoachingYearSelector);
         }
 
-        function submitForm(curObj) {
-            
-            var fullNameSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=fullName]');
-            var fullName = fullNameSelector.val();
-
-            if (!fullName) {
-                showErrorForInput(fullNameSelector, 'Enter your first and last name');
-                return false;
-            }
-
-            var shareCodeSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=shareCode]');
-            var shareCode = shareCodeSelector.val();
-
-            if (!shareCode) {
-                showErrorForInput(shareCodeSelector, 'Enter your share code');
-                return false;
-            }
-
-            $(curObj).closest('form').submit();
-            $('#refreshRegCaptchButton').click();
-
+        var SecurityCaptchaCodeIdSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=SecurityCaptchaCode]');
+        var SecurityCaptchaCodeId = SecurityCaptchaCodeIdSelector.val();
+        if (!SecurityCaptchaCodeId) {
+            showErrorForInput(SecurityCaptchaCodeIdSelector, 'Enter the security captcha code');
+            var form_valid = false;
+        }
+        else {
+            hideErrorForInput(SecurityCaptchaCodeIdSelector);
         }
 
-        function addValidationError(ctrlSelector, message, IsSelect) {
-            console.log(ctrlSelector);
-            removeValidationError(ctrlSelector);
-            var isSelect = IsSelect;
-            $(ctrlSelector).addClass('DoctorRegister_form-group-validation-input');
-            $(ctrlSelector).closest('.form-group').addClass('saina-form-item-validation');
-            var errMessage = 'Please ' + (isSelect === true ? 'enter ' : 'select ') + $(ctrlSelector).closest('.form-group').find('label').html();
-            if (message)
-                errMessage = message;
-            errMessage = errMessage.replace('*', '');
-            if ($(ctrlSelector).closest('.form-group').find('.DoctorRegister_form-group-validation-text').length == 0) {
-                $(ctrlSelector).closest('.form-group').append('<lable class="DoctorRegister_form-group-validation-text">' + errMessage + '</lable>');
-            }
-            $(ctrlSelector).focus();
+        if (!form_valid) {
+            return false;
         }
 
-        function removeValidationError(ctrlSelector) {
-            $(ctrlSelector).removeClass('DoctorRegister_form-group-validation-input');
-            $(ctrlSelector).closest('.form-group').removeClass('saina-form-item-validation');
-            $(ctrlSelector).closest('.form-group').find('.DoctorRegister_form-group-validation-text').remove();
-        }
+        $('form').append('<input type="hidden" name="captchatimestamp" value="{{ captcha }}">');
+        $('form').submit();
+    }
 
-        function validateForm(curButton, postData) {
-            var IsSelect = false;
-            var isFormValid = true;
-            var formSelector = $(curButton).closest('form');
-            if (postData) {
-                for (por in postData) {
-                    var ctrlSelector = $(formSelector).find('input[name=' + por + '],select[name=' + por + ']');
-                    if (ctrlSelector.length > 0) {
-                        IsSelect = true;
-                        var isSelect = ctrlSelector.find('option').length;
-                        var curValue = '';
-                        if (isSelect > 0) {
-                            IsSelect = false;
-                            curValue = $(ctrlSelector).find('option:selected').val();
-                        } else {
-                            curValue = $(ctrlSelector).val();
-                        }
-                        if (!curValue) {
-                            isFormValid = false;
-                            addValidationError(ctrlSelector, "", IsSelect);
-                        } else {
-                            removeValidationError(ctrlSelector);
-                        }
+    function addValidationError(ctrlSelector, message, IsSelect) {
+        console.log(ctrlSelector);
+        removeValidationError(ctrlSelector);
+        var isSelect = IsSelect;
+        $(ctrlSelector).addClass('DoctorRegister_form-group-validation-input');
+        $(ctrlSelector).closest('.form-group').addClass('saina-form-item-validation');
+        var errMessage = 'Please ' + (isSelect === true ? 'enter ' : 'select ') + $(ctrlSelector).closest('.form-group').find('label').html();
+        if (message)
+            errMessage = message;
+        errMessage = errMessage.replace('*', '');
+        if ($(ctrlSelector).closest('.form-group').find('.DoctorRegister_form-group-validation-text').length == 0) {
+            $(ctrlSelector).closest('.form-group').append('<lable class="DoctorRegister_form-group-validation-text">' + errMessage + '</lable>');
+        }
+        $(ctrlSelector).focus();
+    }
+
+    function removeValidationError(ctrlSelector) {
+        $(ctrlSelector).removeClass('DoctorRegister_form-group-validation-input');
+        $(ctrlSelector).closest('.form-group').removeClass('saina-form-item-validation');
+        $(ctrlSelector).closest('.form-group').find('.DoctorRegister_form-group-validation-text').remove();
+    }
+
+    function validateForm(curButton, postData) {
+        var IsSelect = false;
+        var isFormValid = true;
+        var formSelector = $(curButton).closest('form');
+        if (postData) {
+            for (por in postData) {
+                var ctrlSelector = $(formSelector).find('input[name=' + por + '],select[name=' + por + ']');
+                if (ctrlSelector.length > 0) {
+                    IsSelect = true;
+                    var isSelect = ctrlSelector.find('option').length;
+                    var curValue = '';
+                    if (isSelect > 0) {
+                        IsSelect = false;
+                        curValue = $(ctrlSelector).find('option:selected').val();
+                    } else {
+                        curValue = $(ctrlSelector).val();
+                    }
+                    if (!curValue) {
+                        isFormValid = false;
+                        addValidationError(ctrlSelector, "", IsSelect);
+                    } else {
+                        removeValidationError(ctrlSelector);
                     }
                 }
             }
-            return isFormValid;
         }
+        return isFormValid;
+    }
 
-        function getFormData(selector) {
-            var postData = {};
-            $(selector).find('input[name]').each(function() {
-                postData[$(this).attr('name')] = $(this).val();
-            });
-            $(selector).find('select[name]').each(function() {
-                postData[$(this).attr('name')] = $(this).find('option:selected').val();
-            })
-            return postData;
-        }
+    function getFormData(selector) {
+        var postData = {};
+        $(selector).find('input[name]').each(function() {
+            postData[$(this).attr('name')] = $(this).val();
+        });
+        $(selector).find('select[name]').each(function() {
+            postData[$(this).attr('name')] = $(this).find('option:selected').val();
+        })
+        return postData;
+    }
 
-        function initCaptchCTRL(cSelector) {
-            cSelector.each(function() {
-                if ($(this).attr('url') && !$(this)[0].refresh) {
-                    $(this)[0].refresh = function() {
-                        $(this).find('input[type=tel]').val('');
-                        var src = $(this).attr('url');
-                        createRequest(src, function(res) {
-                            if (res && res.uniqId) {
-                                $(this).find('input[type=hidden]').val(res.uniqId);
-                                $(this).find('img').attr('src', src + 'Image/' + res.uniqId);
-                            }
-                        }.bind(this));
-                    }
-                    $(this)[0].refresh();
-                    $(this).find('span').click(function() {
-                        $(this).closest('.captchCTRL')[0].refresh();
-                    });
+    function initCaptchCTRL(cSelector) {
+        cSelector.each(function() {
+            if ($(this).attr('url') && !$(this)[0].refresh) {
+                $(this)[0].refresh = function() {
+                    $(this).find('input[type=tel]').val('');
+                    var src = $(this).attr('url');
+                    createRequest(src, function(res) {
+                        if (res && res.uniqId) {
+                            $(this).find('input[type=hidden]').val(res.uniqId);
+                            $(this).find('img').attr('src', src + 'Image/' + res.uniqId);
+                        }
+                    }.bind(this));
                 }
-            });
-        }
-
-        initCaptchCTRL($('.captchCTRL'));
-        $('input[name],select[name]').blur(function() {
-            console.log(1);
-            var IsSelect = false;
-            var name = $(this).attr('name');
-            var ctrlSelector = $(this);
-            console.log(ctrlSelector);
-            console.log(name);
-            var isSelect = ctrlSelector.find('option').length;
-            var curValue = '';
-            if (isSelect > 0) {
-                IsSelect = true;
-                curValue = $(ctrlSelector).find('option:selected').val();
-            } else {
-                IsSelect = false;
-                curValue = $(ctrlSelector).val();
-            }
-            if (!curValue) {
-                addValidationError(name, IsSelect);
-            } else {
-                removeValidationError(name);
+                $(this)[0].refresh();
+                $(this).find('span').click(function() {
+                    $(this).closest('.captchCTRL')[0].refresh();
+                });
             }
         });
+    }
+
+    initCaptchCTRL($('.captchCTRL'));
+    $('input[name],select[name]').blur(function() {
+        console.log(1);
+        var IsSelect = false;
+        var name = $(this).attr('name');
+        var ctrlSelector = $(this);
+        console.log(ctrlSelector);
+        console.log(name);
+        var isSelect = ctrlSelector.find('option').length;
+        var curValue = '';
+        if (isSelect > 0) {
+            IsSelect = true;
+            curValue = $(ctrlSelector).find('option:selected').val();
+        } else {
+            IsSelect = false;
+            curValue = $(ctrlSelector).val();
+        }
+        if (!curValue) {
+            addValidationError(name, IsSelect);
+        } else {
+            removeValidationError(name);
+        }
+    });
 
     </script>
 </div>
