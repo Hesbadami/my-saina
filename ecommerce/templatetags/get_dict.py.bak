@@ -1,0 +1,17 @@
+from django import template
+from risk.jdate import *
+from datetime import datetime
+register = template.Library()
+@register.filter
+
+
+def get_subdata(data, key):
+    if type(data) == dict:
+        if key in data:
+            return data[key]
+        else:
+            return ''
+        
+  
+    
+    

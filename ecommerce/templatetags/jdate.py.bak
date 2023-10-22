@@ -1,0 +1,13 @@
+from django import template
+from risk.jdate import *
+register = template.Library()
+@register.filter
+
+
+def jalali(value=None):
+    
+    if isinstance(value, datetime):
+
+        return to_str(miladi_to_shamsi(value))
+
+

@@ -13,10 +13,10 @@ class CoachSocialMedia(models.Model):
     platforms = (
         ("Instagram", "Instagram"),
         ("Twitter", "Twitter"),
-        ("Facebook", "Facebook")
+        ("Facebook", "Facebook"),
         ("Website", "Website")
     )
-    platform = models.CharField(choices=platforms)
+    platform = models.CharField(max_length=100, choices=platforms)
     profile_url = models.TextField(max_length=100)
 
 class Coach(models.Model):
@@ -29,19 +29,4 @@ class Coach(models.Model):
     coach_socialmedia = models.ManyToManyField(CoachSocialMedia, related_name="coach_socialmedia")
     coach_address = models.TextField(max_length=300, null=True, blank=True)
     coach_city = models.TextField(max_length=100)
-    coach_county = models.TextField(max_length=100) 
-
-    def get_full_name(self):
-        '''
-        Returns the full_name.
-        '''
-        return self.full_name
-
-    def get_short_name(self):
-        '''
-        Returns the short name for the user.
-        '''
-        return self.full_name
-
-    def __str__(self):
-        return self.full_name
+    coach_county = models.TextField(max_length=100, null=True, blank=True)

@@ -13232,3 +13232,1986 @@ figure.cost-img>img{
         background-size:135% 140px
     }
 }
+
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center {
+    background-color: #fff;
+    float: left;
+    display: block;
+    width: 100%;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px
+}
+
+.filter-section>.filter-sec-title {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 1em 0 .5em;
+    font-weight: 700
+}
+
+.filter-section>.filter-sec-title>span {
+    padding: 0 1em;
+    border-left: 4px solid #2ccaa7;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section {
+    float: left;
+    display: block;
+    width: 100%
+}
+
+.box.box-search-filter {
+    float: left;
+    display: block;
+    margin: 1em auto 1em;
+    width: 100%;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.1);
+    border-radius: 3px
+}
+
+.box.box-search-filter>.ContentHeader01.ContentHeader-search-filter-header {
+    float: left;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    font-weight: 700;
+    border-bottom: 1px solid #e3e4e6;
+    background: #f7f7f7;
+    padding: .5em 1em .5em 1em;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px
+}
+
+.box.box-search-filter>.ContentHeader01.ContentHeader-search-filter-header>span {
+    font-size: 15px;
+    font-weight: 400;
+    color: #425d80;
+    padding-left: 0
+}
+
+.box.box-search-filter>.ContentHeader01.ContentHeader-search-filter-header>i {
+    background-image: url(/themes/drSainaBooked/images/icon_search_black_48dp-copy-2.png);
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: block;
+    margin: .2em 0 0 .4em;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.box.box-search-filter>.searchProvince-cneter {
+    width: 100%;
+    display: block;
+    float: left
+}
+
+.box.box-search-filter>.searchProvince-cneter>.searchProvince-cneter-content {
+    padding: 1em 1em 0;
+    float: left;
+    display: block;
+    width: 100%
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>input[type=text] {
+    float: left;
+    width: calc(100% - 5em);
+    display: block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0;
+    padding: 0 .3em;
+    margin: 0 1em 0 0;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>input[type=submit] {
+    float: left;
+    width: 3em;
+    display: block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0;
+    padding: 0 .3em;
+    margin: 0 1em 0 0;
+    background-image: url(/themes/drSainaBooked/images/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #fff;
+    text-align: center;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: transparent;
+    font-size: 13px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>input[type=submit].search-btn {
+    background-color: #425d80
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>select {
+    width: calc(100% - 2em);
+    float: left;
+    display: block;
+    margin: 8px 1em 0 1em;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>select:focus {
+    border: 1px solid #425d80
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>select>option {
+    background: #fff;
+    color: #000
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section {
+    float: left;
+    display: block;
+    width: 100%
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.searchspeciality-contet-header {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 1em 0 .5em;
+    font-weight: 700;
+    margin: 8px 0 8px 0
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.searchspeciality-contet-header>span {
+    padding: 0 1em;
+    border-left: 4px solid #2ccaa7;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 0;
+    margin-bottom: 0;
+    min-height: 350px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li {
+    display: block;
+    padding: .5em 0;
+    float: left;
+    width: 100%
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li>span.show-more {
+    font-size: 14px;
+    margin-left: 1em;
+    font-weight: 300
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title {
+    font-weight: 300;
+    display: block;
+    width: 100%;
+    float: left;
+    margin: 0 auto;
+    padding: .5em 0;
+    cursor: pointer
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title:focus {
+    font-weight: 400
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title:hover {
+    background-color: #f5f5f5;
+    color: #000
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left {
+    float: left;
+    padding-left: 1em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left>span {
+    font-size: 14px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left>i {
+    background-image: url(/themes/drSainaBooked/images/arrow-point-to-left-1-copy-3.png);
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.right {
+    float: right;
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    text-align: center;
+    padding-right: 10px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.right>span {
+    background: #c2c2c2;
+    border-radius: 10px;
+    padding: 0 7px;
+    float: right;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 300;
+    display: inline-block;
+    min-width: 10px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.right>span:focus {
+    background-color: #3cbea2
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li .category-item-specialties {
+    float: left
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item .category-item-specialties>ul {
+    width: 100%;
+    float: left;
+    margin: 0 auto
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item .category-item-specialties>ul>li {
+    display: block;
+    width: 100%;
+    float: left;
+    margin: 0 auto;
+    padding: .5em .5em .5em .5em;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 2em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item .category-item-specialties>ul>li>a {
+    color: #66676c;
+    line-height: 1.9em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.specialty-search-sec {
+    width: 100%;
+    float: left;
+    padding: 0 1em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.specialty-search-sec>input#txtInlineSearch {
+    float: left;
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0;
+    padding: 0 2em 0 .3em;
+    background-image: url(/themes/drSainaBooked/images/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: 98% center
+}
+
+.searchResualtProfile * {
+    font-family: IRANSans_FaNum
+}
+
+.searchProfileProperty .link-Booked {
+    padding: .3em .7em;
+    display: flex;
+    justify-content: flex-end
+}
+
+.searchProfileProperty .link-Booked>a {
+    width: 140px;
+    margin: 0 4px
+}
+
+ul.searchProfileContent>li {
+    line-height: 2.5em
+}
+
+ul.searchProfileContent>li>span {
+    clear: both;
+    width: 100%;
+    font-weight: 300;
+    font-size: 14px;
+    color: #888
+}
+
+ul.searchProfileContent>li>h5 {
+    display: inline;
+    color: #00234b;
+    font-weight: 400;
+    font-size: 14px
+}
+
+ul.searchProfileContent>li>a {
+    color: #00234b
+}
+
+.searchResualtProfile {
+    width: 100%;
+    display: block;
+    clear: left;
+    margin-bottom: 15px;
+    float: left;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 1em;
+    position: relative
+}
+
+.searchResualtProfile.searchDocterProfile {
+    width: 100%;
+    display: block;
+    clear: left;
+    margin: .5em 0 .5em 0;
+    padding: 0;
+    float: left;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px
+}
+
+.searchResualtProfile.searchDocterProfile .searchContent {
+    padding: 1em 1em 1em 1em
+}
+
+.searchResualtProfile .searchProfileContent {
+    width: calc(100% - 110px);
+    float: right;
+    list-style: none;
+    padding: 0 0 0 1em;
+    margin: 0
+}
+
+.searchResualtProfile p.searchAddress {
+    width: calc(100% - 110px);
+    float: right;
+    padding: 0 0 0 1em;
+    margin: 0
+}
+
+.searchResualtProfile a.link-profilecnt {
+    float: right;
+    padding: .5em;
+    background-color: #3cbea2;
+    color: #fff;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px
+}
+
+
+.searchResualtProfile h5,.searchResualtProfile label {
+    font-size: 14px;
+    font-family: IRANSans_FaNum
+}
+
+.searchResualtProfile p.searchAddress label {
+    color: #094a6f;
+    margin-right: 7px;
+    float: left
+}
+
+.searchResualtProfile p.searchAddress span.address-list {
+    float: left;
+    text-align: left
+}
+
+.searchResualtProfile>img {
+    display: block;
+    float: left;
+    width: 10%;
+    text-align: center
+}
+
+.searchResualtProfile * {
+    font-family: IRANSans_FaNum
+}
+
+.searchResualtProfile .searchProfileContent h2 {
+    font-size: 17px;
+    display: block;
+    font-weight: 900;
+    text-align: left;
+    margin-top: .5em
+}
+
+.searchResualtProfile .searchProfileContent h3 {
+    display: inline;
+    color: #00234b;
+    font-weight: 400;
+    font-size: 14px
+}
+
+.searchResualtProfile>a,a.searchProfilePicture {
+    display: block;
+    float: left;
+    width: 110px;
+    text-align: center
+}
+
+.searchResualtProfile>a ul:first-child,a.searchProfilePicture ul:first-child {
+    float: left
+}
+
+.searchResualtProfile>a>img,a.searchProfilePicture>img {
+    width: 100%;
+    max-height: 100%;
+    border: 1px solid #ddd;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%
+}
+
+ul.searchProfileContent {
+    display: block;
+    float: right;
+    width: 89%
+}
+
+div.searchProfileMatab {
+    display: block;
+    width: 100%;
+    float: left;
+    margin-top: 15px
+}
+
+.searchProfileMatab>ul {
+    width: 100%;
+    padding: 2px
+}
+
+.searchProfileMatab>ul:hover {
+    background-color: #eee
+}
+
+.searchProfileMatab>ul>li:last-child {
+    float: right
+}
+
+div#searchHeaderBox>div {
+    clear: both;
+    background-color: #fff;
+    padding: 1em;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 1em
+}
+
+.lft-archive .ContentCenter01.ContentCenterBannerCategoriesConsultant ul.categoryList>li {
+    display: block;
+    width: 100%;
+    margin: 0 0 .6em 0
+}
+
+.filtered-items-box.filter-active {
+    width: 100%;
+    display: block;
+    clear: left;
+    margin: 1em 0 0 0;
+    float: left;
+    -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: .3em
+}
+
+.filtered-items-box>.filtered-item {
+    display: inline-block;
+    background-color: #425d80;
+    padding: .5em;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    float: left;
+    margin-right: .5em
+}
+
+.filtered-items-box>.filtered-item>span {
+    font-size: 11px;
+    color: #fff;
+    float: left;
+    display: inline-block;
+    white-space: nowrap
+}
+
+.filtered-items-box>.filtered-item>a {
+    display: inline-block;
+    float: right;
+    width: 1.5em;
+    height: 1.5em;
+    margin-left: .2em
+}
+
+.filtered-items-box>.filtered-item>a>i {
+    display: block;
+    width: 100%;
+    background-image: url(/themes/drSainaBooked/images/closeico02.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 1.5em
+}
+
+div.searchProfileMatab>ul li {
+    display: inline-flex
+}
+
+div.searchProfileMatab>ul li>label {
+    color: #f34c00;
+    font-size: 13px;
+    margin-left: 10px
+}
+
+div.searchProfileMatab>ul li>span {
+    margin: 0 5px 0 3px
+}
+
+div.searchProfileMatab>ul li>img {
+    width: 78%;
+    float: left
+}
+
+.searchProfileContent h1,.searchProfileContent h2,.searchProfileContent h3,.searchProfileContent h4,.searchProfileContent h5,.searchProfileContent h6 {
+    display: inline
+}
+
+.searchProfileMatab>ul>li * {
+    font-size: 12px;
+    font-family: IRANSans_FaNum
+}
+
+.searchHeaderBoxMobileBox {
+    display: none
+}
+
+.container.searchlist-content .searchResultBox {
+    min-height: 400px
+}
+
+.searchResultBox span.searchDocterAddress {
+    color: #00234b;
+    font-weight: 400;
+    font-size: 14px;
+    clear: both;
+    width: 100%
+}
+
+.searchResultBox span.searchDocterAddress>i {
+    background-image: url(/themes/drSainaBooked/images/placeholder.png);
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 15px;
+    height: 30px;
+    float: left
+}
+
+.searchResultHeader {
+    float: left;
+    width: 100%;
+    display: block;
+    margin: 1em 0 .6em
+}
+
+.searchResultHeader>i {
+    background-image: url(/themes/drSainaBooked/images/doctor-with-stethoscope.png);
+    background-repeat: no-repeat;
+    float: left;
+    display: block;
+    width: 2em;
+    height: 2em;
+    background-position: center center
+}
+
+.searchResultHeader>h1 {
+    color: #065482;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 9px 0 5px 0
+}
+
+.searchResultHeader>span {
+    color: #445c7e;
+    font-size: 16px;
+    font-weight: 700;
+    float: left;
+    width: calc(100% - 26px);
+    display: block;
+    padding: 4px 4px 0
+}
+
+a#showSearchBox {
+    background-color: #085d8f;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: .5em .5em;
+    color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px
+}
+
+.modalhover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0,0,0,.34);
+    width: 100%;
+    height: 10000px;
+    z-index: 3
+}
+
+.searchResultBox {
+    display: block;
+    width: 100%;
+    float: left
+}
+
+.searchResultBox>.emptyList_doctor-box {
+    display: block;
+    width: 100%;
+    margin: 0 auto 10px;
+    background-color: #fff;
+    padding: 1em;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1)
+}
+
+.searchResultBox>.emptyList_doctor-box>.emptyList_doctor-center {
+    display: block;
+    width: 100%;
+    float: left;
+    text-align: center
+}
+
+.searchResultBox>.emptyList_doctor-box>.emptyList_doctor-center>.emptyList_doctor-center-box {
+    display: block;
+    width: 100%;
+    float: left
+}
+
+.searchResultBox>.emptyList_doctor-box>.emptyList_doctor-center>.emptyList_doctor-center-box>i {
+    background-image: url(/themes/drSainaBooked/images/sadness-boy-face.png);
+    display: block;
+    width: 65px;
+    height: 65px;
+    background-repeat: no-repeat;
+    margin: 0 auto
+}
+
+.searchResultBox>.emptyList_doctor-box>.emptyList_doctor-center>.emptyList_doctor-center-box>span {
+    display: block;
+    margin: .5em 0;
+    font-weight: 500;
+    font-size: 17px
+}
+
+.searchHeaderBox select {
+    border: 1px solid #ddd;
+    padding: 0 .5em 0 .5em
+}
+
+.searchHeaderBox input[type=text] {
+    border: 1px solid #ddd;
+    padding: .25em
+}
+
+.searchHeaderBox input[type=text]:active {
+    border-color: #085d8f
+}
+
+.searchHeaderBox input[type=submit] {
+    background-color: #3cbea2;
+    border: none;
+    color: #fff;
+    padding: .3em 1em .3em 1em
+}
+
+.searchProfileProperty {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    background-color: #f7f7f7;
+    width: 100%;
+    display: block;
+    border-top: 1px solid #eeeff1
+}
+
+.searchProfileProperty ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0
+}
+
+.searchProfileProperty ul>li {
+    padding: 0;
+    border-right: 0;
+    border-bottom: 0;
+    display: inline-block;
+    float: left
+}
+
+.searchProfileProperty ul>li:first-child {
+    border-top: none
+}
+
+ul.MatabWelfares {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #eee
+}
+
+ul.MatabWelfares>li {
+    display: block;
+    list-style: none;
+    width: 25%;
+    height: 50px;
+    float: left;
+    border-left: 1px solid #eee;
+    background-repeat: no-repeat;
+    background-position: center
+}
+
+ul.MatabWelfares>li>a {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 1em auto 0;
+    background-repeat: no-repeat;
+    background-image: url(/themes/drSainaBooked/images/pakeIconMain.png)
+}
+
+ul.MatabWelfares>li.imgMetroDisable>a {
+    background-position: -5px -214px
+}
+
+ul.MatabWelfares>li.imgBusDisable>a {
+    background-position: -134px -214px
+}
+
+ul.MatabWelfares>li.imgParkingDisable>a {
+    background-position: -45px -214px
+}
+
+ul.MatabWelfares>li.imgEvelatorDisable>a {
+    background-position: -89px -214px
+}
+
+ul.MatabWelfares>li.imgMetro>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/metro.png);
+    background-position: center center
+}
+
+ul.MatabWelfares>li.imgBus>a {
+    background-position: center center;
+    background-image: url(/themes/drSainaBooked/images/search-ico/bus.png)
+}
+
+ul.MatabWelfares>li.imgParking>a {
+    background-image: url(images/search-ico/park.png);
+    background-position: center center
+}
+
+ul.MatabWelfares>li.imgEvelator>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/evelator.png);
+    background-position: center center
+}
+
+.imgBus>a,.imgBusDisable>a,.imgEvelator>a,.imgEvelatorDisable>a,.imgMetro>a,.imgMetroDisable>a,.imgParking>a,.imgParkingDisable>a {
+    height: 3em;
+    width: 2.5em;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.imgMetroDisable>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/metro-disable.png)
+}
+
+.imgMetro>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/public-transport-subway.png)
+}
+
+.imgBusDisable>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/bus-disable.png)
+}
+
+.imgBus>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/bus.png)
+}
+
+.imgParkingDisable>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/park-disable.png)
+}
+
+.imgParking>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/parking-sign.png)
+}
+
+.imgEvelatorDisable>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/evelator-disable.png)
+}
+
+.imgEvelator>a {
+    background-image: url(/themes/drSainaBooked/images/search-ico/elevator-with-two-men-sign.png)
+}
+
+.searchTopclinicListContent>h1 {
+    font-size: 17px;
+    font-weight: 400;
+    color: #717171
+}
+
+.searchTopclinicList.searchTopclinicListContent {
+    background-color: #fff;
+    padding: .5em;
+    border: 1px solid #ddd;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px
+}
+
+.searchTopclinicList.searchTopclinicListContent li.cl_public {
+    padding: 1em
+}
+
+.lbl-count-sm {
+    margin-top: 15px
+}
+
+.lbl-count-sm>h3 {
+    font-size: 2em;
+    font-family: IRANSans_FaNum;
+    text-align: center
+}
+
+ul.search-filter>li {
+    display: inline-block;
+    border: 1px solid #eee;
+    background-color: #eee;
+    padding: .5em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 0
+}
+
+ul.search-filter>li>a.del-filter {
+    background: url(../_shared/images/closeico01.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+    font-size: 11px;
+    font-family: IRANSans_FaNum;
+    color: #777;
+    text-align: left;
+    padding-right: 20px
+}
+
+ul.search-filter>li a {
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 15px 15px;
+    font-size: 11px;
+    font-family: IRANSans_FaNum;
+    color: #000;
+    text-align: left;
+    padding-right: 20px
+}
+
+.container.searchlist-content section#leftContaner {
+    padding: 0 15px 0 0;
+    margin: 0
+}
+
+.container.searchlist-content {
+    margin-top: 10px
+}
+
+.ContentCenter01.ContentCenterBlocks>.Banner-Item.banneritems>a {
+    display: block;
+    width: 100%;
+    height: 165px;
+    margin-bottom: 10px;
+    border: 1px solid #eee
+}
+
+.ContentCenter01.ContentCenterBlocks>.Banner-Item.banneritems>a>img {
+    width: 100%;
+    height: auto
+}
+
+.ContentHeader01.ContentHeaderBlocks>span {
+    display: none;
+    visibility: hidden
+}
+
+ul.SearchContent * {
+    font-family: IRANSans_FaNum
+}
+
+ul.SearchContent.Searchdocters-sm>li {
+    width: 33%;
+    display: inline-block;
+    padding: 0 0 0 4px;
+    margin: 15px auto 10px auto;
+    border: none
+}
+
+ul.SearchContent.Searchdocters-sm>li.btnSearchContent-sm {
+    width: 100%!important;
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 30px
+}
+
+.SearchContent.Searchdocters-sm li.SmallBox-sm>input,.SearchContent.Searchdocters-sm li.SmallBox-sm>select {
+    width: 96%;
+    display: block;
+    font-size: 13px;
+    line-height: 1.7em;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    padding: 3px
+}
+
+ul.SearchContent.Searchdocters-sm>li.btnSearchContent-sm>a {
+    width: 15%;
+    display: block;
+    float: right;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 3px 0 #689f39;
+    background-color: #7db343;
+    border: 1px solid #7db343;
+    border-radius: 3px;
+    height: 30px;
+    margin: 4px 0 0 auto
+}
+
+ul.search-filter {
+    margin: 0;
+    padding: 0
+}
+
+ul.SearchContent-sm.Searchclinic-sm * {
+    font-family: IRANSans_FaNum
+}
+
+ul.SearchContent-sm {
+    margin: 0;
+    padding: 0
+}
+
+ul.SearchContent-sm>li {
+    margin: 0!important
+}
+
+ul.SearchContent-sm>li:first-child>input {
+    width: 100%
+}
+
+ul.SearchContent.SearchHospital-sm>li {
+    width: 24.5%;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    border: none
+}
+
+ul.SearchContent.SearchHospital-sm {
+    margin: 0;
+    padding: 0
+}
+
+ul.SearchContent.SearchHospital-sm>li:first-child>input {
+    width: 100%
+}
+
+ul.SearchContent.SearchHospital-sm li.SmallBox-sm input,ul.SearchContent.SearchHospital-sm li.SmallBox-sm select {
+    width: 96%;
+    display: block;
+    font-size: 12px;
+    line-height: 1.7em;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin: 0 auto;
+    padding: 3px
+}
+
+ul.SearchContent.SearchHospital-sm>li.btnSearchContent-sm {
+    width: 100%!important;
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 30px
+}
+
+ul.SearchContent.SearchHospital-sm>li.btnSearchContent-sm>a {
+    width: 15%;
+    display: block;
+    float: right;
+    color: #fff;
+    box-shadow: 0 3px 0 #689f39;
+    background-color: #7db343;
+    border: 1px solid #7db343;
+    border-radius: 3px;
+    margin: 11px 1 0 auto%;
+    padding: .5em;
+    text-align: center;
+    font-family: IRANSans_FaNum;
+    font-size: 15px
+}
+
+ul.SearchContent.SearchHospital-sm>li.btnSearchContent-sm>a {
+    width: 15%;
+    display: block;
+    float: right;
+    color: #fff;
+    box-shadow: 0 2px 0 #689f39;
+    background-color: #7db343;
+    border: 1px solid #7db343;
+    border-radius: 3px;
+    margin: 11px 1 0 auto%;
+    padding: .3em .5em .3em .5em;
+    text-align: center;
+    font-family: IRANSans_FaNum;
+    font-size: 15px
+}
+
+@media(max-width: 992px) {
+    .container.searchlist-content section#leftContaner {
+        padding:0
+    }
+}
+
+
+@media(max-width: 768px) {
+    .container {
+        width:98%
+    }
+
+    ul.SearchContent.Searchdocters-sm>li {
+        width: 32%
+    }
+
+    ul.SearchContent.Searchdocters-sm>li.btnSearchContent-sm>a {
+        margin: 4px 2.5% 0 auto
+    }
+
+    ul.loginUser.mgmenu a#hamburger {
+        display: block;
+        height: 39px;
+        width: 50px;
+        background-repeat: no-repeat;
+        background-size: 40px;
+        margin-right: 5px
+    }
+
+    .searchResualtProfile {
+        padding-bottom: 40px
+    }
+
+    .searchResualtProfile .searchProfileContent h2 {
+        line-height: 1.7em;
+        font-size: 15px
+    }
+}
+
+@media (max-width: 620px) {
+    ul.SearchContent-sm.SearchHospital-sm>li.btnSearchContent-sm {
+        width:70px
+    }
+
+    .newrightdiscription ul li {
+        width: 49%
+    }
+
+    .filtered-items-box>.filtered-item {
+        margin-bottom: .5em
+    }
+}
+
+@media(max-width: 425px) {
+    .pagination>li a.beforePage,.pagination>li a.nextPage {
+        padding:5px 10px;
+        width: auto;
+        height: auto
+    }
+
+    .pagination>li {
+        margin: 0 0 20px 0
+    }
+
+    .pagination>li a {
+        padding: 5px 9px;
+        display: block;
+        font-size: 13px
+    }
+
+    ul.SearchContent.Searchdocters-sm>li {
+        width: 100%
+    }
+
+    ul.SearchContent.SearchHospital-sm>li {
+        width: 100%
+    }
+}
+
+.bread-bx .navigationBar {
+    background: 0 0;
+    border: none
+}
+
+.doctorsearch .search-filter-box {
+    margin-top: .7em
+}
+
+.doctorsearch .searchResultHeader {
+    margin-top: .7em
+}
+
+.doctorsearch .smartsearch-doctor {
+    margin-top: .7em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center {
+    background-color: #fff;
+    float: left;
+    display: block;
+    width: 100%;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px
+}
+
+.filter-section>.filter-sec-title {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 1em 0 .5em;
+    font-weight: 700
+}
+
+.filter-section>.filter-sec-title>span {
+    padding: 0 1em;
+    border-left: 4px solid #2ccaa7;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333
+}
+
+.filter-section>.filter-sec-searchBox {
+    border: 1px solid #ddd;
+    width: calc(100% - 2em);
+    float: left;
+    margin: 0 1em
+}
+
+.filter-section>.filter-sec-searchBox>input.filter-control.doctor-name-text {
+    float: left;
+    width: calc(100% - 5em);
+    display: block;
+    border-radius: 2px;
+    height: 42px;
+    border: 0;
+    outline: 0;
+    padding: 0 .3em;
+    margin: 0;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.filter-section>.filter-sec-searchBox>input[type=submit] {
+    float: right;
+    width: 42px;
+    display: block;
+    border-radius: 2px;
+    height: 42px;
+    border: 0;
+    outline: 0;
+    padding: 0 .3em;
+    background-image: url(/themes/drSainaBooked/images/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #fff;
+    text-align: center;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: transparent;
+    font-size: 13px;
+    margin: 0
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section {
+    float: left;
+    display: block;
+    width: 100%
+}
+
+.padding-none {
+    padding: 0
+}
+
+.smartsearch-doctor {
+    display: block;
+    width: 220px;
+    float: right;
+    border-radius: 7px;
+    margin: 1em auto 0;
+    font-weight: 700
+}
+
+.smartsearch-doctor>.smartsearch-doctor-header {
+    border-bottom: 1px solid #ddd;
+    background: #f7f7f7;
+    padding: .5em;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px
+}
+
+.smartsearch-doctor>.smartsearch-doctor-header>i {
+    background-image: url(images/icon_search_black_48dp-copy-2.png);
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.smartsearch-doctor>.smartsearch-doctor-header>span {
+    padding-left: .5em;
+    font-size: 16px;
+    font-weight: 400;
+    color: #425d80
+}
+
+.smartsearch-doctor>.smartsearch-doctor-cnter {
+    width: 100%;
+    float: left;
+    padding: 0 0 0 1em
+}
+
+.smartsearch-doctor>.smartsearch-doctor-cnter>input[type=text] {
+    float: left;
+    width: calc(100% - 3em);
+    display: block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    border-right: 0;
+    outline: 0;
+    padding: 0 .7em.3em 0;
+    font-weight: 400;
+    color: #798290
+}
+
+.smartsearch-doctor>.smartsearch-doctor-cnter>a {
+    float: right;
+    width: 3em;
+    display: inline-block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    border-left: 0;
+    outline: 0;
+    background-color: #fff;
+    background-image: url(/themes/drSainaBooked/images/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #798290
+}
+
+.smartsearch-doctor>.smartsearch-doctor-cnter>span.k-widget.k-autocomplete.k-header.k-state-default {
+    border: none;
+    width: 100%;
+    box-shadow: none
+}
+
+.smartsearch-doctor>.smartsearch-doctor-cnter>span.k-widget.k-autocomplete.k-header.k-state-default>input#txtSearchdoctor {
+    width: 100%;
+    float: left;
+    display: block;
+    height: 3em;
+    padding: 1em;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    box-sizing: border-box
+}
+
+.smartsearch-doctor>.smartsearch-doctor-cnter>span.k-widget.k-autocomplete.k-header.k-state-default>input#txtSearchdoctor:focus {
+    border: 1px solid #425d80
+}
+
+.rightContanerdoctorsList {
+    padding: 0 0 0 .5em
+}
+
+.leftContanerdoctorsList {
+    padding: 0 .5em 0 0
+}
+
+.filtered-items-box.filter-active {
+    width: 100%;
+    display: block;
+    clear: left;
+    margin: 1em 0 0 0;
+    float: left;
+    -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: .3em
+}
+
+.filtered-items-box>.filtered-item {
+    display: inline-block;
+    background-color: #425d80;
+    padding: .5em;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    float: left;
+    margin-right: .5em
+}
+
+.filtered-items-box>.filtered-item>span {
+    font-size: 11px;
+    color: #fff;
+    float: left;
+    display: inline-block;
+    white-space: nowrap
+}
+
+.filtered-items-box>.filtered-item>a {
+    display: inline-block;
+    float: right;
+    width: 1.5em;
+    height: 1.5em;
+    margin-left: .2em
+}
+
+.filtered-items-box>.filtered-item>a>i {
+    display: block;
+    width: 100%;
+    background-image: url(/themes/drSainaBooked/images/closeico02.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 1.5em
+}
+
+.box.box-search-filter {
+    float: left;
+    display: block;
+    margin: 1em auto 1em;
+    width: 100%;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.1);
+    border-radius: 3px
+}
+
+.box.box-search-filter>.ContentHeader01.ContentHeader-search-filter-header {
+    float: left;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    font-weight: 700;
+    border-bottom: 1px solid #e3e4e6;
+    background: #f7f7f7;
+    padding: .5em 1em .5em 1em;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px
+}
+
+.box.box-search-filter>.ContentHeader01.ContentHeader-search-filter-header>span {
+    font-size: 15px;
+    font-weight: 400;
+    color: #425d80;
+    padding-left: 0
+}
+
+.box.box-search-filter>.ContentHeader01.ContentHeader-search-filter-header>i {
+    background-image: url(/themes/drSainaBooked/images/icon_search_black_48dp-copy-2.png);
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: block;
+    margin: .2em 0 0 .4em;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.box.box-search-filter>.searchProvince-cneter {
+    width: 100%;
+    display: block;
+    float: left
+}
+
+.box.box-search-filter>.searchProvince-cneter>.searchProvince-cneter-content {
+    padding: 1em 1em 0;
+    float: left;
+    display: block;
+    width: 100%
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>input[type=text] {
+    float: left;
+    width: calc(100% - 5em);
+    display: block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0;
+    padding: 0 .3em;
+    margin: 0 0 0 1em;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>input[type=submit] {
+    float: left;
+    width: 3em;
+    display: block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0;
+    padding: 0 .3em;
+    margin: 0 1em 0 0;
+    background-image: url(/themes/drSainaBooked/images/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #fff;
+    text-align: center;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: transparent;
+    font-size: 13px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>input[type=submit].search-btn {
+    background-color: #425d80
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>select {
+    width: calc(100% - 2em);
+    float: left;
+    display: block;
+    margin: 8px 1em 0 1em;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>select:focus {
+    border: 1px solid #425d80
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>select>option {
+    background: #fff;
+    color: #000
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section {
+    float: left;
+    display: block;
+    width: 100%
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.searchspeciality-contet-header {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 1em 0 .5em;
+    font-weight: 700;
+    margin: 8px 0 8px 0
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.searchspeciality-contet-header>span {
+    padding: 0 1em;
+    border-left: 4px solid #2ccaa7;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 0;
+    margin-bottom: 0;
+    min-height: 350px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li {
+    display: block;
+    padding: .5em 0;
+    float: left;
+    width: 100%
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li>span.show-more {
+    font-size: 14px;
+    margin-left: 1em;
+    font-weight: 300
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title {
+    font-weight: 300;
+    display: block;
+    width: 100%;
+    float: left;
+    margin: 0 auto;
+    padding: .5em 0;
+    cursor: pointer
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title:focus {
+    font-weight: 400
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title:hover {
+    background-color: #f5f5f5;
+    color: #000
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left {
+    float: left;
+    padding-left: 1em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left>span {
+    font-size: 14px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left>i {
+    background-image: url(/themes/drSainaBooked/images/arrow-point-to-left-1-copy-3.png);
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.right {
+    float: right;
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    text-align: center;
+    padding-right: 10px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.right>span {
+    background: #c2c2c2;
+    border-radius: 10px;
+    padding: 0 7px;
+    float: right;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 300;
+    display: inline-block;
+    min-width: 10px
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.right>span:focus {
+    background-color: #3cbea2
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li .category-item-specialties {
+    float: left
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item .category-item-specialties>ul {
+    width: 100%;
+    float: left;
+    margin: 0 auto
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item .category-item-specialties>ul>li {
+    display: block;
+    width: 100%;
+    float: left;
+    margin: 0 auto;
+    padding: .5em .5em .5em .5em;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 2em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item .category-item-specialties>ul>li>a {
+    color: #66676c;
+    line-height: 1.9em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.specialty-search-sec {
+    width: 100%;
+    float: left;
+    padding: 0 1em
+}
+
+.box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>.specialty-search-sec>input#txtInlineSearch {
+    float: left;
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+    height: 3em;
+    border: 1px solid #ddd;
+    outline: 0;
+    padding: 0 2em 0 .3em;
+    background-image: url(/themes/drSainaBooked/images/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: 98% center
+}
+
+.search-doctortype-box {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1)
+}
+
+.search-doctortype-box>.search-doctortype-header {
+    background-color: #f7f7f7;
+    display: block;
+    width: 100%;
+    float: left;
+    padding: .5em 1em .5em 1em;
+    border-bottom: 1px solid #e3e4e6;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px
+}
+
+.search-doctortype-box>.search-doctortype-header>i {
+    background-image: url(../_shared/images/filter.png);
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: block;
+    margin: .2em 0 0 .4em;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.search-doctortype-box>.search-doctortype-header>span {
+    padding-left: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: #425d80
+}
+
+.search-doctortype-box>.search-doctortype-cneter {
+    background-color: #fff;
+    display: block;
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    padding: 1em
+}
+
+.search-doctortype-box>.search-doctortype-cneter>input {
+    color: #2ccaa7;
+    float: left;
+    margin-top: .4em
+}
+
+.search-doctortype-box>.search-doctortype-cneter>label {
+    font-size: 14px;
+    font-weight: 300;
+    float: left;
+    padding-left: 1em
+}
+
+.search-filter-box {
+    margin-top: 1em;
+    float: left;
+    display: block;
+    width: 100%
+}
+
+.search-filter-box ul.search-filter {
+    background-color: #fff;
+    padding: .5em;
+    float: left;
+    display: block;
+    margin: 0 auto .5em auto;
+    width: 100%;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.1);
+    border-radius: 3px
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding:0;
+        margin: 0 auto;
+        width: 100%
+    }
+
+    .container-fluid {
+        padding: 0;
+        margin: 0
+    }
+}
+
+@media (max-width: 768px) {
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left {
+        padding-left:0
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.right {
+        padding-right: 5px
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item>a.category-item-title>.left>span {
+        font-size: 12px
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center>.filter-section>ul.searchspeciality-box>li.category-item .category-item-specialties>ul {
+        padding-left: .7em
+    }
+}
+
+@media (max-width: 767px) {
+    .rightContanerdoctorsList {
+        width:33.33333333%;
+        padding-right: .5em
+    }
+
+    .leftContanerdoctorsList {
+        width: 66.66666667%
+    }
+}
+
+@media (max-width: 586px) {
+    .rightContanerdoctorsList {
+        width:100%;
+        padding-right: 0
+    }
+
+    .leftContanerdoctorsList {
+        width: 100%;
+        padding: 0
+    }
+
+    .rightContanerdoctorsList .search-filter-box {
+        margin-top: .5em
+    }
+
+    .leftContanerdoctorsList .searchResultHeader,.leftContanerdoctorsList .smartsearch-doctor {
+        margin-top: .5em
+    }
+
+    .box.box-search-filter {
+        margin: 0 auto 0 auto;
+        border-bottom: 0;
+        border-radius: 0
+    }
+
+    .box.box-search-filter>.searchProvince-cneter {
+        height: 0;
+        display: block;
+        overflow: hidden;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        transition: all .3s
+    }
+
+    .box.box-search-filter.openDropdownSerch>.searchProvince-cneter {
+        height: 117px;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        transition: all .3s
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeaderFilterDoctors-Turning {
+        height: 0;
+        overflow: hidden;
+        transition: all .3s
+    }
+
+    .box.box-search-filter.openDropdownFilter {
+        border: 1px solid #ebeced
+    }
+
+    .box.box-search-filter.openDropdownFilter>.ContentCenter01.ContentHeader-search-filter-center {
+        height: 320px;
+        overflow-y: scroll;
+        transition: all .3s
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center {
+        height: 0;
+        overflow: hidden;
+        overflow-y: scroll;
+        direction: ltr
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        border-radius: 10px;
+        background-color: #f5f5f5
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center::-webkit-scrollbar {
+        width: 5px;
+        background-color: #f5f5f5
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #ccc
+    }
+
+    .box.box-search-filter>.ContentCenter01.ContentHeader-search-filter-center::-webkit-scrollbar-thumb:hover {
+        background-color: #a7a7a7
+    }
+
+    .searchResualtProfile.searchDocterProfile {
+        border-radius: 0
+    }
+}
+
+@media (max-width: 426px) {
+    .box.BookedSearchPublic-ConculationProfile {
+        padding:0
+    }
+}
+
+.pagination-parent {
+    clear: both;
+    text-align: center
+}
+
+.pagination * {
+    font-family: IRANSans_FaNum
+}
+
+.pagination {
+    display: inline-block;
+    padding-right: 0;
+    margin: 20px 0;
+    border-radius: 4px
+}
+
+.pagination>li {
+    display: inline-block;
+    height: 1.5em
+}
+
+.pagination>li a {
+    text-decoration: none;
+    background-color: #fff;
+    border: none;
+    color: #999;
+    font-size: 12px;
+    font-family: IRANSans_FaNum;
+    float: none!important;
+    padding: 6px 12px;
+    border-radius: 100% 100%;
+    width: 35px;
+    height: 35px
+}
+
+.pagination>li a.beforePage,.pagination>li a.nextPage {
+    color: #107fbf;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid;
+    border-radius: 0
+}
+
+.pagination>li span.countdata {
+    display: none;
+    visibility: hidden
+}
+
+.pagination>li a.curentPage {
+    color: #09305c!important;
+    border-radius: 100% 100%
+}
+
+.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover {
+    color: #107fbf;
+    background: #eee
+}
+
+.pagination>li a.beforePage:hover,.pagination>li a.nextPage:hover {
+    background: 0 0;
+    color: #ff9200
+}
+
+.pagination>li:first-child>a,.pagination>li:first-child>span {
+    margin-right: 0;
+    background-color: transparent;
+    border-bottom: 1px solid;
+    border-radius: 0
+}

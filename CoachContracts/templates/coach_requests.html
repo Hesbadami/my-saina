@@ -1,0 +1,163 @@
+{% extends 'CoachContracts/base.html' %}
+{% load static %}
+{% load get_dict %}
+{% block content %}
+
+<section id=queueBackground class=container-fluid>
+    <div class=container>
+        <div class=row>
+            <style>.category-item-title .right > span{white-space:nowrap}</style>
+            <div class="leftContanerdoctorsList col-xl-3 col-lg-3 col-md-4 col-12 float-right">
+                <div class="box box-search-filter">
+                    <div class="ContentHeader01 ContentHeader-search-filter-header"><i></i> <span>Find applicant</span></div>
+                    <div class="ContentCenter01 ContentHeader-search-filter-center">
+                        <div id=filters_Loader class=loader style=display:none>
+                            <div class=loaders>
+                                <div class=loader>
+                                    <div class=ball-spin-fade-loader>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=filter-section>
+                            <div class=filter-sec-title><i></i> <span>Applicant name:</span></div>
+                            <div class=filter-sec-searchBox><input id=txtDoctorName class="filter-control doctor-name-text" value="{{ request.GET.name }}" placeholder="Search applicant name..."> 
+                                <a onclick="window.location.href='?page={{ cur_page }}&name='+document.getElementById('txtDoctorName').value+'{% if request.GET.city %}&city={{ request.GET.city }}{% endif %}{% if request.GET.spec %}&spec={{ request.GET.spec }}{% endif %}'" id=btnSearchDoctorName></a>
+                            </div>
+                        </div>
+                        <div class=filter-section>
+                            <div class=filter-sec-title><i></i> <span>City:</span></div>
+                            <select id=ddlprovince class=filter-control onChange="window.location.href='?page={{ cur_page }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}&city='+this.value+'{% if request.GET.spec %}&spec={{ request.GET.spec }}{% endif %}'">
+                                <option value="">All cities:</option>
+                                {% for city in city_data %}
+                                    <option value="{{ city }}" {% if request.GET.city == city %}selected{% endif %}>{{ city }} ({{ city_data|get_subdata:city }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class=filter-section>
+                            <div class=filter-sec-title><i></i> <span>Speciality:</span></div>
+                            <ul class=searchspeciality-box>
+                                {% for spec in specs_data %}
+                                <li class=category-item>
+                                    <a class=category-item-title href="?page={{ cur_page }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.city %}&city={{ request.GET.city }}{% endif %}&spec={{ spec }}" data-cat-id=1 data-mode=More>
+                                        <div class=left><i></i> <span>{{ spec }}</span></div>
+                                        <div class=right><span>{{ specs_data|get_subdata:spec }}</span></div>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <script>
+
+                    function changeParentsCSSByClass(obj, className, isShow) {
+                        do {
+                            if (obj && $(obj).elements && $(obj).elements.length > 0 && $(obj).elements[0].parentElement) {
+                                obj = $(obj).elements[0].parentElement;
+                                var currentClass = $(obj).attr('class');
+                                if (currentClass && currentClass.indexOf(className) != -1) {
+                                    if (isShow == true) {
+                                        $(obj).show();
+                                    } else {
+                                        $(obj).hide();
+                                    }
+                                }
+                            }
+                        } while (obj && $(obj).elements && $(obj).elements.length > 0 && $(obj).elements[0].parentElement)
+                    }
+                    var cntShowInLess = 6;
+                    (function() {
+                        $('.ContentHeader-search-filter-header').on('click', function() {
+                            var sObj = $('.ContentCenter01.ContentHeader-search-filter-center')
+                            if (sObj.height() == 0) {
+                                sObj.css('height', '300px');
+                            } else {
+                                sObj.removeAttr('style')
+                            }
+                        });
+                    })();
+                </script>
+            </div>
+            <div class="RightContanerdoctorsList col-xl-9 col-lg-9 col-md-8 col-12 float-left">
+                {% if 'spec' in request.GET or 'city' in request.GET or 'name' in request.GET %}
+                <div class="filtered-items-box filter-active">
+                    {% for item in request.GET %}
+                        {% if item != 'page' %}
+                            <div class="filtered-item"><span>{{ request.GET|get_subdata:item }}</span> <a onclick="window.location.href='?page={{ cur_page }}{% if item != 'name' and 'name' in request.GET %}&name={{ request.GET.name }}{% endif %}{% if item != 'city' and 'city' in request.GET %}&city={{ request.GET.city }}{% endif %}{% if item != 'spec' and 'spec' in request.GET %}&spec={{ request.GET.spec }}{% endif %}'" dideo-checked="true"> <i></i> </a></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class=searchResultBox>
+                    {% for coach in coaches %}
+                    <div class="searchResualtProfile searchDocterProfile" data-id=fe75a6a657fb413e89abeba77c097697 data-name="{{ coach.coach_fullname }}" data-category="{{ coach.coach_specialty }}">
+                        <div class="searchContent row">
+                            <div class="searchProfilePicture col-xl-2 col-lg-3 col-md-3 col-3"> 
+                                <img src="{% static 'CoachContracts/images/avatar.png' %}" class="lazyload img-circle" alt="{{ coach.coach_fullname }}" title="{{ coach.coach_fullname }}"> 
+                                <div style="margin-top: 0.8em;"><i></i><span class=searchDocterAddress> {{ coach.coach_user.phone }} </span></div>
+                            </div>
+                            <ul class="searchProfileContent col-xl-10 col-lg-9 col-md-9 col-9">
+                                <li>
+                                    <h2>{{ coach.coach_user.full_name }}</h2>
+                                </li>
+                                <li>
+                                    <span>Speciality: </span>
+                                    <h3>{{ coach.coach_specialty }}</h3>
+                                </li>
+                                <li>
+                                    <span>Experience: </span>
+                                    <h3>{{ coach.coach_experience }} years</h3>
+                                </li>
+                                <li><span class=searchDocterAddress> <i></i> {{ coach.coach_city }} </span></li>
+                            </ul>
+                        </div>
+                        <div class="searchProfileProperty row">
+                            <form action="{% url 'coachrequests' %}" method="post" class="link-Booked col-xl-4 col-lg-4 col-md-5 col-12 float-right">
+                                {% csrf_token %}
+                                <input type="hidden" name="coach_phone_number" value={{ coach.coach_user.phone }}>
+                                <input type="hidden" name="page_number" value={{ cur_page }}>
+                                <a class="md-drsaina-btn top-interaction-btn-transform rounded-btn red-primary-btn" title="approve {{ coach.coach_fullname }}" onclick="reject(this);return false"> Reject </a>
+                                <a class="md-drsaina-btn top-interaction-btn-transform rounded-btn green-primary-btn" title="reject {{ coach.coach_fullname }}" onclick="approve(this);return false"> Approve </a>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <script>
+                        function approve(curObj) {
+                            $(curObj).closest('form').append('<input type="hidden" name="state" value="approve">');
+                            $(curObj).closest('form').submit();
+                        }
+
+                        function reject(curObj) {
+                            $(curObj).closest('form').append('<input type="hidden" name="state" value="reject">');
+                            $(curObj).closest('form').submit();
+                        }
+                    </script>
+                </div>
+                {% if page_count > 1 %}
+                <div class="pagination-parent pagination-parent-herbal">
+                    <ul class="pagination pagination-herbal">
+                        <li><a href="?page=1" class=beforePage> First </a></li>
+                        {% for p in n_pages %}
+                        <li><a href="?page={{ p }}" {% if p == cur_page %}class=curentPage{% endif %}>{{ p }}</a></li>
+                        {% endfor %}
+                        <li><a href="?page={{ page_count }}" class=nextPage> Last </a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<input type=hidden id=hidden-enhanced-ecommerce-booked data-found-province="" data-found-spec="" data-found-abovespec="" data-found-cat="">
+
+{% endblock content %}

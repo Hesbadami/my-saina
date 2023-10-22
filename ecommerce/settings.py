@@ -52,9 +52,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ecommerce',
     'store',
     'accounts',
     'CoachContracts',
+    'coaching',
     'django_filters',
 ]
 

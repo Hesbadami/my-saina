@@ -30,6 +30,7 @@ urlpatterns = [
     path('', store_views.landing, name='landing'),
     path('CoachContracts/Contracts/Register', cc_views.register, name='coach_register'),
     path('CoachContracts/Contracts/RegisterSuccessFull', cc_views.register_successfull, name='coach_register_successfull'),
+    path('CoachContracts/Contracts/CoachRequests', cc_views.coachrequests, name='coachrequests'),
     path(
         "create-checkout-session/<int:pk>/",
         store_views.StripeCheckoutSession.as_view(),

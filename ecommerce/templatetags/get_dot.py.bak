@@ -1,0 +1,13 @@
+from django import template
+from risk.jdate import *
+from datetime import datetime
+register = template.Library()
+@register.filter
+
+
+def get_col(data):
+    return data.value
+
+
+    
+    
