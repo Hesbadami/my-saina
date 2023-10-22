@@ -27,8 +27,9 @@ with open('CoachContracts/static/CoachContracts/css/test', 'w') as f:
     captcha_path = os.path.join(BASE_DIR, 'data/')
 
 def register(request):
-    if request.user.is_authenticated:
-        return redirect('landing')
+    if not request.user.is_authenticated:
+        request.session['coach_register'] = True
+        return redirect('registerlogin')
     else:
         image = ImageCaptcha()
         code = randint(1e3, 1e4)
@@ -61,10 +62,9 @@ def register(request):
                 context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_speciality'}
                 return render(request, 'register.html', context)
 
-            coach_req, created = coach_requests.objects.get_or_create(coach_phone_number=request.POST['MobileNumber'])
+            coach_req, created = coach_requests.objects.get_or_create(coach_user=request.user)
             
             if created:
-                coach_req.coach_fullname = request.POST['fullName']
                 coach_req.coach_sharecode = request.POST['shareCode']
                 coach_req.coach_specialty = expertise.objects.get(expertise_name=request.POST['CategorySpeciality'])
                 coach_req.coach_city = request.POST['cityTitle']
@@ -78,26 +78,26 @@ def register(request):
 
 def register_successfull(request):
 
-    # for i in range(2,500):
+    for i in range(2,500):
 
-        # pn = str('07') + str(randint(100000000, 1000000000))
-        # User.objects.create_user(
-        #     phone=pn,
-        #     password=str(randint(100000000, 1000000000)),
-        #     full_name=f"User {i}"
-        # )
-        # user = User.objects.get(phone = pn)
+        pn = str('07') + str(randint(100000000, 1000000000))
+        User.objects.create_user(
+            phone=pn,
+            password=str(randint(100000000, 1000000000)),
+            full_name=f"User {i}"
+        )
+        user = User.objects.get(phone = pn)
 
-        # coach_req, created = coach_requests.objects.get_or_create(coach_user=user)
+        coach_req, created = coach_requests.objects.get_or_create(coach_user=user)
         
-        # if created:
-        #     coach_req.coach_sharecode = str(randint(100000000, 1000000000-1))
-        #     specialties = ['Goalkeeping', 'Forward', 'Midfielder', 'Defender', 'Team Management']
-        #     coach_req.coach_specialty = expertise.objects.get(expertise_name=specialties[randint(0, len(specialties)-1)])
-        #     cities = ['London', 'Exeter', 'Manchester', 'Liverpool', 'Bermingham', 'Leicester', 'Nottingham', 'Oxford']
-        #     coach_req.coach_city = cities[randint(0, len(cities)-1)]
-        #     coach_req.coach_experience = randint(0, 20)
-        #     coach_req.save()
+        if created:
+            coach_req.coach_sharecode = str(randint(100000000, 1000000000-1))
+            specialties = ['Goalkeeping', 'Forward', 'Midfielder', 'Defender', 'Team Management']
+            coach_req.coach_specialty = expertise.objects.get(expertise_name=specialties[randint(0, len(specialties)-1)])
+            cities = ['London', 'Exeter', 'Manchester', 'Liverpool', 'Bermingham', 'Leicester', 'Nottingham', 'Oxford']
+            coach_req.coach_city = cities[randint(0, len(cities)-1)]
+            coach_req.coach_experience = randint(0, 20)
+            coach_req.save()
 
     context = {}
     return render(request, 'register_successfull.html', context)

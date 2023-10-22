@@ -138,6 +138,8 @@ def registerlogin(request, data={}):
                 user.save()
 
                 login(request, user)
+                if 'coach_register' in request.session:
+                    return redirect('coach_register')
                 return redirect('landing')
             
             elif 'PhoneNumber' in request.POST and 'Password' in request.POST:
@@ -155,6 +157,8 @@ def registerlogin(request, data={}):
                 user = authenticate(request, username=data['PhoneNumber'], password=data['Password'])
                 if user is not None:
                     login(request, user)
+                    if 'coach_register' in request.session:
+                        return redirect('coach_register')
                     return redirect('landing')
                 else:
                     context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}
