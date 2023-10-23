@@ -26,85 +26,62 @@ with open('CoachContracts/static/CoachContracts/css/test', 'w') as f:
     f.write("Hello World")
     captcha_path = os.path.join(BASE_DIR, 'data/')
 
+@login_required(login_url='registerlogin')
 def register(request):
-    if not request.user.is_authenticated:
-        request.session['coach_register'] = True
-        return redirect('registerlogin')
-    else:
-        image = ImageCaptcha()
-        code = randint(1e3, 1e4)
-        date = datetime.now(timezone.utc)
-        captcha_path = os.path.join(BASE_DIR, 'CoachContracts', 'static', 'CoachContracts', 'captcha', f'{str(date.timestamp())}.jpg')
-        image.write(str(code), captcha_path)
-        captcha.objects.create(
-            captcha_code=code,
-            captcha_date=date,
-            captcha_img=captcha_path
-        )
-        expertise_options = expertise.objects.all()
+    image = ImageCaptcha()
+    code = randint(1e3, 1e4)
+    date = datetime.now(timezone.utc)
+    captcha_path = os.path.join(BASE_DIR, 'CoachContracts', 'static', 'CoachContracts', 'captcha', f'{str(date.timestamp())}.jpg')
+    image.write(str(code), captcha_path)
+    captcha.objects.create(
+        captcha_code=code,
+        captcha_date=date,
+        captcha_img=captcha_path
+    )
+    expertise_options = expertise.objects.all()
 
-        if request.method == 'POST':
-            try:
-                captcha_validate_obj = captcha.objects.get(captcha_date=datetime.fromtimestamp(float(request.POST['captchatimestamp'])))
-                
-                if captcha_validate_obj.captcha_code != int(request.POST['SecurityCaptchaCode']):
-                    try:
-                        os.remove(captcha_validate_obj.captcha_img)
-                    except:
-                        pass
-                    context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_captcha'}
-                    return render(request, 'register.html', context)
-            except:
+    if request.method == 'POST':
+        try:
+            captcha_validate_obj = captcha.objects.get(captcha_date=datetime.fromtimestamp(float(request.POST['captchatimestamp'])))
+            
+            if captcha_validate_obj.captcha_code != int(request.POST['SecurityCaptchaCode']):
+                try:
+                    os.remove(captcha_validate_obj.captcha_img)
+                except:
+                    pass
                 context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_captcha'}
                 return render(request, 'register.html', context)
+        except:
+            context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_captcha'}
+            return render(request, 'register.html', context)
 
-            if not expertise.objects.filter(expertise_name=request.POST['CategorySpeciality']).exists():
-                context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_speciality'}
-                return render(request, 'register.html', context)
+        if not expertise.objects.filter(expertise_name=request.POST['CategorySpeciality']).exists():
+            context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error':'invalid_speciality'}
+            return render(request, 'register.html', context)
 
-            coach_req, created = coach_requests.objects.get_or_create(coach_user=request.user)
-            
-            if created:
-                coach_req.coach_sharecode = request.POST['shareCode']
-                coach_req.coach_specialty = expertise.objects.get(expertise_name=request.POST['CategorySpeciality'])
-                coach_req.coach_city = request.POST['cityTitle']
-                coach_req.coach_experience = request.POST['CoachingYear']
-                coach_req.save()
-
-            return redirect('coach_register_successfull')
-
-        context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error': ''}
-        return render(request, 'register.html', context)
-
-def register_successfull(request):
-
-    for i in range(2,500):
-
-        pn = str('07') + str(randint(100000000, 1000000000))
-        User.objects.create_user(
-            phone=pn,
-            password=str(randint(100000000, 1000000000)),
-            full_name=f"User {i}"
-        )
-        user = User.objects.get(phone = pn)
-
-        coach_req, created = coach_requests.objects.get_or_create(coach_user=user)
+        coach_req, created = coach_requests.objects.get_or_create(coach_user=request.user)
         
         if created:
-            coach_req.coach_sharecode = str(randint(100000000, 1000000000-1))
-            specialties = ['Goalkeeping', 'Forward', 'Midfielder', 'Defender', 'Team Management']
-            coach_req.coach_specialty = expertise.objects.get(expertise_name=specialties[randint(0, len(specialties)-1)])
-            cities = ['London', 'Exeter', 'Manchester', 'Liverpool', 'Bermingham', 'Leicester', 'Nottingham', 'Oxford']
-            coach_req.coach_city = cities[randint(0, len(cities)-1)]
-            coach_req.coach_experience = randint(0, 20)
+            coach_req.coach_sharecode = request.POST['shareCode']
+            coach_req.coach_specialty = expertise.objects.get(expertise_name=request.POST['CategorySpeciality'])
+            coach_req.coach_city = request.POST['cityTitle']
+            coach_req.coach_experience = request.POST['CoachingYear']
             coach_req.save()
+
+        return redirect('coach_register_successfull')
+
+    context = {'expertise': expertise_options, 'captcha': str(date.timestamp()), 'error': ''}
+    return render(request, 'register.html', context)
+
+@login_required(login_url='registerlogin')
+def register_successfull(request):
 
     context = {}
     return render(request, 'register_successfull.html', context)
 
-
+@login_required(login_url='registerlogin')
 def coachrequests(request):
-    
+    request.session['AAAAAAAAAA'] = 'AAAAAAAAAAAAAAAAAAAAAAAA'
     try:
         page_number = int(request.GET.get("page"))
         if not page_number:
@@ -114,6 +91,11 @@ def coachrequests(request):
         page_number = 1
 
     if request.method == 'POST':
+        
+        for item in request.POST:
+            if item in ('filter_name', 'filter_city', 'filter_spec'):
+                request.session[item.split('_')[1]] = request.POST.get(item)
+
         if request.POST.get('state') == 'reject':
             try:
                 us = coach_requests.objects.get(coach_user__phone=request.POST.get('coach_phone_number'))
@@ -142,6 +124,10 @@ def coachrequests(request):
 
     if request.method == 'GET':
         
+        for item in request.GET:
+            if item in ('name', 'city', 'spec') and item in request.session:
+                del request.session[item]
+
         if 'name' in request.GET or 'city' in request.GET or 'spec' in request.GET:
             condition = {}
 
@@ -157,13 +143,16 @@ def coachrequests(request):
         else:
             coaches = coach_requests.objects.all()
 
+    else:
+        coaches = coach_requests.objects.all()
 
     specs_data = {}
     for coach in coaches:
-        spec = coach.coach_specialty.expertise_name
-        if spec not in specs_data:
-            specs_data[spec] = 0
-        specs_data[spec] += 1
+        if coach.coach_specialty:
+            spec = coach.coach_specialty.expertise_name
+            if spec not in specs_data:
+                specs_data[spec] = 0
+            specs_data[spec] += 1
 
     city_data = {}
     for coach in coaches:

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from store import views as store_views
 from CoachContracts import views as cc_views
+from coaching import views as coaching_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -31,6 +32,7 @@ urlpatterns = [
     path('CoachContracts/Contracts/Register', cc_views.register, name='coach_register'),
     path('CoachContracts/Contracts/RegisterSuccessFull', cc_views.register_successfull, name='coach_register_successfull'),
     path('CoachContracts/Contracts/CoachRequests', cc_views.coachrequests, name='coachrequests'),
+    path('coaching/coaches/', coaching_views.coaches, name='coaches'),
     path(
         "create-checkout-session/<int:pk>/",
         store_views.StripeCheckoutSession.as_view(),

@@ -78,13 +78,6 @@
     function submitForm(curObj) {
         
         var form_valid = true;
-        var fullNameSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=fullName]');
-        var fullName = fullNameSelector.val();
-        if (!fullName) {
-            showErrorForInput(fullNameSelector, 'Enter your first and last name');
-            var form_valid = false;
-        }
-        else {hideErrorForInput(fullNameSelector);}
 
         var shareCodeSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=shareCode]');
         var shareCode = shareCodeSelector.val();
@@ -109,24 +102,6 @@
             var form_valid = false;
         }
         else {hideErrorForInput(cityTitleSelector);}
-
-        var MobileNumberSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=MobileNumber]');
-        var MobileNumber = MobileNumberSelector.val();
-        if (!MobileNumber) {
-            showErrorForInput(MobileNumberSelector, 'Enter your mobile phone number');
-            var form_valid = false;
-        }
-        else if (MobileNumber && MobileNumber.substr(0, 2) != '07') {
-            showErrorForInput(MobileNumberSelector, 'Mobile phone number has incorrect format');
-            isValid = false;
-        }
-        else if (MobileNumber && MobileNumber.length != 11) {
-            showErrorForInput(MobileNumberSelector, 'Mobile phone number must be 11 digits');
-            isValid = false;
-        }
-        else {
-            hideErrorForInput(MobileNumberSelector);
-        }
 
         var CoachingYearSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=CoachingYear]');
         var CoachingYear = CoachingYearSelector.val();

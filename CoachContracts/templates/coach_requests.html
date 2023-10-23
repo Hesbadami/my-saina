@@ -3,6 +3,11 @@
 {% load get_dict %}
 {% block content %}
 
+{% if "name" in request.session or "city" in request.session or "spec" in request.session %}
+<script>
+    window.location.href='?page={{ cur_page }}{% if "name" in request.session %}&name={{ request.session|get_subdata:"name" }}{% endif %}{% if "city" in request.session %}&city={{ request.session.city }}{% endif %}{% if "spec" in request.session %}&spec={{ request.session.spec }}{% endif %}'
+</script>
+{% endif %}
 <section id=queueBackground class=container-fluid>
     <div class=container>
         <div class=row>
@@ -134,11 +139,21 @@
                     <script>
                         function approve(curObj) {
                             $(curObj).closest('form').append('<input type="hidden" name="state" value="approve">');
+                            {% for item in request.GET %}
+                                {% if item != 'page' %}
+                                    $(curObj).closest('form').append('<input type="hidden" name="filter_{{ item }}" value="{{ request.GET|get_subdata:item }}">');
+                                {% endif %}
+                            {% endfor %}
                             $(curObj).closest('form').submit();
                         }
 
                         function reject(curObj) {
                             $(curObj).closest('form').append('<input type="hidden" name="state" value="reject">');
+                            {% for item in request.GET %}
+                                {% if item != 'page' %}
+                                    $(curObj).closest('form').append('<input type="hidden" name="filter_{{ item }}" value="{{ request.GET|get_subdata:item }}">');
+                                {% endif %}
+                            {% endfor %}
                             $(curObj).closest('form').submit();
                         }
                     </script>

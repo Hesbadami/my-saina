@@ -1,5 +1,6 @@
 from django.db.models.functions import Now
 from django.shortcuts import render, redirect
+from django.urls import resolve
 from django.views.generic import TemplateView
 
 from ecommerce.settings import STRIPE_SECRET_KEY
@@ -20,7 +21,7 @@ from twilio.rest import Client
 User = get_user_model()
 
 twilio_account_sid = "AC5537bc9eccc68e9b994ea838e3a9036b"
-twilio_auth_token = "390ddcae02fc26852363727acaf9fd15"
+twilio_auth_token = "efcd016ff78afd5e05727ac1b4fe5e63"
 twilio_verify_sid = "VAab9851b6895dfdcf74db8262f15f768f"
 client = Client(twilio_account_sid, twilio_auth_token)
 
@@ -138,8 +139,8 @@ def registerlogin(request, data={}):
                 user.save()
 
                 login(request, user)
-                if 'coach_register' in request.session:
-                    return redirect('coach_register')
+                if request.GET.get('next'):
+                    return redirect(resolve(request.GET.get('next')).url_name)
                 return redirect('landing')
             
             elif 'PhoneNumber' in request.POST and 'Password' in request.POST:
@@ -157,8 +158,8 @@ def registerlogin(request, data={}):
                 user = authenticate(request, username=data['PhoneNumber'], password=data['Password'])
                 if user is not None:
                     login(request, user)
-                    if 'coach_register' in request.session:
-                        return redirect('coach_register')
+                    if request.GET.get('next'):
+                        return redirect(resolve(request.GET.get('next')).url_name)
                     return redirect('landing')
                 else:
                     context = {'phase': 'password', 'data': data, 'error': 'incorrect_password'}

@@ -2,9 +2,10 @@
 {% load static %}
 {% block content %}
 
+
 <style>.loaderBG{position:absolute;left:0;top:0;width:100%;height:100%;background-color:rgba(255,255,255,0.4)}.saina-form-box-bg{position:relative}</style>
 <section class=section-login id=sign-in-sign-up>
-    <form action="{% url 'registerlogin' %}" method=post>
+    <form action="{% url 'registerlogin' %}?next={{ request.GET.next }}" method=post>
         {% csrf_token %}
         {% if phase == 'phone' %}
         <div style=display:block>
@@ -42,7 +43,10 @@
                                     <p>Please enter the 6 digit code sent to your mobile phone.</p>
                                 </div>
                                 <ul class=saina-form>
-                                    <li class="saina-form-item saina-form-change-num"><span class=saina-form-user-number> {{ data.PhoneNumberr }} </span> <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change number </a></li>
+                                    <li class="saina-form-item saina-form-change-num">
+                                        <span class=saina-form-user-number> {{ data.PhoneNumber }} </span> 
+                                        <a onclick=moveToFirstStep() class=saina-form-change-num-lnk> Change number </a>
+                                    </li>
                                     {% if error == 'incorrect_otp' %}
                                     <li class="saina-form-item saina-form-item-validation">
                                     {% else %}
