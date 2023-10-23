@@ -14,6 +14,8 @@ from django.views import View
 User = get_user_model()
 
 def coaches(request):
+    city_data = {'London': 25}
     specs = [ex.expertise_name for ex in expertise.objects.all()]
-    context = {'specs':specs}
+    coach_list = Coach.objects.all()
+    context = {'coach_list': coach_list, 'specs':specs, 'city_data':city_data}
     return render(request, 'coaches.html', context)

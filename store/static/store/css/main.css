@@ -1,8 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 *,::after,::before{
     box-sizing:border-box
 }
 html{
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     line-height:1.15;
     -webkit-text-size-adjust:100%;
     -ms-text-size-adjust:100%;
@@ -14,7 +16,7 @@ article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{
 }
 body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,'Open Sans', sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     font-size:1rem;
     font-weight:400;
     line-height:1.5;
@@ -5220,7 +5222,7 @@ i.sideNavDownloadBox-drsaina-icon{
     }
 }
 *{
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     font-size:14px;
     direction:ltr;
     line-height:1.8em
@@ -13409,7 +13411,7 @@ figure.cost-img>img{
 }
 
 .searchResualtProfile * {
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
 }
 
 .searchProfileProperty .link-Booked {
@@ -13510,7 +13512,7 @@ ul.searchProfileContent>li>a {
 
 .searchResualtProfile h5,.searchResualtProfile label {
     font-size: 14px;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
 }
 
 .searchResualtProfile p.searchAddress label {
@@ -13532,7 +13534,7 @@ ul.searchProfileContent>li>a {
 }
 
 .searchResualtProfile * {
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
 }
 
 .searchResualtProfile .searchProfileContent h2 {
@@ -13688,7 +13690,7 @@ div.searchProfileMatab>ul li>img {
 
 .searchProfileMatab>ul>li * {
     font-size: 12px;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
 }
 
 .searchHeaderBoxMobileBox {
@@ -13999,7 +14001,7 @@ ul.MatabWelfares>li.imgEvelator>a {
 
 .lbl-count-sm>h3 {
     font-size: 2em;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     text-align: center
 }
 
@@ -14019,7 +14021,7 @@ ul.search-filter>li>a.del-filter {
     background-repeat: no-repeat;
     background-position: center right;
     font-size: 11px;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     color: #777;
     text-align: left;
     padding-right: 20px
@@ -14030,7 +14032,7 @@ ul.search-filter>li a {
     background-position: center right;
     background-size: 15px 15px;
     font-size: 11px;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     color: #000;
     text-align: left;
     padding-right: 20px
@@ -14064,7 +14066,7 @@ ul.search-filter>li a {
 }
 
 ul.SearchContent * {
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
 }
 
 ul.SearchContent.Searchdocters-sm>li {
@@ -14120,7 +14122,7 @@ ul.search-filter {
 }
 
 ul.SearchContent-sm.Searchclinic-sm * {
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
 }
 
 ul.SearchContent-sm {
@@ -14191,7 +14193,7 @@ ul.SearchContent.SearchHospital-sm>li.btnSearchContent-sm>a {
     margin: 11px 1 0 auto%;
     padding: .5em;
     text-align: center;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     font-size: 15px
 }
 
@@ -14207,7 +14209,7 @@ ul.SearchContent.SearchHospital-sm>li.btnSearchContent-sm>a {
     margin: 11px 1 0 auto%;
     padding: .3em .5em .3em .5em;
     text-align: center;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     font-size: 15px
 }
 
@@ -15026,7 +15028,7 @@ ul.SearchContent.SearchHospital-sm>li.btnSearchContent-sm>a {
 }
 
 .pagination * {
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
 }
 
 .pagination {
@@ -15047,7 +15049,7 @@ ul.SearchContent.SearchHospital-sm>li.btnSearchContent-sm>a {
     border: none;
     color: #999;
     font-size: 12px;
-    font-family:sans-serif;
+    font-family:'Open Sans', sans-serif;
     float: none!important;
     padding: 6px 12px;
     border-radius: 100% 100%;

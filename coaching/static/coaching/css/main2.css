@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+
 button:focus,input:focus,select:focus,textarea:focus {
     outline: 0
 }
@@ -10111,8 +10114,25 @@ i.profile__switch__container__green__left {
     color: #4f6470;
     cursor: pointer
 }
+.city_filters_container .city_filters_item {
+    border: 1px solid #e6e9eb;
+    outline: 0;
+    padding: 4px 8px;
+    margin: 4px 4px;
+    background-color: transparent;
+    border-radius: 999px;
+    font-size: 12px;
+    color: #4f6470;
+    cursor: pointer
+}
 
 .diseases_filters_container .--active {
+    background-color: #08b89d!important;
+    color: #fff!important;
+    border-color: #08b89d!important
+}
+
+.city_filters_container .--active {
     background-color: #08b89d!important;
     color: #fff!important;
     border-color: #08b89d!important
@@ -12208,7 +12228,7 @@ i.profile__switch__container__green__left {
 }
 
 .doctor-card-comments-icon {
-    background-image: url(/themes/_shared/image/doctor-comments.svg);
+    background-image: url(/static/coaching/images/doctor-comments.svg);
     display: flex;
     width: 16px;
     height: 15px;
@@ -13016,7 +13036,7 @@ i.profile__switch__container__green__left {
 }
 
 .fast-c-jrny-modal-suggestion-result-page-section-doc-card>.fast-c-doctor-bottom>.fast-c-doctor-bottom-badge.doctor-comments>i {
-    background-image: url(/themes/_shared/image/doctor-comments.svg);
+    background-image: url(/static/coaching/images/doctor-comments.svg);
     display: flex;
     width: 9px;
     height: 8px;
