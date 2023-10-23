@@ -33,6 +33,7 @@ urlpatterns = [
     path('CoachContracts/Contracts/RegisterSuccessFull', cc_views.register_successfull, name='coach_register_successfull'),
     path('CoachContracts/Contracts/CoachRequests', cc_views.coachrequests, name='coachrequests'),
     path('coaching/coaches/', coaching_views.coaches, name='coaches'),
+    path('coaching/coaches/load', coaching_views.load_more, name='load'),
     path(
         "create-checkout-session/<int:pk>/",
         store_views.StripeCheckoutSession.as_view(),

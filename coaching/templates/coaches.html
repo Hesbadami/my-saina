@@ -9,26 +9,26 @@
     <div class="row">
         <div class="container">
             <div id="consulation-filter" class="boxConsultant-filter col-md-3 float-right">
-                <div class="consultation-filter-box">
+                <div class="consultation-filter-box {% if request.GET %}filterChanged{% endif %}">
                     <div class="consultation-filter-header">
-                        <span class="fa fa-close" title="close"></span> 
+                        <span class="fa fa-close icon-close" title="close"></span> 
                         <i class="consultation-filter-header-icon fa fa-sliders"></i> 
                         <span class="consultation-filter-header-caption">Filters</span> 
                         <span class="consultation-filter-delete" onclick="resetCheckBox(this)">Remove filters</span>
                     </div>
+                    <div class="filtered_now_list_container filtered_now_list_container__m" id="filtered_now____"></div>
                     <div class="consultation-filter-body">
-                        <ul class="consultation-filter-lists consultation-filter-available">
-                            <ul class="consultation-filter-lists consultation-filter-available border-0" style="border-bottom:0">
-                                <li class="consultation-filter-item-caption">
-                                    <label class="consultation-filter-item-text">Cities</label>
-                                    <div><input autocomplete="off" id="filters_cities_input" placeholder="Search speciality" class="consultation-filter-item-diseases_input"></div>
-                                    <div class="city_filters_container">
-                                        {% for city in city_data %}
-                                        <button data-href="1132" class="city_filters_item" style="display: block;"> {{ city }} ({{ city_data|get_subdata:city }}) </button>
-                                        {% endfor %}
-                                    </div>
-                                </li>
-                            </ul>
+                        <ul class="consultation-filter-lists consultation-filter-available border-0">
+                            <li class="consultation-filter-item-caption">
+                                <label class="consultation-filter-item-text">Specialities</label>
+                                <div><input autocomplete="off" id="filters_diseases_input" placeholder="Search speciality" class="consultation-filter-item-diseases_input"></div>
+                                <div class="diseases_filters_container">
+                                    {% for spec in specs_data %}
+                                    <button data-href="{{ spec }}" class="diseases_filters_item {% if request.GET|get_subdata:'spec' == spec %}--active{% endif %} " style="display: block;"> {{ spec }} ({{ specs_data|get_subdata:spec }}) </button>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        </ul>
                         <ul class="consultation-filter-lists">
                             <li class="consultation-filter-item-caption"><label class="consultation-filter-item-text">Coach gender</label></li>
                             <div class="consultation-filter-item___container_box">
@@ -38,11 +38,11 @@
                         </ul>
                         <ul class="consultation-filter-lists consultation-filter-available border-0" style="border-bottom:0">
                             <li class="consultation-filter-item-caption">
-                                <label class="consultation-filter-item-text">Specialities</label>
-                                <div><input autocomplete="off" id="filters_diseases_input" placeholder="Search speciality" class="consultation-filter-item-diseases_input"></div>
-                                <div class="diseases_filters_container">
-                                    {% for spec in specs %}
-                                    <button data-href="1132" class="diseases_filters_item" style="display: block;"> {{ spec }} </button>
+                                <label class="consultation-filter-item-text">Cities</label>
+                                <div><input autocomplete="off" id="filters_cities_input" placeholder="Search cities" class="consultation-filter-item-diseases_input"></div>
+                                <div class="city_filters_container">
+                                    {% for city in city_data %}
+                                    <button data-href="{{ city }}" class="city_filters_item {% if request.GET|get_subdata:'city' == city %}--active{% endif %} " style="display: block;"> {{ city }} ({{ city_data|get_subdata:city }}) </button>
                                     {% endfor %}
                                 </div>
                             </li>
@@ -73,54 +73,41 @@
                         </div>
                     </div>
                     <script>
-
-                        function createWhiteBody() {
-                            window.body.style.transition = 'opacity 500ms'
-                            window.body.style.opacity = 0.5
-                            setTimeout(function() {
-                                window.body.style.opacity = 1
-                            }, 8000)
-                        }
-                        var showAllDiseasesBtn = false
-                        var showAllDiseases = false
-
                         function handleShowDieases(isSearching) {
                             $('.diseases_filters_container > button').each(function(dieases__index) {
                                 $(this).css('display', 'block')
-                                if (dieases__index > 5) {
-                                    showAllDiseasesBtn = true
-                                    if (!showAllDiseases) $(this).css('display', 'none')
-                                }
+
                             })
-                            $('.showAllDiseasesBtn').css('display', showAllDiseasesBtn && !isSearching ? 'flex' : 'none')
                         }
+
+                        function handleShowCities(isSearching) {
+                            $('.city_filters_container > button').each(function(dieases__index) {
+                                $(this).css('display', 'block')
+                            })
+                        }
+
                         $('.diseases_filters_item').on('click', function() {
                             var _urlParams_disease = new URL(window.location);
-                            _urlParams_disease.searchParams.delete('disease')
-                            var hrefId = $(this).attr('data-href')
-                            if (getActiveFilter('disease') && !!hrefId === true) {
-                                onClickDiseaseFilter(false)
-                            }
-                            onClickDiseaseFilter(!!hrefId, hrefId)
-                            if (hrefId) {
-                                _urlParams_disease.searchParams.set('disease', $(this).attr('data-href'))
-                            }
+                            _urlParams_disease.searchParams.delete('spec')
+                            _urlParams_disease.searchParams.set('spec', $(this).attr('data-href'))
                             window.history.replaceState({}, '', _urlParams_disease);
-                            createWhiteBody()
                             window.scrollTo(0, 0)
                             window.location.reload()
                         })
+                        $('.city_filters_item').on('click', function() {
+                            var _urlParams_disease = new URL(window.location);
+                            _urlParams_disease.searchParams.delete('city')
+                            _urlParams_disease.searchParams.set('city', $(this).attr('data-href'))
+                            window.history.replaceState({}, '', _urlParams_disease);
+                            window.scrollTo(0, 0)
+                            window.location.reload()
+                        })
+
                         $('.exactly-category-button-item-filter').on('click', function() {
                             if ($(this).attr('data-href')) {
                                 window.location.href = $(this).attr('data-href') + window.location.search
                                 createWhiteBody()
                             }
-                        })
-                        $('.showAllDiseasesBtn').on('click', function() {
-                            showAllDiseases = !showAllDiseases
-                            $('.showAllDiseasesBtn span').text(showAllDiseases ? "Show less" : "Show more")
-                            $('.showAllDiseasesBtn i').toggleClass('showAllDiseasesBtn--close__i_rotate')
-                            handleShowDieases(false)
                         })
                         var showAllDoctors = false
                         $('#filters_diseases_input').on('input', function(e) {
@@ -129,7 +116,6 @@
                                 handleShowDieases(false)
                                 return
                             }
-                            $('.showAllDiseasesBtn').css('display', 'none')
                             $('.diseases_filters_container > button ').each(function() {
                                 var diease_inner_text = $(this).text()
                                 if (diease_inner_text.includes(_searchVal)) {
@@ -142,11 +128,10 @@
                         $('#filters_cities_input').on('input', function(e) {
                             var _searchVal = e.target.value
                             if (!_searchVal) {
-                                handleShowDieases(false)
+                                handleShowCities(false)
                                 return
                             }
-                            $('.showAllDiseasesBtn').css('display', 'none')
-                            $('.cities_filters_container > button ').each(function() {
+                            $('.city_filters_container > button ').each(function() {
                                 var city_inner_text = $(this).text()
                                 if (city_inner_text.includes(_searchVal)) {
                                     $(this).css('display', 'block');
@@ -161,42 +146,17 @@
                         });
 
                         function resetCheckBox(curThis) {
-                            window.dataLayer.push({
-                                activeFilters: undefined
-                            })
-                            window.dataLayer.push({
-                                event: 'remove_all_filters',
-                                ecommerce: undefined,
-                                activeFilters: getActiveFilters()
-                            })
                             var urlSearchDisease = new URLSearchParams(window.location.search)
-                            if (urlSearchDisease.get('disease')) {
-                                var __parent_filter = urlSearchDisease.get('parent')
-                                if (__parent_filter) {
-                                    createWhiteBody()
-                                    window.scrollTo(0, 0)
-                                    window.location.replace(window.location.origin + window.location.pathname + "?parent=" + __parent_filter)
-                                } else {
-                                    createWhiteBody()
-                                    window.scrollTo(0, 0)
-                                    window.location.replace(window.location.origin + window.location.pathname)
-                                }
+                            if (urlSearchDisease.get('spec')) {
+                                window.scrollTo(0, 0)
+                                window.location.replace(window.location.origin + window.location.pathname)
                             }
                             var urlSearchCity = new URLSearchParams(window.location.search)
                             if (urlSearchDisease.get('city')) {
-                                var __parent_filter = urlSearchDisease.get('parent')
-                                if (__parent_filter) {
-                                    createWhiteBody()
-                                    window.scrollTo(0, 0)
-                                    window.location.replace(window.location.origin + window.location.pathname + "?parent=" + __parent_filter)
-                                } else {
-                                    createWhiteBody()
-                                    window.scrollTo(0, 0)
-                                    window.location.replace(window.location.origin + window.location.pathname)
-                                }
+                                window.scrollTo(0, 0)
+                                window.location.replace(window.location.origin + window.location.pathname)
                             }
                             $('#justMaleR').removeAttr('checked');
-                            $('#f_specialization').removeAttr('checked');
                             $('#justFemaleR').removeAttr('checked');
                             $(curThis).closest('.consultation-filter-box').removeClass('filterChanged');
                             $('.mobile_clear_all_filters__').css('display', 'flex')
@@ -226,88 +186,29 @@
                         });
 
                         function soSearch(canClose) {
-                            showAllDoctors = true
-                            $('.expandable').children().slice(0, 10).appendTo($('.listOfConsultants_manBox .main-doctor-list'));
+                            showThisRow = true
                             if ($('.listOfConsultants_manBox .expandable').children().length === 0) {
                                 $('.listOfConsultants_manBox .expandable').remove();
-                                $('.show_more_doctors_list').css('display', 'none');
                             }
                             if ($(window).width() <= 750 && canClose != true) {
                                 $('#consulation-filter').css('display', 'none');
                             }
                             var isFemale = $('#justFemaleR').is(':checked');
                             var isMale = $('#justMaleR').is(':checked');
-                            var isOnlineValue = $('#cb_isOnline').is(':checked');
-                            var cb_hasChat = $('#cb_hasChat').is(':checked');
-                            var cb_hasPhoneCallValue = $('#cb_hasPhoneCall').is(':checked');
-                            var cb_Insurance = $("#cb_hasInsurance").is(':checked');
-                            var cb_hasFastPhoneCallValue = $('#cb_hasFastPhoneCall').is(':checked');
-                            var cb_hasVideoCallValue = $('#cb_hasVideoCall').is(':checked');
-                            var f_specialization = $('#f_specialization').is(':checked');
-                            var f_upper_specialization = $('#f_upper_specialization').is(':checked');
+                            console.log(isMale)
                             var all_of_filters = {
                                 isFemale: {
                                     value: isFemale,
                                     id: 'justFemaleR',
-                                    caption: 'خانم'
+                                    caption: 'Female'
                                 },
                                 isMale: {
                                     value: isMale,
                                     id: 'justMaleR',
-                                    caption: 'آقا'
-                                },
-                                isOnlineValue: {
-                                    value: isOnlineValue,
-                                    id: 'cb_isOnline',
-                                    caption: 'پزشکان فعال'
-                                },
-                                cb_hasPhoneCallValue: {
-                                    value: cb_hasPhoneCallValue,
-                                    id: 'cb_hasPhoneCall',
-                                    caption: 'تلفنی'
-                                },
-                                cb_Insurance: {
-                                    value: cb_Insurance,
-                                    id: 'cb_hasInsurance',
-                                    caption: 'با بیمه'
-                                },
-                                cb_hasFastPhoneCallValue: {
-                                    value: cb_hasFastPhoneCallValue,
-                                    id: 'cb_hasFastPhoneCall',
-                                    caption: 'تلفنی فوری'
-                                },
-                                f_specialization: {
-                                    value: f_specialization,
-                                    id: 'f_specialization',
-                                    caption: 'تخصص'
-                                },
-                                f_upper_specialization: {
-                                    value: f_upper_specialization,
-                                    id: 'f_upper_specialization',
-                                    caption: 'فوق تخصص'
-                                },
-                                cb_hasVideoCallValue: {
-                                    value: cb_hasVideoCallValue,
-                                    id: 'cb_hasVideoCall',
-                                    caption: 'ویدئویی'
-                                },
-                                cb_hasChat: {
-                                    value: cb_hasChat,
-                                    id: 'cb_hasChat',
-                                    caption: 'متنی'
+                                    caption: 'Male'
                                 }
                             }
                             var _urlParams = new URL(window.location);
-                            $('#custom_dynamic_specialization > li > input').each(function() {
-                                if ($(this)[0].hasAttribute("custom_dynamic_specialization")) {
-                                    all_of_filters[$(this).attr("id")] = {
-                                        value: $(this).is(':checked') || false,
-                                        id: $(this).attr("id"),
-                                        caption: $(this).attr("data-caption"),
-                                        customType: "custom_dynamic_specialization"
-                                    }
-                                }
-                            })
                             var fContainer = $(".filtered_now_list_container")
                             $('#filtered_now____').children('').each(function() {
                                 if (!$(this).attr('custom_dynamic_disease')) $(this).remove()
@@ -319,162 +220,26 @@
                                 fContainer.removeClass('f_no_d')
                                 if (_f_i_c[1].value) {
                                     _urlParams.searchParams.set(_f_i_c[1].id, 'true');
-                                    fContainer.append(`<button onclick="removeF_D('${_f_i_c[1].id}')" class="filtered_now_list_item">${_f_i_c[1].caption} <i class="icon icon-close close_filter_btn_icon" ></i></button>`)
+                                    fContainer.append(`<button onclick="removeF_D('${_f_i_c[1].id}')" class="filtered_now_list_item"><i class="fa icon-close fa-close close_filter_btn_icon" ></i> ${_f_i_c[1].caption}</button>`)
                                 } else {
                                     _urlParams.searchParams.delete(_f_i_c[1].id)
                                 }
                             })
                             window.history.replaceState({}, '', _urlParams);
                             var boolShowAll = false;
-                            if (cb_hasChat == false && f_specialization == false && f_upper_specialization == false && isOnlineValue == false && cb_hasPhoneCallValue == false && cb_hasFastPhoneCallValue == false && cb_Insurance == false && cb_hasVideoCallValue == false && isFemale == false && isMale == false) {
+                            if (isFemale == false && isMale == false) {
                                 boolShowAll = true;
                             }
                             $('.listOfConsultants_manBox > ul > li').each(function(_index) {
                                 var dataGender = $(this).attr('data-gender');
-                                if (dataGender)
-                                    dataGender = dataGender.toLowerCase();
-                                var dataFastPH = $(this).attr('data-hasfastphone');
-                                if (dataFastPH)
-                                    dataFastPH = dataFastPH.toLowerCase();
-                                var dataPH = $(this).attr('data-hasphone');
-                                if (dataPH)
-                                    dataPH = dataPH.toLowerCase();
-                                var dataInsurance = $(this).attr('data-insuranceIsActive');
-                                if (dataInsurance)
-                                    dataInsurance = dataInsurance.toLowerCase();
-                                var dataVideoCall = $(this).attr('data-videocall');
-                                if (dataVideoCall)
-                                    dataVideoCall = dataVideoCall.toLowerCase();
-                                var dataIsOnline = $(this).attr('data-isOnline');
-                                if (dataIsOnline)
-                                    dataIsOnline = dataIsOnline.toLowerCase();
-                                var dataHasChat = $(this).attr('data-chat');
-                                if (dataHasChat)
-                                    dataHasChat = dataHasChat.toLowerCase();
-                                var dataSuperExpert = $(this).attr('data-super-expert');
-                                if (dataSuperExpert)
-                                    dataSuperExpert = dataSuperExpert.toLowerCase();
-                                var showThisRow = true;
-                                if ((isOnlineValue == true && dataIsOnline != isOnlineValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_hasFastPhoneCallValue == true && dataFastPH != cb_hasFastPhoneCallValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_Insurance == true && dataInsurance != cb_Insurance.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_hasVideoCallValue == true && dataVideoCall != cb_hasVideoCallValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_hasPhoneCallValue == true && dataPH != cb_hasPhoneCallValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if (f_specialization == true && f_upper_specialization == true) {} else {
-                                    if (f_specialization == true && dataSuperExpert !== "false") {
-                                        showThisRow = false;
-                                    }
-                                    if (f_upper_specialization == true && dataSuperExpert !== "true") {
-                                        showThisRow = false;
-                                    }
-                                }
                                 if (isMale == true && isFemale == true) {} else {
-                                    if (isFemale == true && dataGender !== "false") {
+                                    if (isFemale == true && dataGender !== "Female") {
                                         showThisRow = false;
                                     }
-                                    if (isMale == true && dataGender !== "true") {
-                                        showThisRow = false;
-                                    }
-                                }
-                                if (cb_hasChat == true && dataHasChat !== "true") {
-                                    showThisRow = false;
-                                }
-                                var ___has_one_custom_dynamic_specialization = false
-                                var ___should_custom_dynamic_specialization = false
-                                for (var filter_itrator in all_of_filters) {
-                                    if (all_of_filters[filter_itrator].customType == "custom_dynamic_specialization" && all_of_filters[filter_itrator].value) {
-                                        ___should_custom_dynamic_specialization = true
-                                        if ($(this).attr(`data-expr-${all_of_filters[filter_itrator].id.split("_")[2]}`) === "1")
-                                            ___has_one_custom_dynamic_specialization = true;
-                                    }
-                                }
-                                if (___should_custom_dynamic_specialization && !___has_one_custom_dynamic_specialization) showThisRow = false;
-                                if (showThisRow == false) {
-                                    $(this).css('display', 'none');
-                                } else {
-                                    $(this).css('display', 'flex');
-                                }
-                            })
-                            $('.expandable > li').each(function(_index) {
-                                var dataGender = $(this).attr('data-gender');
-                                if (dataGender)
-                                    dataGender = dataGender.toLowerCase();
-                                var dataFastPH = $(this).attr('data-hasfastphone');
-                                if (dataFastPH)
-                                    dataFastPH = dataFastPH.toLowerCase();
-                                var dataPH = $(this).attr('data-hasphone');
-                                if (dataPH)
-                                    dataPH = dataPH.toLowerCase();
-                                var dataInsurance = $(this).attr('data-insuranceIsActive');
-                                if (dataInsurance)
-                                    dataInsurance = dataInsurance.toLowerCase();
-                                var dataVideoCall = $(this).attr('data-videocall');
-                                if (dataVideoCall)
-                                    dataVideoCall = dataVideoCall.toLowerCase();
-                                var dataIsOnline = $(this).attr('data-isOnline');
-                                if (dataIsOnline)
-                                    dataIsOnline = dataIsOnline.toLowerCase();
-                                var dataHasChat = $(this).attr('data-chat');
-                                if (dataHasChat)
-                                    dataHasChat = dataHasChat.toLowerCase();
-                                var dataSuperExpert = $(this).attr('data-super-expert');
-                                if (dataSuperExpert)
-                                    dataSuperExpert = dataSuperExpert.toLowerCase();
-                                var showThisRow = true;
-                                if ((isOnlineValue == true && dataIsOnline != isOnlineValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_hasFastPhoneCallValue == true && dataFastPH != cb_hasFastPhoneCallValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_Insurance == true && dataInsurance != cb_Insurance.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_hasVideoCallValue == true && dataVideoCall != cb_hasVideoCallValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if ((cb_hasPhoneCallValue == true && dataPH != cb_hasPhoneCallValue.toString())) {
-                                    showThisRow = false;
-                                }
-                                if (f_specialization == true && f_upper_specialization == true) {} else {
-                                    if (f_specialization == true && dataSuperExpert !== "false") {
-                                        showThisRow = false;
-                                    }
-                                    if (f_upper_specialization == true && dataSuperExpert !== "true") {
+                                    if (isMale == true && dataGender !== "Male") {
                                         showThisRow = false;
                                     }
                                 }
-                                if (isMale == true && isFemale == true) {} else {
-                                    if (isFemale == true && dataGender !== "false") {
-                                        showThisRow = false;
-                                    }
-                                    if (isMale == true && dataGender !== "true") {
-                                        showThisRow = false;
-                                    }
-                                }
-                                if (cb_hasChat == true && dataHasChat !== "true") {
-                                    showThisRow = false;
-                                }
-                                var ___has_one_custom_dynamic_specialization = false
-                                var ___should_custom_dynamic_specialization = false
-                                for (var filter_itrator in all_of_filters) {
-                                    if (all_of_filters[filter_itrator].customType == "custom_dynamic_specialization" && all_of_filters[filter_itrator].value) {
-                                        ___should_custom_dynamic_specialization = true
-                                        if ($(this).attr(`data-expr-${all_of_filters[filter_itrator].id.split("_")[2]}`) === "1")
-                                            ___has_one_custom_dynamic_specialization = true;
-                                    }
-                                }
-                                if (___should_custom_dynamic_specialization && !___has_one_custom_dynamic_specialization) showThisRow = false;
                                 if (showThisRow == false) {
                                     $(this).css('display', 'none');
                                 } else {
@@ -482,24 +247,19 @@
                                 }
                             })
                         }
-
+                        
                         function removeF_D(f_name_d) {
                             ecommerceFiltersClickHandler(f_name_d, false)
                             if (f_name_d == 'disease') {
                                 var _urlParams_disease_remove = new URL(window.location);
                                 _urlParams_disease_remove.searchParams.delete('disease')
                                 window.history.replaceState({}, '', _urlParams_disease_remove);
-                                createWhiteBody()
                                 window.location.reload()
                                 window.scrollTo(0, 0)
                                 return
                             }
                             $("#" + f_name_d).prop('checked', false);
                             setTimeout(soSearch, 20)
-                        }
-
-                        function hideLargeDoctorList() {
-                            $('.listOfConsultants_manBox .expandable').css('display', 'none')
                         }
 
                         function changeSort(sortValue) {
@@ -509,8 +269,8 @@
                                 var isAsc = true;
                                 targetValue = 'data-pos';
                             } else if (sortValue == 2) {
-                                targetValue = 'data-expdate';
-                                isAsc = true;
+                                targetValue = 'data-exp';
+                                isAsc = false;
                             } else if (sortValue == 3) {
                                 isAsc = false;
                                 targetValue = 'data-rating';
@@ -534,50 +294,25 @@
                             allRow = allRow.sort(function(a, b) {
                                 return isAsc == true ? (a.sortProperty - b.sortProperty) : (b.sortProperty - a.sortProperty);
                             });
-                            var ofDoc = [];
                             if (allRow != null && allRow.length > 0) {
                                 $('.listOfConsultants_manBox > ul').html('');
                                 for (var i = 0; i < allRow.length; i++) {
-                                    if (allRow[i].html.attr("data-isOnline") == "False") {
-                                        ofDoc.push(allRow[i]);
-                                    } else {
-                                        $('.listOfConsultants_manBox > ul').append(allRow[i].html);
-                                    }
-                                }
-                                for (var i = 0; i < ofDoc.length; i++) {
-                                    $('.listOfConsultants_manBox > ul').append(ofDoc[i].html);
+                                    $('.listOfConsultants_manBox > ul').append(allRow[i].html);
                                 }
                                 $(".listOfConsultants_manBox > ul > li[data-rating='']").attr("data-rating", "1")
                             }
                         }
-                        $(document).ready(function() {
-                            hideLargeDoctorList()
-                            handleShowDieases(false)
-                            var rowItem = $(".rowItem_LC");
-                            for (var i = 0; i < rowItem.length; i++) {
-                                $($(".rowItem_LC")[i]).attr("data-pos", i + 1);
-                            }
-                            new URLSearchParams(window.location.search).forEach(function(value_search_params, key_search_params) {
-                                if (key_search_params === 'disease') {
-                                    $('.consultation-filter-box').addClass('filterChanged');
-                                }
-                                if (value_search_params == 'true') {
-                                    $(`#${key_search_params}`).click()
-                                }
-                            });
-                        });
-
                     </script>
                 </div>
                 <div class="listOfConsultants_manBox">
                     <ul class="main-doctor-list">
                         {% for coach in coach_list %}
-                        <li data-isonline="True" data-super-expert="False" data-gender="False" data-hasfastphone="False" data-insuranceisactive="False" data-hasphone="True" data-expdate="1390" data-rating="98.31893892658853" data-videocall="False" data-chat="False" class="rowItem_LC doctorId doctor-card-container" data-id="014c2f112cc14d148ec2cc077c4b554b" data-name="{{ coach.coach_user.full_name }}  " data-category="coaching" data-expertise="{{ coach.coach_specialty }}" data-superexpertise="" data-childcategory="coaching" data-expr-1579="1" data-pos="1" data-ecm-visited="1" data-ecm-view="1" data-ecm-ga4-visited="1" data-ecm-ga4-view="1">
+                        <li data-isonline="True" data-super-expert="False" data-gender="{{ coach.coach_gender }}" data-hasfastphone="False" data-insuranceisactive="False" data-hasphone="True" data-exp="{{ coach.coach_experience }}" data-rating="{% widthratio coach.coach_rating 1 20 %}" data-videocall="False" data-chat="False" class="rowItem_LC doctorId doctor-card-container" data-id="014c2f112cc14d148ec2cc077c4b554b" data-name="{{ coach.coach_user.full_name }}  " data-category="coaching" data-expertise="{{ coach.coach_speciality }}" data-superexpertise="" data-childcategory="coaching" data-expr-1579="1" data-pos="{{ forloop.counter }}" data-ecm-visited="1" data-ecm-view="1" data-ecm-ga4-visited="1" data-ecm-ga4-view="1">
                             <a class="doctor-card-container-layout" href="/doctorConsulation/{{ coach.coach_user.phone }}/" title="Coaching with {{ coach.coach_user.full_name }}    ">
                                 <div class="doctor-card-right-side">
                                     <div class="doctor-card-personal-info-container">
                                         <div class="doctor-card-personal-image"><img src="{% static 'coaching/images/avatar.png' %}"  title="Coaching with {{ coach.coach_user.full_name }}    " alt="Coaching with {{ coach.coach_user.full_name }}    " loading="lazy"> <i class="doctor-card-activity-status online-status rounded-circle"></i></div>
-                                        <div class="doctor-card-personal-info"><span class="doctor-card-personal-info-name">{{ coach.coach_user.full_name }} </span> <span class="doctor-card-personal-info-specialty">{{ coach.coach_specialty }}</span> <span class="doctor-card-personal-info-specialty doctor-card-personal-info-super-specialty"></span></div>
+                                        <div class="doctor-card-personal-info"><span class="doctor-card-personal-info-name">{{ coach.coach_user.full_name }} </span> <span class="doctor-card-personal-info-specialty">{{ coach.coach_speciality }}</span> <span class="doctor-card-personal-info-specialty doctor-card-personal-info-super-specialty"></span></div>
                                     </div>
                                     <div class="doctor-card-platform-info-container">
                                         <div class="doctor-card-platform-info"><span class="doctor-card-rating"> <i class="fa fa-star"></i> 4.9 </span> <span class="doctor-card-comments"> <i class="doctor-card-comments-icon"></i> <span class="doctor-card-comments-text">3242 comments</span> </span></div>
@@ -595,567 +330,83 @@
                             </a>
                         </li>
                         {% endfor %}
-                        <ul class="expandable" style="display:none">
-                            {% for coach in coach_list %}
-                            <li data-isonline="True" data-super-expert="False" data-gender="False" data-hasfastphone="False" data-insuranceisactive="False" data-hasphone="True" data-expdate="1390" data-rating="98.31893892658853" data-videocall="False" data-chat="False" class="rowItem_LC doctorId doctor-card-container" data-id="014c2f112cc14d148ec2cc077c4b554b" data-name="{{ coach.coach_user.full_name }}  " data-category="coaching" data-expertise="{{ coach.coach_specialty }}" data-superexpertise="" data-childcategory="coaching" data-expr-1579="1" data-pos="1" data-ecm-visited="1" data-ecm-view="1" data-ecm-ga4-visited="1" data-ecm-ga4-view="1">
-                                <a class="doctor-card-container-layout" href="/coaching/{{ coach.coach_user.phone }}/" title="Coaching with {{ coach.coach_user.full_name }}    ">
-                                    <div class="doctor-card-right-side">
-                                        <div class="doctor-card-personal-info-container">
-                                            <div class="doctor-card-personal-image"><img src="{% static 'coaching/images/avatar.png' %}"  title="Coaching with {{ coach.coach_user.full_name }}    " alt="Coaching with {{ coach.coach_user.full_name }}    " loading="lazy"> <i class="doctor-card-activity-status online-status rounded-circle"></i></div>
-                                            <div class="doctor-card-personal-info"><span class="doctor-card-personal-info-name">{{ coach.coach_user.full_name }} </span> <span class="doctor-card-personal-info-specialty">{{ coach.coach_specialty }}</span> <span class="doctor-card-personal-info-specialty doctor-card-personal-info-super-specialty"></span></div>
-                                        </div>
-                                        <div class="doctor-card-platform-info-container">
-                                            <div class="doctor-card-platform-info"><span class="doctor-card-rating"> <i class="fa fa-star"></i> 4.9 </span> <span class="doctor-card-comments"> <i class="doctor-card-comments-icon"></i> <span class="doctor-card-comments-text">3242 comments</span> </span></div>
-                                        </div>
-                                    </div>
-                                    <div class="doctor-card-left-side">
-                                        <div class="doctor-card-business-info">
-                                            <div class="doctor-card-business-info-row"><span class="doctor-card-business-info-title">Experience:</span> <span class="doctor-card-business-info-value">{{ coach.coach_experience }} years</span></div>
-                                            <div class="doctor-card-business-info-row"><span class="doctor-card-business-info-title">Successfull coachings:</span> <span class="doctor-card-business-info-value">8925</span> <span class="doctor-card-business-info-subtitle">( in 3 years and 6 months )</span></div>
-                                        </div>
-                                        <div class="doctor-card-cta-container">
-                                            <div class="green-tertiary-btn doctor-card-cta">Get coaching <i class="icon icon-arrow-left"></i></div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
                     </ul>
-                    <div class="show_more_doctors_list" onclick="soSearch()" style="display:flex">Show more coaches</div>
+                    <button id="loadmorebtn" class="show_more_doctors_list" style="display:flex">Show more coaches</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<input type="hidden" id="hidden-ecm-category-id" data-is-phone-call="0" data-is-fast-phone="0" data-cat-caption="مشاوره روانشناسی"><script>$(".insurance-action").click(function(){$("#drsaina_nw_modal_insurance_action").addClass("is-visible");});$(".insurance-button-modal").click(function(){$("#drsaina_nw_modal_insurance_action").removeClass("is-visible");})
-    $('#scroll__to__top__fixed__button').on('click',function(){window.scrollTo(0,0);})
-    function loadModalFirstStepContent(){$.ajax({url:'/RegisterLogin/true',type:'GET',success:function(res)
-    {$('#loginSectionModal').html(res);$('#loginCreateAcountModal').addClass('MainModalBlock');$('#txtQuestionText').keypress(function(e){e.stopPropagation();e.preventDefault();return false;});},error:function(){}});}
-    $('#loginCreateAcountModal .closeModal').click(function()
-    {$(this).closest('.MainModalBlock').removeClass('MainModalBlock');});function createPhoneCall(doctorGuid){loadModalFirstStepContent();$('#loginCreateAcountModal').addClass('MainModalBlock');return;$.ajax({url:'/Question/CreatePhoneQuestion',type:'post',data:JSON.stringify({doctorGUID:doctorGuid}),contentType:'application/json',success:function(res)
-    {if(res&&res.isSuccess==true&&res.questionGUID&&res.planId){location.href="/Question/PaymentNew/"+res.questionGUID+"/"+res.planId+"/"}else if(res&&res.isSuccess==false){alert(res.errorMessage);}else{alert('خطا در انجام عملیات لطفا 5 دقیقه دیگر دوباره امتحان کنید');}},error:function()
-    {alert('خطا در برقراری ارتباط');}});}
-    var w=window.innerWidth;var header_height=$("#above-page").height();var mainHeader_Height=$(".container-header").height();var top_section=header_height+mainHeader_Height;$(".above-consulation-list-link-suggest").removeClass("fix_btn");$(window).scroll(function(){if(window.scrollY>1400){document.getElementById('scroll__to__top__fixed__button').classList.add('scroll__to__top__fixed__button__show')}
-    else{document.getElementById('scroll__to__top__fixed__button').classList.remove('scroll__to__top__fixed__button__show')}
-    var scrollTop=$(window).scrollTop();if(scrollTop>top_section)$(".above-consulation-list-link-suggest-bottom").addClass("fix_btn");else $(".above-consulation-list-link-suggest-bottom").removeClass("fix_btn");});
-</script><script>$(".activate-doctor-content p span").click(function(){$("#popup_activate-doctor_ConsultationDoctor").addClass("is-visible");});$("#popup_activate-doctor-action").click(function(){$("#popup_activate-doctor_ConsultationDoctor").removeClass("is-visible");});$(".activate-doctor-img").click(function(){$("#popup_activate-doctor_ConsultationDoctor").addClass("is-visible");});$(document).ready(function(){$('.consultation-filter-input').click(function(){let gender=$('.consultation-filter-input-radio.genderRadio:checked').val();let filter=$('.consultation-filter-input-checkbox:checkbox:checked + label').map(function(){return $(this).text().replace(/\(.*\)/,'');}).get().join(", ");EmitSearchFilterEvent(filter,gender);});});</script>
-<div class="main-box-consultant-suggest-category" style="margin-top:24px"></div>
-<section id="user-comments" class="section">
-    <div class="container">
-        <div class="row">
-            <div class="section-header">
-                <label class="section-title"> Users comments </label>
-                <i class="user-comment-icon img-bg"></i>
-            </div>
-            <div class="section-body">
-                <div class="user-comment-body flickity-enabled flickity-rtl is-draggable" data-flickity="{ &quot;cellAlign&quot;: &quot;right&quot;, &quot;contain&quot;: true, &quot;wrapAround&quot;: false, &quot;rightToLeft&quot;: true  ,&quot;prevNextButtons&quot; : true ,&quot;pageDots&quot; :false ,&quot;freeScroll&quot;: true }" tabindex="0">
-                    <div class="flickity-viewport" style="height: 447.172px; touch-action: pan-y;">
-                        <div class="flickity-slider" style="right: 0px; transform: translateX(0%);">
-                            <div class="flickity-spacing-user-comment is-selected" style="position: absolute; right: 0%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> فقط ميتونم بگم خدا خواست که ايشون من رو ويزيت کنه و با يه راه‌حل به ظاهر ساده، که خيلی‌ها نتونستن به من کمک کن ايشون من رو از يه مشکل خيليييی بزرگ نجات دادن ازشون بی‌نهايت ممنونم </span> <label class="user-comments-name"> علیمردانی </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/07/01</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">22</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">33</span></div>
-                                        </div>
+<input type="hidden" id="hidden-ecm-category-id" data-is-phone-call="0" data-is-fast-phone="0" data-cat-caption="Coaching">
+<script>
+    const loadBtn = document.getElementById('loadmorebtn');
+    const total = {{ total_coach }};
+    if ($('.doctor-card-container-layout').length == total) {
+        loadBtn.classList.add('not-visible');
+    }
+    function loadmorePost() {
+        var _current_item = $('.doctor-card-container-layout').length;
+        const content_container = $('.main-doctor-list')[0];
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var data = {
+            'offset': _current_item
+        };
+        if (urlParams.has('city')) {
+            data['city'] = urlParams.get('city')
+        };
+        if (urlParams.has('spec')) {
+            data['spec'] = urlParams.get('spec')
+        };
+        if (urlParams.has('justFemaleR')) {
+            data['justFemaleR'] = urlParams.get('justFemaleR')
+        };
+        if (urlParams.has('justMaleR')) {
+            data['justMaleR'] = urlParams.get('justMaleR')
+        };
+        $.ajax({
+            url: '{% url "load" %}',
+            type: 'GET',
+            data: data,
+            success: function (response) {
+                const data = response.coaches
+                data.map((coach, i) => {
+                    content_container.innerHTML += `<li data-isonline="True" data-super-expert="False" data-gender="${coach.coach_gender}" data-hasfastphone="False" data-insuranceisactive="False" data-hasphone="True" data-exp="${coach.coach_experience}" data-rating="{% widthratio coach.coach_rating 1 20 %}" data-videocall="False" data-chat="False" class="rowItem_LC doctorId doctor-card-container" data-id="014c2f112cc14d148ec2cc077c4b554b" data-name="${coach.coach_user__full_name}  " data-category="coaching" data-expertise="${coach.coach_speciality}" data-superexpertise="" data-childcategory="coaching" data-expr-1579="1" data-pos="${i+1+_current_item}" data-ecm-visited="1" data-ecm-view="1" data-ecm-ga4-visited="1" data-ecm-ga4-view="1">
+                            <a class="doctor-card-container-layout" href="/doctorConsulation/${coach.coach_user__phone}/" title="Coaching with ${coach.coach_user__full_name}    ">
+                                <div class="doctor-card-right-side">
+                                    <div class="doctor-card-personal-info-container">
+                                        <div class="doctor-card-personal-image"><img src="{% static 'coaching/images/avatar.png' %}"  title="Coaching with ${coach.coach_user__full_name}    " alt="Coaching with ${coach.coach_user__full_name}    " loading="lazy"> <i class="doctor-card-activity-status online-status rounded-circle"></i></div>
+                                        <div class="doctor-card-personal-info"><span class="doctor-card-personal-info-name">${coach.coach_user__full_name} </span> <span class="doctor-card-personal-info-specialty">${coach.coach_speciality}</span> <span class="doctor-card-personal-info-specialty doctor-card-personal-info-super-specialty"></span></div>
+                                    </div>
+                                    <div class="doctor-card-platform-info-container">
+                                        <div class="doctor-card-platform-info"><span class="doctor-card-rating"> <i class="fa fa-star"></i> 4.9 </span> <span class="doctor-card-comments"> <i class="doctor-card-comments-icon"></i> <span class="doctor-card-comments-text">3242 comments</span> </span></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 33.33%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> عالي هستن من خيلي راحت باهاشون ارتباط گرفتم بدون قضاوت عالي گوش ميدن و بهترين راهنمايی‌ها را ميکنن مرسی از خانم دکتر و تیم دکتر ساينا </span> <label class="user-comments-name"> فاطمه رنجبر </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/07/22</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">19</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">20</span></div>
-                                        </div>
+                                <div class="doctor-card-left-side">
+                                    <div class="doctor-card-business-info">
+                                        <div class="doctor-card-business-info-row"><span class="doctor-card-business-info-title">Experience:</span> <span class="doctor-card-business-info-value">${coach.coach_experience} years</span></div>
+                                        <div class="doctor-card-business-info-row"><span class="doctor-card-business-info-title">Successfull coachings:</span> <span class="doctor-card-business-info-value">8925</span> <span class="doctor-card-business-info-subtitle">( in 3 years and 6 months )</span></div>
+                                    </div>
+                                    <div class="doctor-card-cta-container">
+                                        <div class="green-tertiary-btn doctor-card-cta">Get coaching <i class="icon icon-arrow-left"></i></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 66.66%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> بعنوان جلسه اول خوب بود و البته هنوز براي قضاوتم زود هستش ولي مشتاق شدم که جلسات بعدي رو شرکت کنم چون اميدوار شدم که کمک کننده خواهد بود.سپاس </span> <label class="user-comments-name"> فاطمه موسوی </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/08/02</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">10</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">47</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 99.99%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> خيلي آقاي دکتر خوبن حال روحی‌ام رو دگرگون کردن، حال خوبم و اميد به زندگیم رو مديون آقاي دکتر هستم فقط تو دو جلسه که با ايشون صحب کردم. پيشنهاد ميکنم حتما از اين دکتر باتجربه و مهربان مشاوره بگيريد فقط ب خاطر بهتر شدن حال خودتون </span> <label class="user-comments-name"> ازاده خاکزاد </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/08/05</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">08</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">05</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 133.32%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> پزشکی متین و اخلاق مدار که تمام تلاششون رو در راستای شرح حال گیری درست و درنتیجه تشخیص صحیح انجام میدهند </span> <label class="user-comments-name"> میر عبدالحسین نقیب زاده </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/08/17</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">19</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">30</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 166.65%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> ضمن تشکر از راهنمایی‌هاي سازنده ايشان، گاهاً پزشک صحبت‌هاي جلسه قبل را به خاطر ندارند و نياز به مرور آن‌ها است. به لحاظ زماني مشکلي ندارم، نگراني من از اين است که اين مسئله باعث عدم تمرکز و کاهش کيفيت مشاوره شود. مجدداً از ايشان بابت نکات مثبت‌شان متشکر هستم </span> <label class="user-comments-name"> عماد آشور </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/08/28</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">04</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">20</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 199.98%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> بسيار عالي. دلسوزانه و صبور و تشخيص صحيح در کوتاه ترين زمان. چند ماهه تحت نظر ايشون هستم تنها پزشکي که از نحوه درمان و تجويزشون جواب گرفتم. </span> <label class="user-comments-name"> مهدی غلامرضازاده </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/09/01</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">12</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 233.31%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> خانم دکتر عزيزم از اينکه شمارو بعنوان پزشک مشاور انتخاب کردم بسيار خرسندم و بی‌شک بهترين دوست و همراه من هستين و خواهيد بود و خدارا شاکرم که شمارو سر راه بنده قرار داد تا با هم‌صحبتي از شما آرامش خاطر بگيرم و در يک کلام بي‌نظيرين و فوق العاده اميدوارم هميشه سلامت و زنده و برقرار باشين جانم و بابت صبرو شکيباييتون بسيار سپاسگذارم </span> <label class="user-comments-name"> سعیده نیری </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/09/02</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">17</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">11</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flickity-spacing-user-comment" aria-hidden="true" style="position: absolute; right: 266.64%;">
-                                <div class="user-comment-item carousel-cell">
-                                    <span class="user-comment-text"> با دقت به علایم رفتاری و حوادث گوش دادند. شرح کاملی درخواست کردند و راهنمایی های مفیدی داشتند. </span> <label class="user-comments-name"> مهدی روحانی نژاد </label>
-                                    <div class="user-comments-detail">
-                                        <div class="user-comments-rate-box">
-                                            <span class="user-comments-rate-text"> امتیاز به پزشک: </span>
-                                            <div class="user-comments-rate">
-                                                <ul class="user-comments-rate-list">
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                    <li class="user-comments-rate-item"><i class="user-comments-rate-fill icon icon-fill-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="user-comments-date-time">
-                                            <span class="user-comments-text user-comments-date">1400/09/06</span>
-                                            <div class="user-comments-time"><span class="user-comments-time-text user-comments-time-h">08</span> <span class="user-comments-time-text">:</span> <span class="user-comments-time-text user-comments-time-m">59</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="flickity-button flickity-prev-next-button previous" type="button" disabled="" aria-label="Previous">
-                        <svg class="flickity-button-icon" viewBox="0 0 100 100">
-                            <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path>
-                        </svg>
-                    </button>
-                    <button class="flickity-button flickity-prev-next-button next" type="button" aria-label="Next">
-                        <svg class="flickity-button-icon" viewBox="0 0 100 100">
-                            <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<div class="container-fluid container-fluid-consultation-doctors container-category-description">
-    <div class="row">
-        <div class="container">
-            <div id="consulation-list" class="box boxConsultant col-lg-10 float-right">
-                <div class="consulationCommentHeader __Description__each_cat consulationCommentHeaderDs desc_category_slugs_container--close">
-                    <h2 style="text-align:right" dir="rtl">روانشناس کیست و چگونه می‌تواند به شما کمک کند؟</h2>
-                    <p style="text-align:right" dir="rtl"><strong>روانشناس</strong> یک متخصص بهداشت روان آموزش دیده است که با کمک علم روان‌شناسی،&nbsp; حالات ذهنی، فرآیندها و رفتار ادراکی، شناختی، عاطفی و اجتماعی افراد را مطالعه می‌کند. کار آن‌ها اغلب شامل آزمایش، مشاهده و تفسیر چگونگی ارتباط افراد با یکدیگر و محیط‌شان است و به افراد کمک می‌کنند راه‌های سالمی برای <strong>مقابله با چالش‌های سلامت روان</strong> بیاموزند. آن‌ها می‌توانند به افرادی که با شرایط خاص زندگی می کنند، مانند افرادی که دچار <strong>افسردگی</strong> یا <strong>اضطراب</strong> هستند، یا کسانی که دوران سختی را در زندگی سپری می‌کنند، مانند غم و اندوه از دست دادن عزیزانشان کمک کنند.</p>
-                    <h2 style="text-align:right" dir="rtl">چه زمانی باید از روانشناس کمک بگیریم؟</h2>
-                    <p style="text-align:right" dir="rtl">همه انسان‌ها در مقاطعی از زندگی روزانه خود دچار چالش‌هایی می‌شوند؛ از آن‌جایی که احساسات، افکار و اعمال افراد تاثیر مستقیمی بر انرژی، بهره‌وری و سلامت روانی و جسمی افراد دارد این چالش‌ها می‌توانند آنقدر طاقت‌فرسا باشند که ادامه دادن با آن غیرممکن به نظر می‌رسد؛ چالش‌هایی از جنس <strong>استرس</strong>، <strong>اضطراب</strong>،‌ <strong>از دست دادن عزیزان</strong>، <strong>افسردگی</strong>، <strong>فوبیا</strong>، <strong>عادت‌های ناسالم</strong>، <strong>اعتیاد</strong>، <strong>اختلالات روانی </strong>و…. مراجعه به روانشناس راه‌حلی منطقی و تخصصی برای حل بیماری‌ها و مشکلات مرتبط با روان است.</p>
-                    <p style="text-align:right" dir="rtl">در صورت مشاهده هر‌یک از مشکلات زیر، بهتر است تا از متخصص روانشناس در زندگی خود کمک بگیرید:</p>
-                    <p style="text-align:right" dir="rtl">- اگر به دنبال روش‌هایی برای <strong>غلبه بر خجالت و<span style="color:#0000ff"> <a href="https://www.drsaina.com/mag/self-confidence-enhancement"><span style="color:#0000ff">افزایش اعتماد به نفس</span></a></span></strong> خود هستید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر<strong> رابطه شما با همسر، والدین یا همسرتان</strong> دچار مشکل شده است.</p>
-                    <p style="text-align:right" dir="rtl">- اگر<span style="color:#0000ff">&nbsp;<strong><a href="https://www.drsaina.com/mag/emotional-eating"><span style="color:#0000ff">پرخوری عصبی</span></a></strong></span> دارید و به‌دنبال راه‌حلی برای درمان آن هستید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر در شرایط مختلف دچار استرس می‌شوید و به دنبال راه‌حلی برای <span style="color:#0000ff"><strong><a href="https://www.drsaina.com/mag/stress-control-technics"><span style="color:#0000ff">مدیریت استرس</span></a></strong></span> خود هستید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر به دنبال روش‌هایی برای از بین بردن<span style="background-color:#ffffff;color:#0000ff"><strong> <a href="https://www.drsaina.com/mag/stress-children"><span style="background-color:#ffffff;color:#0000ff">اضطراب کودکان</span></a></strong></span> هستید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر در زندگی خود از <span style="color:#0000ff"><strong><a href="https://www.drsaina.com/mag/compulsive-cleaning"><span style="color:#0000ff">وسواس شستشو</span></a></strong></span> اذیت می‌شوید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر می‌خواهید<strong> تروماهای کودکی و بزرگسالی</strong> خود را درمان کنید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر در زندگی خود <strong>عادت‌های ناسالم</strong> دارید و می‌خواهید آن‌ها را حذف کنید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر<span style="color:#0000ff"> <strong><a href="https://www.drsaina.com/mag/ocd-types"><span style="color:#0000ff">وسواس فکری</span></a></strong></span> اذیتتان می‌کند و به‌دنبال راه‌حلی برای آن هستید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر در زندگی روزانه خود <strong>نوسان خلق و ناپایداری در احساسات</strong> دارید.</p>
-                    <p style="text-align:right" dir="rtl">همچنین بسیاری از اوقات، برای درمان اختلالات و بیماری‌ها، بهتر است در کنار روان‌پزشک، از یک روان‌شناس هم کمک بگیرید؛ به‌طور مثال:</p>
-                    <p style="text-align:right" dir="rtl">- اگر مبتلا به اختلال<strong><span style="color:#0000ff"> <a href="https://www.drsaina.com/mag/paranoid-personality-disorder"><span style="color:#0000ff">شخصیت پارانوئید</span></a></span>، <span style="background-color:#ffffff;color:#0000ff"><a href="https://www.drsaina.com/mag/bipolar-disorder-symptoms-diagnosis"><span style="background-color:#ffffff;color:#0000ff">دو‌قطبی</span></a></span>، <span style="color:#0000ff"><a href="https://www.drsaina.com/mag/hypochondria-symptoms"><span style="color:#0000ff">اضطراب بیماری</span></a></span> و <span style="color:#0000ff"><a href="https://www.drsaina.com/mag/schizophrenia-causes-symptoms"><span style="color:#0000ff">اسکیزوفرنی</span></a></span></strong> هستید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر شاهد <span style="color:#0000ff"><strong><a href="https://www.drsaina.com/mag/autism-adults"><span style="color:#0000ff">اوتیسم در بزرگسالان</span></a></strong></span> هستید.</p>
-                    <p style="text-align:right" dir="rtl">- اگر دچار <span style="color:#0000ff"><strong><a href="https://www.drsaina.com/mag/seasonal-affective-disorder"><span style="color:#0000ff">افسردگی فصلی</span></a></strong></span> شده‌اید.</p>
-                    <p style="text-align:right">&nbsp;</p>
-                    <h2 style="text-align:right" dir="rtl">مشاوره آنلاین با متخصص روانشناس چه مزایایی دارد؟</h2>
-                    <p style="text-align:right" dir="rtl">یکی از مهم‌ترین دستاوردهای دنیای مدرن، مشاوره پزشکی آنلاین و از راه دور بوده که به سرعت در سراسر دنیا در حال گسترش است. معایب مراجعه حضوری به روان‌شناس گاهی به حدی است که افراد کلاً قید کمک گرفتن از روان‌شناس را می‌زنند؛ به‌عنوان‌مثال:</p>
-                    <p style="text-align:right" dir="rtl">- وقت‌گیر بودن مراجعه هفتگی یا ماهانه</p>
-                    <p style="text-align:right" dir="rtl">- ترس و خجالت از گفتگوی رودرو با روان‌شناس</p>
-                    <p style="text-align:right" dir="rtl">- هزینه‌ی بالای مراجعه حضوری</p>
-                    <p style="text-align:right" dir="rtl">اما مشاوره آنلاین تمام این مشکلات را حل کرده است. اگر شما هم جزو کسانی هستید که مراجعه حضوری به هر دلیلی برایتان دشوار است، مشاوره آنلاین یک گزینه عالی برای شماست. در واقع به راحتی می‌توانید از طریق تماس و یا حتی به صورت متنی با پزشک‌تان در ارتباط باشید. از جمله مزیت‌های دیگر مشاوره روان‌شناسی&nbsp; آنلاین عبارتند از:<br>- در وقت و هزینه شما صرفه‌جویی می‌شود.</p>
-                    <p style="text-align:right" dir="rtl">- در هر زمان و مکانی که باشید، به بهترین متخصصین روانشناس دسترسی خواهید داشت.</p>
-                    <p style="text-align:right" dir="rtl">- از مراجعات غیر‌ضروری به متخصص روانشناس معاف می‌شوید.</p>
-                    <p style="text-align:right" dir="rtl">- امکان مشاوره آنلاین با بهترین متخصصین روانشناس در سراسر کشور را خواهید داشت.</p>
-                    <p style="text-align:right" dir="rtl">- اطلاعات شما کاملا محرمانه خواهد بود.</p>
-                    <h2 style="text-align:right" dir="rtl">چطور می‌توانید بهترین متخصص مشاوره روانشناسی را انتخاب کنید؟</h2>
-                    <p style="text-align:right" dir="rtl">برای انتخاب بهترین متخصص روانشناس در دکتر‌‌ساینا می‌توانید یکی از روش‌های زیر را انتخاب کنید:</p>
-                    <ol style="text-align:right">
-                        <li dir="rtl">
-                            <p dir="rtl">در بخش «<strong>مرتب سازی بر اساس</strong>:» روانشناس با بالاترین تجربه یا بیشترین امتیاز از دید کاربران را انتخاب کنید. همچنین برای آسودگی خیال می‌توانید از بخش «<strong>دیدگاه</strong>» بیش از هزاران نظر را از دید کاربران مشاهده کنید.</p>
-                        </li>
-                        <li dir="rtl">
-                            <p dir="rtl">با تغییر فیلترها متناسب با شرایط، دکتر‌ساینا می‌تواند به شما روانپزشک پیشنهاد بدهد. برای پیشنهاد روان‌شناس، ابتدا با استفاده از فیلترها نوع مشاوره، جنسیت روانشناس، بیماری و… را انتخاب کنید و با استفاده از دکمه قرمز رنگ بالای صفحه، <strong>پیشنهاد بهترین پزشک</strong> را دریافت کنید.</p>
-                        </li>
-                    </ol>
-                    <h2 style="text-align:right" dir="rtl">بهترین متخصصان مشاوره روانشناسی در دکتر‌ساینا</h2>
-                    <p style="text-align:right" dir="rtl">روش دیگر انتخاب روان‌شناس، استفاده از لیست محبوب‌ترین، فعال‌ترین و&nbsp; بهترین متخصص روانشناس دکتر‌ساینا است:</p>
-                    <p style="text-align:right" dir="rtl"><strong>-&nbsp;<span style="color:#0000ff"><a href="https://www.drsaina.com/doctorConsulation/f82a975857e848e9b2d2f202fcedb9a6/"><span style="color:#0000ff">دکتر معصومه مختارپور</span></a></span></strong></p>
-                    <p style="text-align:right" dir="rtl"><strong>-<a href="https://www.drsaina.com/doctorConsulation/d2ee43ca60414313b228a20dd6fbc1da/">&nbsp;<span style="color:#0000ff">دکتر حلیمه صابریان</span></a><span style="color:#0000ff">&nbsp;</span><br></strong></p>
-                    <p style="text-align:right" dir="rtl"><strong>-&nbsp;<span style="color:#0000ff"><a href="https://www.drsaina.com/doctorConsulation/5d75fe12569a4937af136c69a63e92b4/"><span style="color:#0000ff">دکتر مجید مهرمحمدی</span></a></span>&nbsp;</strong></p>
-                    <p style="text-align:right" dir="rtl"><strong>-&nbsp;<span style="color:#0000ff"><a href="https://www.drsaina.com/doctorConsulation/fcb990bf76734e09b104c6169ab14fb0/"><span style="color:#0000ff">دکتر زینب قنادی</span></a>&nbsp;</span></strong></p>
-                    <p style="text-align:right" dir="rtl"><strong>-&nbsp;<span style="color:#0000ff"><a href="https://www.drsaina.com/doctorConsulation/90170b35dcb44e5b9982f32f898f50d8/"><span style="color:#0000ff">دکتر حمیده جنگجو&nbsp;</span></a></span></strong></p>
-                    <h2 style="text-align:right" dir="rtl">هزینه ویزیت متخصص مشاوره روانشناسی در دکتر‌ساینا چقدر است؟</h2>
-                    <p style="text-align:right" dir="rtl">هزینه ویزیت آنلاین متخصص روانشناس در دکتر‌ساینا طبق تعرفه، بین بازه <strong>129.000 تومان تا 224.000 تومان</strong> (با توجه به نوع مشاوره متنی، فوری، ویدیویی یا تلفنی) متغیر است. البته اگر تحت پوشش بیمه باشید، دکتر‌ساینا امکان کسر هزینه تا سقف 100% را متناسب با بیمه شما دارد.</p>
-                    <p style="text-align:right">فراموش نکنید که دکتر‌ساینا ادعای تضمین <strong>بازگشت 100% وجه</strong> را دارد؛ بدین معنا که در صورت نارضایتی شما از مشاوره، هزینه به طور کامل بازگردانده می‌شود!</p>
-                    <p><textarea id="BFI_DATA" style="width:1px;height:1px;display:none"></textarea></p>
-                    <div id="WidgetFloaterPanels" class="LTRStyle" style="display:none;direction:ltr;visibility:hidden;text-align:right">
-                        <div id="WidgetFloater" style="display:none" onmouseover="Microsoft.Translator.OnMouseOverFloater()" onmouseout="Microsoft.Translator.OnMouseOutFloater()">
-                            <div id="WidgetLogoPanel">TRANSLATE with <img id="FloaterLogo" alt=""> x</div>
-                            <div id="LanguageMenuPanel">
-                                <div class="DDStyle_outer">
-                                    <input id="LanguageMenu_svid" style="display:none" onclick="this.select()" name="LanguageMenu_svid" value="en"> <input id="LanguageMenu_textid" style="display:none" onclick="this.select()" name="LanguageMenu_textid"> English
-                                    <div style="position:relative;text-align:left;left:0">
-                                        <div style="position:absolute;;left:0">
-                                            <div id="__LanguageMenu_popup" class="DDStyle" style="display:none">
-                                                <table id="LanguageMenu" border="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('ar')" tabindex="-1" href="#ar">Arabic</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('he')" tabindex="-1" href="#he">Hebrew</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('pl')" tabindex="-1" href="#pl">Polish</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('bg')" tabindex="-1" href="#bg">Bulgarian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('hi')" tabindex="-1" href="#hi">Hindi</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('pt')" tabindex="-1" href="#pt">Portuguese</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('ca')" tabindex="-1" href="#ca">Catalan</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('mww')" tabindex="-1" href="#mww">Hmong Daw</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('ro')" tabindex="-1" href="#ro">Romanian</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('zh-CHS')" tabindex="-1" href="#zh-CHS">Chinese Simplified</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('hu')" tabindex="-1" href="#hu">Hungarian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('ru')" tabindex="-1" href="#ru">Russian</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('zh-CHT')" tabindex="-1" href="#zh-CHT">Chinese Traditional</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('id')" tabindex="-1" href="#id">Indonesian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('sk')" tabindex="-1" href="#sk">Slovak</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('cs')" tabindex="-1" href="#cs">Czech</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('it')" tabindex="-1" href="#it">Italian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('sl')" tabindex="-1" href="#sl">Slovenian</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('da')" tabindex="-1" href="#da">Danish</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('ja')" tabindex="-1" href="#ja">Japanese</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('es')" tabindex="-1" href="#es">Spanish</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('nl')" tabindex="-1" href="#nl">Dutch</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('tlh')" tabindex="-1" href="#tlh">Klingon</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('sv')" tabindex="-1" href="#sv">Swedish</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('en')" tabindex="-1" href="#en">English</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('ko')" tabindex="-1" href="#ko">Korean</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('th')" tabindex="-1" href="#th">Thai</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('et')" tabindex="-1" href="#et">Estonian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('lv')" tabindex="-1" href="#lv">Latvian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('tr')" tabindex="-1" href="#tr">Turkish</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('fi')" tabindex="-1" href="#fi">Finnish</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('lt')" tabindex="-1" href="#lt">Lithuanian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('uk')" tabindex="-1" href="#uk">Ukrainian</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('fr')" tabindex="-1" href="#fr">French</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('ms')" tabindex="-1" href="#ms">Malay</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('ur')" tabindex="-1" href="#ur">Urdu</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('de')" tabindex="-1" href="#de">German</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('mt')" tabindex="-1" href="#mt">Maltese</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('vi')" tabindex="-1" href="#vi">Vietnamese</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('el')" tabindex="-1" href="#el">Greek</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('no')" tabindex="-1" href="#no">Norwegian</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('cy')" tabindex="-1" href="#cy">Welsh</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a onclick="return LanguageMenu.onclick('ht')" tabindex="-1" href="#ht">Haitian Creole</a></td>
-                                                            <td><a onclick="return LanguageMenu.onclick('fa')" tabindex="-1" href="#fa">Persian</a></td>
-                                                            <td>&nbsp;</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <img style="height:7px;width:17px;border-width:0;left:20px" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>var LanguageMenu;var LanguageMenu_keys=["ar","bg","ca","zh-CHS","zh-CHT","cs","da","nl","en","et","fi","fr","de","el","ht","he","hi","mww","hu","id","it","ja","tlh","ko","lv","lt","ms","mt","no","fa","pl","pt","ro","ru","sk","sl","es","sv","th","tr","uk","ur","vi","cy"];var LanguageMenu_values=["Arabic","Bulgarian","Catalan","Chinese Simplified","Chinese Traditional","Czech","Danish","Dutch","English","Estonian","Finnish","French","German","Greek","Haitian Creole","Hebrew","Hindi","Hmong Daw","Hungarian","Indonesian","Italian","Japanese","Klingon","Korean","Latvian","Lithuanian","Malay","Maltese","Norwegian","Persian","Polish","Portuguese","Romanian","Russian","Slovak","Slovenian","Spanish","Swedish","Thai","Turkish","Ukrainian","Urdu","Vietnamese","Welsh"];var LanguageMenu_callback=function(){};var LanguageMenu_popupid='__LanguageMenu_popup';</script>
-                            </div>
-                            <div id="CTFLinksPanel"><a id="HelpLink" title="Help" href="https://go.microsoft.com/?linkid=9722454" target="_blank"> <img id="HelpImg" alt=""></a> <a id="EmbedLink" title="Get this widget for your own site" href="javascript:Microsoft.Translator.FloaterShowEmbed()"> <img id="EmbedImg" alt=""></a> <a id="ShareLink" title="Share translated page with friends" href="javascript:Microsoft.Translator.FloaterShowSharePanel()"> <img id="ShareImg" alt=""></a></div>
-                            <div id="FloaterProgressBar">&nbsp;</div>
-                        </div>
-                        <div id="WidgetFloaterCollapsed" style="display:none" onmouseover="Microsoft.Translator.OnMouseOverFloater()">TRANSLATE with <img id="CollapsedLogoImg" alt=""></div>
-                        <div id="FloaterSharePanel" style="display:none">
-                            <div id="ShareTextDiv">COPY THE URL BELOW</div>
-                            <div id="ShareTextboxDiv"><input id="ShareTextbox" onclick="this.select()" name="ShareTextbox" readonly="">  <a id="EmailLink" title="Email this translation"></a> <img id="EmailImg" alt=""></div>
-                            <div id="ShareFooter"><a id="ShareHelpLink"></a> <img id="ShareHelpImg" alt=""> <a id="ShareBack" title="Back To Translation" href="javascript:Microsoft.Translator.FloaterOnShareBackClick()"> Back</a></div>
-                            <input id="EmailSubject" type="hidden" name="EmailSubject" value="Check out this page in {0} translated from {1}"> <input id="EmailBody" type="hidden" name="EmailBody" value="Translated: {0}%0d%0aOriginal: {1}%0d%0a%0d%0aAutomatic translation powered by Microsoft® Translator%0d%0ahttp://www.bing.com/translator?ref=MSTWidget"> <input id="ShareHelpText" type="hidden" value="This link allows visitors to launch this page and automatically translate it to {0}.">
-                        </div>
-                        <div id="FloaterEmbed" style="display:none">
-                            <div id="EmbedTextDiv">EMBED THE SNIPPET BELOW IN YOUR SITE <a id="EmbedHelpLink" title="Copy this code and place it into your HTML."></a> <img id="EmbedHelpImg" alt=""></div>
-                            <div id="EmbedTextboxDiv"><input id="EmbedSnippetTextBox" onclick="this.select()" name="EmbedSnippetTextBox" value="<div id='MicrosoftTranslatorWidget' class='Dark' style='color:white;background-color:#555555'></div><script type='text/javascript'>setTimeout(function(){var s=document.createElement('script');s.type='text/javascript';s.charset='UTF-8';s.src=((location &amp;&amp; location.href &amp;&amp; location.href.indexOf('https') == 0)?'https://ssl.microsofttranslator.com':'http://www.microsofttranslator.com')+'/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**&amp;ctf=true&amp;ui=true&amp;settings=manual&amp;from=en';var p=document.getElementsByTagName('head')[0]||document.documentElement;p.insertBefore(s,p.firstChild); },0);</script>" readonly=""></div>
-                            <div id="EmbedNoticeDiv">Enable collaborative features and customize widget: <a href="http://www.bing.com/widget/translator" target="_blank">Bing Webmaster Portal</a></div>
-                            <div id="EmbedFooterDiv"><a title="Back To Translation" href="javascript:Microsoft.Translator.FloaterOnEmbedBackClick()">Back</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="catergory_description_container__show_all_btn_container">
-                    <div class="catergory_description_container__show_all_btn"><span id="other_category_slugs_container__show_all_text">مشاهده بیشتر</span> <i class="icon icon-arrow-bottom"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-</div>
-<div class="container">
-    <div class="section-footer row">
-        <div class="section col-12">
-            <div class="container accordion--box">
-                <div class="darsaina-value-title"><label class="section-title"> سوالات متداول </label></div>
-                <div class="drni-accordion-pr">
-                    <div class="drni-accordion-pr">
-                        <div class="drni-accordion-item">
-                            <div class="drni-accordion-header"><i class="before-header"></i> <span>چه تفاوتی بین روانشناسی و روان‌درمانی وجود دارد؟</span> <i class="icon icon-arrow-bottom icon-drni-accordion-header"></i></div>
-                            <div class="drni-accordion-content">روانشناسی علمی است که به مطالعه و تحلیل رفتارها، افکار و احساسات افراد می‌پردازد؛ در صورتی‌که روان‌درمانی به روش‌هایی اشاره دارد که برای بهبود رفتارها، افکار و احساسات افراد به‌کار می‌روند.</div>
-                        </div>
-                        <div class="drni-accordion-item">
-                            <div class="drni-accordion-header"><i class="before-header"></i> <span>آیا روانشناسی آنلاین به اندازه مشاوره حضوری مفید خواهد بود؟ </span> <i class="icon icon-arrow-bottom icon-drni-accordion-header"></i></div>
-                            <div class="drni-accordion-content">با توجه به پیشرفت تکنولوژی و بهبود روش‌های ارتباطی آنلاین، مشاوره روانشناسی آنلاین به اندازه مشاوره حضوری مفید خواهد بود.</div>
-                        </div>
-                        <div class="drni-accordion-item">
-                            <div class="drni-accordion-header"><i class="before-header"></i> <span> روانشناس چگونه به ما کمک می‌کند؟</span> <i class="icon icon-arrow-bottom icon-drni-accordion-header"></i></div>
-                            <div class="drni-accordion-content">روانشناسی به ما در فهم و درک بهتر خودمان، دیگران و جهان اطراف کمک می‌کند. در واقع با شناخت بهتر خودمان، می‌توانیم به بهبود روابط اجتماعی و ارتقای سطح کیفیت زندگی خودمان و دیگران کمک کنیم.</div>
-                        </div>
-                        <div class="drni-accordion-item">
-                            <div class="drni-accordion-header"><i class="before-header"></i> <span> چگونه با پشتیبانی دکتر ساینا ارتباط بگیرم ؟ </span> <i class="icon icon-arrow-bottom icon-drni-accordion-header"></i></div>
-                            <div class="drni-accordion-content">ارسال پیام در قسمت تماس با ما <br> شماره تماس خط ویژه: 91072025-021</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row" style="margin:24px 0">
-    <div class="container">
-        <label class="section-title section-title-other-cats-label">سایر تخصص ها</label>
-        <div class="other_category_slugs_container">
-            <div class="other_category_slugs_container_inner other_category_slugs_container--close"><a href="/consultation/sexologist"> <span>کلینیک مشاوره جنسی و زناشویی (سکسولوژی)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/gynecologist-infertility"> <span>متخصص زنان و زایمان</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/dermatologist"> <span>متخصص پوست و مو</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/pediatricians"> <span>متخصص کودکان و اطفال</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/internal-expertise"> <span>متخصص و فوق تخصص داخلی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/psychologist"> <span>مشاوره روانشناسی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/psychiatrist"> <span>متخصص روانپزشکی و اعصاب و روان</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/covid-19"> <span>کلینیک مشاوره کرونا</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/urologist"> <span>متخصص و جراح کلیه و مجاری ادراری (ارولوژی)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/endocrinologist"> <span>کلینیک غدد، رشد و متابولیسم</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/gastrointestinal-liver"> <span>کلینیک گوارش و کبد</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/nutrition-diet"> <span>کلینیک تغذیه و رژیم درمانی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/neurosurgeon"> <span>جراح مغز و اعصاب</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/otorhinolaryngologist"> <span>متخصص و جراح گوش و حلق و بینی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/general-practitioner"> <span>پزشک عمومی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/immunologist-allergist"> <span>کلینیک ایمونولوژی و آلرژی (آسم و آلرژی)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/infectious-disease"> <span>متخصص بیماری های عفونی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/hematologist-oncologist"> <span>متخصص خون و آنکولوژی (سرطان)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/geneticist"> <span>کلینیک ژنتیک</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/general-surgeon"> <span>جراحی عمومی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/forensic-pathologist"> <span>متخصص پزشکی قانونی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/geriatricians"> <span>متخصص طب سالمندان</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/dentist"> <span>متخصص دندان‌ پزشکی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/complimentary-specialist"> <span>متخصص طب مکمل و سنتی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/cardiologist"> <span>متخصص قلب و عروق</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/cancer-surgeon"> <span>جراحی سرطان</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/anesthesiologist"> <span>متخصص بیهوشی و مراقبت‌های ویژه</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/lung"> <span>کلینیک ریه</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/nephrologist"> <span>کلینیک امراض کلیه (نفرولوژی)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/neurologist"> <span>متخصص مغز و اعصاب (نورولوژی)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/sports-medicine-physician"> <span>متخصص پزشکی ورزشی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/speech-stutter-therapist"> <span>کلینیک گفتار درمانی و لکنت زبان</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/rheumatologist"> <span>کلینیک روماتولوژی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/radiotherapist"> <span>متخصص پرتو درمانی (رادیوتراپی)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/physiotherapist"> <span>کلینیک فیزیوتراپی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/pharmacist"> <span>متخصص داروسازی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/pathologist"> <span>متخصص پاتولوژی (آسیب‌شناسی)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/orthopedist"> <span>متخصص ارتوپدی (جراحی استخوان و مفاصل)</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/ophthalmologist"> <span>متخصص چشم پزشکی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/occupational-specialist"> <span>متخصص طب کار و بیماری های شغلی</span><i class="icon icon-arrow-left"></i> </a> <a href="/consultation/plastic-surgeon"> <span>جراحی پلاستیک و زیبایی</span><i class="icon icon-arrow-left"></i> </a></div>
-            <div class="other_category_slugs_container__show_all_btn"><span id="other_category_slugs_container__show_all_text">مشاهده بیشتر</span> <i class="icon icon-arrow-up other_category_slugs_container--close__i_rotate"></i></div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid container-fluid-comments">
-    <div class="row">
-        <div class="container">
-            <div class="main-box-doctor-saina main-center">
-                <div class="row col-12">
-                    <div class="darsaina-value-item Consultation-doctors col-12 col-md-3 d-flex flex-column align-items-center">
-                        <i class="value-icon all-day-support img-bg lazy"></i> <label>پشتیبانی 24 ساعته </label>
-                        <p class="value-text-center">در 24 ساعت شبانه روز در 7 روز هفته با پشتیبانی گفتگو کنید.</p>
-                    </div>
-                    <div class="darsaina-value-item Consultation-doctors col-12 col-md-3 d-flex flex-column align-items-center">
-                        <i class="value-icon private-communicate img-bg lazy"></i> <label> خصوصی بودن ارتباط با پزشک </label>
-                        <p class="value-text-center">ما تضمین می کنیم که گفتگوی شما با پزشکان کاملا محرمانه می باشد</p>
-                    </div>
-                    <div class="darsaina-value-item Consultation-doctors col-12 col-md-3 d-flex flex-column align-items-center">
-                        <i class="value-icon guarantee img-bg lazy"></i> <label>مقرون به صرفه</label>
-                        <p class="value-text-center">زحمت حضور در صف های طولانی نوبت و هزینه رفت و آمد را به حداقل برسانید</p>
-                    </div>
-                    <div class="darsaina-value-item Consultation-doctors col-12 col-md-3 d-flex flex-column align-items-center">
-                        <i class="value-icon img-bg-dr all-time-access img-bg lazy"></i> <label>دسترسی در هر زمان و مکان</label>
-                        <p class="value-text-center">در هر زمان از شبانه روز، حتی ایام تعطیل به طور مستقیم با پزشکان گفتگو کنید</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div style="display:none;position:fixed;bottom:16px;right:16px;z-index:99;background-color:rgb(255,255,255);border-radius:12px;box-shadow:0 10px 20px rgba(0,0,0,0.09)" id="kayako-container-plp">
-    <div>
-        <div id="proactivechatcontainer5pphpiuq24">
-            <div id="proactivechatdiv" style="position: absolute; display: none; float: left; top: 117px; left: 458px; z-index: 500;">
-                <div style="float: left; width: 500px; background: #ffffff url('https://crm.saina-co.ir/__swift/themes/client/images/mainbackground.gif') repeat; border: solid 1px #bababa;">
-                    <div style="background: #ffffff url('https://crm.saina-co.ir/__swift/themes/client/images/icon_proactiveuserbackground.gif') no-repeat bottom left; border: solid 1px #bababa; margin: 8px;">
-                        <div style="text-align: center;margin-top: 15px;margin-bottom: 10px;"><img align="absmiddle" border="0" src="https://crm.saina-co.ir/__swift/files/file_p2nau2qoncdn42r.png"></div>
-                        <hr style="border: solid #d8dbdf; border-width: 1px 0 0; clear: both; height: 0; margin: 0; text-align: center">
-                        <div style="padding-left: 100px; text-align: center; margin-top: 20px; height: 60px; overflow: hidden; font: 40px 'segoe ui','helvetica neue', arial, helvetica, sans-serif; color: #128dbe;width: 350px;">			میتونم کمکتون کنم؟		</div>
-                        <div style="padding-left: 100px; vertical-align: top; margin-top: 0px; padding-top: 0px; height: 180px; font: 18pt 'segoe ui','helvetica neue', arial, helvetica, sans-serif; color: #4c5156;width: 350px;">
-                            تیم ما آماده است تا به شما کمک کند. روی  "گفتگو" کلیک کنید.<br>			
-                            <div style="padding-top: 30px; padding-left: 90px; text-align: center;">
-                                <div onclick="javascript:doProactiveRequest_ca4d1y14();" style="font-weight: normal;font-size: 19px;color: #5d9928;padding: 10px 25px 10px 25px;background-color: #fff;background: -moz-linear-gradient(top,#fafafa 0%,#e7ebf0);background: -webkit-gradient(linear, left top, left bottom, from(#ffffff),to(#f3f3f3));-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #cdd2d4;-moz-box-shadow: 0px 1px 1px #f8f8f8,inset 0px 1px 1px #fff;-webkit-box-shadow: 0px 1px 1px #f8f8f8,inset 0px 1px 1px #fff;box-shadow: 0px 1px 1px #f8f8f8,inset 0px 1px 1px #fff;text-shadow: 0px 1px 0px #fff;cursor: pointer;width: 100px;">					گفتگو				</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="float: left; margin-left: -8px; margin-top: -8px;">	<a href="javascript:closeProactiveRequest_ca4d1y14();"><img align="absmiddle" border="0" src="https://crm.saina-co.ir/__swift/themes/client/images/icon_close.png"></a></div>
-            </div>
-            <div id="inlinechatdiv" style="position: absolute; display: none; float: left; top: -23px; left: 383px; z-index: 500;">
-                <div style="float: left; width: 600px;"><iframe width="600" height="680" scrolling="auto" frameborder="0" src="" name="inlinechatframe" id="inlinechatframe">error: no iframe support detected</iframe></div>
-                <div id="inlinechatclosebutton" style="float: left; margin-left: -30px; margin-top: -2px;"><a href="javascript: closeInlineProactiveRequest_ca4d1y14();"><i style="color:red;" class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>
-            </div>
-        </div>
-        <table border="0" cellspacing="2" cellpadding="2">
-            <tbody>
-                <tr>
-                    <td align="center" id="swifttagcontainer5pphpiuq24">
-                        <div style="display:inline" id="swifttagdatacontainer5pphpiuq24">
-                            <div><a class="chatstatuscontainer" href="javascript:startChat_ca4d1y14('0');" onmouseover="window.status='گفتگو آنلاین در دسترس نیست. برای گذاشتن پیام کلیک کنید.'; return true;" onmouseout="window.status=''; return true;"><img src="https://crm.saina-co.ir/__swift/files/file_z5ejdo7y5hcc5o8.jpg" border="0" alt="گفتگو آنلاین در دسترس نیست. برای گذاشتن پیام کلیک کنید." title="گفتگو آنلاین در دسترس نیست. برای گذاشتن پیام کلیک کنید."></a></div>
-                        </div>
-                        <script type="text/javascript" src="https://crm.saina-co.ir/visitor/index.php?/Default/LiveChat/HTML/HTMLButton/cHJvbXB0dHlwZT1jaGF0JnVuaXF1ZWlkPTVwcGhwaXVxMjQmdmVyc2lvbj00LjkzLjA0JnByb2R1Y3Q9ZnVzaW9uJmN1c3RvbW9ubGluZT1odHRwcyUzQSUyRiUyRmNybS5zYWluYS1jby5pciUyRl9fc3dpZnQlMkZmaWxlcyUyRmZpbGVfN2FjcDFsODFuN2lpNGw4LmpwZyZjdXN0b21vZmZsaW5lPWh0dHBzJTNBJTJGJTJGY3JtLnNhaW5hLWNvLmlyJTJGX19zd2lmdCUyRmZpbGVzJTJGZmlsZV96NWVqZG83eTVoY2M1bzguanBnJmN1c3RvbWF3YXk9aHR0cHMlM0ElMkYlMkZjcm0uc2FpbmEtY28uaXIlMkZfX3N3aWZ0JTJGZmlsZXMlMkZmaWxlXzhsY3JncGo1MXp2bnRwai5qcGcmY3VzdG9tYmFja3Nob3J0bHk9aHR0cHMlM0ElMkYlMkZjcm0uc2FpbmEtY28uaXIlMkZfX3N3aWZ0JTJGZmlsZXMlMkZmaWxlX2d0bDl1cWpsZzl2bm9xai5qcGcKYWI2MDRhYzU3NDU5MzY5NmNlMjRiNWU5ZTJiMWMzNzU4NmFjZmNkYQ=="></script>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <script>var swiftscriptelem5pphpiuq24=document.createElement("script");swiftscriptelem5pphpiuq24.type="text/javascript";var swiftrandom=Math.floor(Math.random()*1001);var swiftuniqueid="5pphpiuq24";var swifttagurl5pphpiuq24="https://crm.saina-co.ir/visitor/index.php?/Default/LiveChat/HTML/HTMLButton/cHJvbXB0dHlwZT1jaGF0JnVuaXF1ZWlkPTVwcGhwaXVxMjQmdmVyc2lvbj00LjkzLjA0JnByb2R1Y3Q9ZnVzaW9uJmN1c3RvbW9ubGluZT1odHRwcyUzQSUyRiUyRmNybS5zYWluYS1jby5pciUyRl9fc3dpZnQlMkZmaWxlcyUyRmZpbGVfN2FjcDFsODFuN2lpNGw4LmpwZyZjdXN0b21vZmZsaW5lPWh0dHBzJTNBJTJGJTJGY3JtLnNhaW5hLWNvLmlyJTJGX19zd2lmdCUyRmZpbGVzJTJGZmlsZV96NWVqZG83eTVoY2M1bzguanBnJmN1c3RvbWF3YXk9aHR0cHMlM0ElMkYlMkZjcm0uc2FpbmEtY28uaXIlMkZfX3N3aWZ0JTJGZmlsZXMlMkZmaWxlXzhsY3JncGo1MXp2bnRwai5qcGcmY3VzdG9tYmFja3Nob3J0bHk9aHR0cHMlM0ElMkYlMkZjcm0uc2FpbmEtY28uaXIlMkZfX3N3aWZ0JTJGZmlsZXMlMkZmaWxlX2d0bDl1cWpsZzl2bm9xai5qcGcKYWI2MDRhYzU3NDU5MzY5NmNlMjRiNWU5ZTJiMWMzNzU4NmFjZmNkYQ==";setTimeout("swiftscriptelem5pphpiuq24.src=swifttagurl5pphpiuq24;document.getElementById('swifttagcontainer5pphpiuq24').appendChild(swiftscriptelem5pphpiuq24);",1);</script>
-</div>
+                            </a>
+                        </li>`;
+                })
+                if ($('.doctor-card-container-layout').length == total) {
+                    loadBtn.classList.add('not-visible');
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            },
+        });
+    }
+    loadBtn.addEventListener('click', () => {
+        loadmorePost()
+    });
+</script>
 <script>$(document).ready(function(){var currentRoute=window.location.pathname;if(currentRoute==='/consultation/gynecologist-infertility'){$('body').append(`<style type="text/css">#goftino_w {display: none !important }</style>`);}else{$('#kayako-container-plp').css('display','none');}})</script>
 
 {% endblock content %}

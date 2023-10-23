@@ -30,3 +30,9 @@ class Coach(models.Model):
     coach_address = models.TextField(max_length=300, null=True, blank=True)
     coach_city = models.TextField(max_length=100)
     coach_county = models.TextField(max_length=100, null=True, blank=True)
+    genders = (
+        ("Male", "Male"),
+        ("Female", "Female")
+    )
+    coach_gender = models.CharField(max_length=50, choices=genders, default="Male")
+    coach_rating = models.FloatField(null=True)

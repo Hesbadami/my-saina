@@ -1,0 +1,23 @@
+
+                    content_container.innerHTML += `<li data-isonline="True" data-super-expert="False" data-gender="Female" data-hasfastphone="False" data-insuranceisactive="False" data-hasphone="True" data-exp="${coach.coach_experience}" data-rating="98.31893892658853" data-videocall="False" data-chat="False" class="rowItem_LC doctorId doctor-card-container" data-id="014c2f112cc14d148ec2cc077c4b554b" data-name="${coach.coach_user__full_name}  " data-category="coaching" data-expertise="${coach.coach_specialty}" data-superexpertise="" data-childcategory="coaching" data-expr-1579="1" data-pos="1" data-ecm-visited="1" data-ecm-view="1" data-ecm-ga4-visited="1" data-ecm-ga4-view="1">
+                            <a class="doctor-card-container-layout" href="/doctorConsulation/${coach.coach_user__phone}/" title="Coaching with ${coach.coach_user__full_name}    ">
+                                <div class="doctor-card-right-side">
+                                    <div class="doctor-card-personal-info-container">
+                                        <div class="doctor-card-personal-image"><img src="{% static 'coaching/images/avatar.png' %}"  title="Coaching with ${coach.coach_user__full_name}    " alt="Coaching with ${coach.coach_user__full_name}    " loading="lazy"> <i class="doctor-card-activity-status online-status rounded-circle"></i></div>
+                                        <div class="doctor-card-personal-info"><span class="doctor-card-personal-info-name">${coach.coach_user__full_name} </span> <span class="doctor-card-personal-info-specialty">${coach.coach_specialty}</span> <span class="doctor-card-personal-info-specialty doctor-card-personal-info-super-specialty"></span></div>
+                                    </div>
+                                    <div class="doctor-card-platform-info-container">
+                                        <div class="doctor-card-platform-info"><span class="doctor-card-rating"> <i class="fa fa-star"></i> 4.9 </span> <span class="doctor-card-comments"> <i class="doctor-card-comments-icon"></i> <span class="doctor-card-comments-text">3242 comments</span> </span></div>
+                                    </div>
+                                </div>
+                                <div class="doctor-card-left-side">
+                                    <div class="doctor-card-business-info">
+                                        <div class="doctor-card-business-info-row"><span class="doctor-card-business-info-title">Experience:</span> <span class="doctor-card-business-info-value">${coach.coach_experience} years</span></div>
+                                        <div class="doctor-card-business-info-row"><span class="doctor-card-business-info-title">Successfull coachings:</span> <span class="doctor-card-business-info-value">8925</span> <span class="doctor-card-business-info-subtitle">( in 3 years and 6 months )</span></div>
+                                    </div>
+                                    <div class="doctor-card-cta-container">
+                                        <div class="green-tertiary-btn doctor-card-cta">Get coaching <i class="icon icon-arrow-left"></i></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>`;
