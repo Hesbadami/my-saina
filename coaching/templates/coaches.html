@@ -64,15 +64,22 @@
                             <span class="apply-filter-item-caption"> Sort by: </span>
                             <div class="orderCTRL">
                                 <ul class="filter-sort-list">
-                                    <li data-value="1" class="filter-sort-item filter-sort-active"><span class="filter-sort-select"> Default </span></li>
-                                    <li data-value="2" class="filter-sort-item"><span class="filter-sort-select"> Highest experience </span></li>
-                                    <li data-value="3" class="filter-sort-item"><span class="filter-sort-select"> Best rating </span></li>
-                                    <li data-value="4" class="filter-sort-item" style="display:none"><span class="filter-sort-select"> Least wait time </span></li>
+                                    <li data-value="1" class="filter-sort-item {% if sort == 1 %}filter-sort-active{% endif %}"><span class="filter-sort-select"> Default </span></li>
+                                    <li data-value="2" class="filter-sort-item {% if sort == 2 %}filter-sort-active{% endif %}"><span class="filter-sort-select"> Highest experience </span></li>
+                                    <li data-value="3" class="filter-sort-item {% if sort == 3 %}filter-sort-active{% endif %}"><span class="filter-sort-select"> Best rating </span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <script>
+                        
+                        {% if 'justFemaleR' in request.GET %}
+                            $('#justFemaleR').attr('checked', true);
+                        {% endif %}
+                        {% if 'justMaleR' in request.GET %}
+                            $('#justMaleR').attr('checked', true);
+                        {% endif %}
+
                         function handleShowDieases(isSearching) {
                             $('.diseases_filters_container > button').each(function(dieases__index) {
                                 $(this).css('display', 'block')
@@ -117,8 +124,8 @@
                                 return
                             }
                             $('.diseases_filters_container > button ').each(function() {
-                                var diease_inner_text = $(this).text()
-                                if (diease_inner_text.includes(_searchVal)) {
+                                var diease_inner_text = $(this).text().toLowerCase()
+                                if (diease_inner_text.includes(_searchVal.toLowerCase())) {
                                     $(this).css('display', 'block');
                                 } else {
                                     $(this).css('display', 'none');
@@ -132,8 +139,8 @@
                                 return
                             }
                             $('.city_filters_container > button ').each(function() {
-                                var city_inner_text = $(this).text()
-                                if (city_inner_text.includes(_searchVal)) {
+                                var city_inner_text = $(this).text().toLowerCase()
+                                if (city_inner_text.includes(_searchVal.toLowerCase())) {
                                     $(this).css('display', 'block');
                                 } else {
                                     $(this).css('display', 'none');
@@ -149,10 +156,18 @@
                             var urlSearchDisease = new URLSearchParams(window.location.search)
                             if (urlSearchDisease.get('spec')) {
                                 window.scrollTo(0, 0)
+                                console.log("I SEEEEEE")
                                 window.location.replace(window.location.origin + window.location.pathname)
                             }
-                            var urlSearchCity = new URLSearchParams(window.location.search)
                             if (urlSearchDisease.get('city')) {
+                                window.scrollTo(0, 0)
+                                window.location.replace(window.location.origin + window.location.pathname)
+                            }
+                            if (urlSearchDisease.get('justMaleR')) {
+                                window.scrollTo(0, 0)
+                                window.location.replace(window.location.origin + window.location.pathname)
+                            }
+                            if (urlSearchDisease.get('justFemaleR')) {
                                 window.scrollTo(0, 0)
                                 window.location.replace(window.location.origin + window.location.pathname)
                             }
@@ -160,7 +175,6 @@
                             $('#justFemaleR').removeAttr('checked');
                             $(curThis).closest('.consultation-filter-box').removeClass('filterChanged');
                             $('.mobile_clear_all_filters__').css('display', 'flex')
-                            soSearch();
                         }
                         $('body').click(function() {
                             $('.openMenu').removeClass('openMenu')
@@ -186,16 +200,11 @@
                         });
 
                         function soSearch(canClose) {
-                            showThisRow = true
-                            if ($('.listOfConsultants_manBox .expandable').children().length === 0) {
-                                $('.listOfConsultants_manBox .expandable').remove();
-                            }
                             if ($(window).width() <= 750 && canClose != true) {
                                 $('#consulation-filter').css('display', 'none');
                             }
                             var isFemale = $('#justFemaleR').is(':checked');
                             var isMale = $('#justMaleR').is(':checked');
-                            console.log(isMale)
                             var all_of_filters = {
                                 isFemale: {
                                     value: isFemale,
@@ -209,43 +218,15 @@
                                 }
                             }
                             var _urlParams = new URL(window.location);
-                            var fContainer = $(".filtered_now_list_container")
-                            $('#filtered_now____').children('').each(function() {
-                                if (!$(this).attr('custom_dynamic_disease')) $(this).remove()
-                            });
-                            $('#filtered_now____mobile').children('').each(function() {
-                                if (!$(this).attr('custom_dynamic_disease')) $(this).remove()
-                            });
                             Object.entries(all_of_filters).forEach(function(_f_i_c) {
-                                fContainer.removeClass('f_no_d')
                                 if (_f_i_c[1].value) {
                                     _urlParams.searchParams.set(_f_i_c[1].id, 'true');
-                                    fContainer.append(`<button onclick="removeF_D('${_f_i_c[1].id}')" class="filtered_now_list_item"><i class="fa icon-close fa-close close_filter_btn_icon" ></i> ${_f_i_c[1].caption}</button>`)
                                 } else {
                                     _urlParams.searchParams.delete(_f_i_c[1].id)
                                 }
                             })
                             window.history.replaceState({}, '', _urlParams);
-                            var boolShowAll = false;
-                            if (isFemale == false && isMale == false) {
-                                boolShowAll = true;
-                            }
-                            $('.listOfConsultants_manBox > ul > li').each(function(_index) {
-                                var dataGender = $(this).attr('data-gender');
-                                if (isMale == true && isFemale == true) {} else {
-                                    if (isFemale == true && dataGender !== "Female") {
-                                        showThisRow = false;
-                                    }
-                                    if (isMale == true && dataGender !== "Male") {
-                                        showThisRow = false;
-                                    }
-                                }
-                                if (showThisRow == false) {
-                                    $(this).css('display', 'none');
-                                } else {
-                                    $(this).css('display', 'flex');
-                                }
-                            })
+                            window.location.reload()
                         }
                         
                         function removeF_D(f_name_d) {
@@ -274,33 +255,14 @@
                             } else if (sortValue == 3) {
                                 isAsc = false;
                                 targetValue = 'data-rating';
-                            } else if (sortValue == 4) {
-                                isAsc = true;
-                                targetValue = 'data-avgresponse';
                             }
-                            var allRow = [];
-                            $('.listOfConsultants_manBox > ul > li').each(function() {
-                                var value = $(this).attr(targetValue).trim();
-                                if (!value || value == '' || value == "0" || value == 0) {
-                                    value = 999999999;
-                                } else {
-                                    value = Number.parseInt(value);
-                                }
-                                allRow.push({
-                                    html: $(this).clone(),
-                                    sortProperty: value
-                                });
-                            });
-                            allRow = allRow.sort(function(a, b) {
-                                return isAsc == true ? (a.sortProperty - b.sortProperty) : (b.sortProperty - a.sortProperty);
-                            });
-                            if (allRow != null && allRow.length > 0) {
-                                $('.listOfConsultants_manBox > ul').html('');
-                                for (var i = 0; i < allRow.length; i++) {
-                                    $('.listOfConsultants_manBox > ul').append(allRow[i].html);
-                                }
-                                $(".listOfConsultants_manBox > ul > li[data-rating='']").attr("data-rating", "1")
-                            }
+
+                            var _urlParams_disease = new URL(window.location);
+                            _urlParams_disease.searchParams.delete('sort-by')
+                            _urlParams_disease.searchParams.set('sort-by', sortValue)
+                            window.history.replaceState({}, '', _urlParams_disease);
+                            window.scrollTo(0, 0)
+                            window.location.reload()
                         }
                     </script>
                 </div>
@@ -308,14 +270,14 @@
                     <ul class="main-doctor-list">
                         {% for coach in coach_list %}
                         <li data-isonline="True" data-super-expert="False" data-gender="{{ coach.coach_gender }}" data-hasfastphone="False" data-insuranceisactive="False" data-hasphone="True" data-exp="{{ coach.coach_experience }}" data-rating="{% widthratio coach.coach_rating 1 20 %}" data-videocall="False" data-chat="False" class="rowItem_LC doctorId doctor-card-container" data-id="014c2f112cc14d148ec2cc077c4b554b" data-name="{{ coach.coach_user.full_name }}  " data-category="coaching" data-expertise="{{ coach.coach_speciality }}" data-superexpertise="" data-childcategory="coaching" data-expr-1579="1" data-pos="{{ forloop.counter }}" data-ecm-visited="1" data-ecm-view="1" data-ecm-ga4-visited="1" data-ecm-ga4-view="1">
-                            <a class="doctor-card-container-layout" href="/doctorConsulation/{{ coach.coach_user.phone }}/" title="Coaching with {{ coach.coach_user.full_name }}    ">
+                            <a class="doctor-card-container-layout" href="/coachConsulation/{{ coach.coach_user.phone }}/" title="Coaching with {{ coach.coach_user.full_name }}    ">
                                 <div class="doctor-card-right-side">
                                     <div class="doctor-card-personal-info-container">
                                         <div class="doctor-card-personal-image"><img src="{% static 'coaching/images/avatar.png' %}"  title="Coaching with {{ coach.coach_user.full_name }}    " alt="Coaching with {{ coach.coach_user.full_name }}    " loading="lazy"> <i class="doctor-card-activity-status online-status rounded-circle"></i></div>
                                         <div class="doctor-card-personal-info"><span class="doctor-card-personal-info-name">{{ coach.coach_user.full_name }} </span> <span class="doctor-card-personal-info-specialty">{{ coach.coach_speciality }}</span> <span class="doctor-card-personal-info-specialty doctor-card-personal-info-super-specialty"></span></div>
                                     </div>
                                     <div class="doctor-card-platform-info-container">
-                                        <div class="doctor-card-platform-info"><span class="doctor-card-rating"> <i class="fa fa-star"></i> 4.9 </span> <span class="doctor-card-comments"> <i class="doctor-card-comments-icon"></i> <span class="doctor-card-comments-text">3242 comments</span> </span></div>
+                                        <div class="doctor-card-platform-info"><span class="doctor-card-rating"> <i class="fa fa-star"></i> {{ coach.coach_rating }} </span> <span class="doctor-card-comments"> <i class="doctor-card-comments-icon"></i> <span class="doctor-card-comments-text">3242 comments</span> </span></div>
                                     </div>
                                 </div>
                                 <div class="doctor-card-left-side">
@@ -372,7 +334,7 @@
                 const data = response.coaches
                 data.map((coach, i) => {
                     content_container.innerHTML += `<li data-isonline="True" data-super-expert="False" data-gender="${coach.coach_gender}" data-hasfastphone="False" data-insuranceisactive="False" data-hasphone="True" data-exp="${coach.coach_experience}" data-rating="{% widthratio coach.coach_rating 1 20 %}" data-videocall="False" data-chat="False" class="rowItem_LC doctorId doctor-card-container" data-id="014c2f112cc14d148ec2cc077c4b554b" data-name="${coach.coach_user__full_name}  " data-category="coaching" data-expertise="${coach.coach_speciality}" data-superexpertise="" data-childcategory="coaching" data-expr-1579="1" data-pos="${i+1+_current_item}" data-ecm-visited="1" data-ecm-view="1" data-ecm-ga4-visited="1" data-ecm-ga4-view="1">
-                            <a class="doctor-card-container-layout" href="/doctorConsulation/${coach.coach_user__phone}/" title="Coaching with ${coach.coach_user__full_name}    ">
+                            <a class="doctor-card-container-layout" href="/coachConsulation/${coach.coach_user__phone}/" title="Coaching with ${coach.coach_user__full_name}    ">
                                 <div class="doctor-card-right-side">
                                     <div class="doctor-card-personal-info-container">
                                         <div class="doctor-card-personal-image"><img src="{% static 'coaching/images/avatar.png' %}"  title="Coaching with ${coach.coach_user__full_name}    " alt="Coaching with ${coach.coach_user__full_name}    " loading="lazy"> <i class="doctor-card-activity-status online-status rounded-circle"></i></div>
@@ -407,6 +369,5 @@
         loadmorePost()
     });
 </script>
-<script>$(document).ready(function(){var currentRoute=window.location.pathname;if(currentRoute==='/consultation/gynecologist-infertility'){$('body').append(`<style type="text/css">#goftino_w {display: none !important }</style>`);}else{$('#kayako-container-plp').css('display','none');}})</script>
 
 {% endblock content %}

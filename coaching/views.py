@@ -16,25 +16,39 @@ User = get_user_model()
 
 def coaches(request):
 
+    sort = 1
     specs = [ex.expertise_name for ex in expertise.objects.all()]
 
     if request.method == 'GET':
         
-        if 'city' in request.GET or 'spec' in request.GET:
+        if (('justFemaleR' in request.GET) ^ ('justMaleR' in request.GET)) or 'city' in request.GET or 'spec' in request.GET:
             condition = {}
 
             if 'city' in request.GET:
                 condition['coach_city']=request.GET.get('city')
             if 'spec' in request.GET:
                 condition['coach_speciality__expertise_name']=request.GET.get('spec')
-            
+            if 'justFemaleR' in request.GET:
+                condition['coach_gender']='Female'
+            if 'justMaleR' in request.GET:
+                condition['coach_gender']='Male'
+
             coach_list = Coach.objects.filter(**condition).all()
 
+        elif ('justFemaleR' in request.GET) and ('justMaleR' in request.GET):
+            coach_list = Coach.objects.none()
         else:
             coach_list = Coach.objects.all()
 
+        if 'sort-by' in request.GET:
+            sort = int(request.GET.get('sort-by'))
     else:
         coach_list = Coach.objects.all()
+
+    if sort == 2:
+        coach_list = coach_list.order_by('-coach_experience')
+    if sort == 3:
+        coach_list = coach_list.order_by('-coach_rating')
 
 
     specs_data = {}
@@ -54,7 +68,7 @@ def coaches(request):
 
     total_coach = len(coach_list)
     coach_list = coach_list[:10]
-    context = {'coach_range': range(total_coach), 'total_coach': total_coach, 'coach_list': coach_list, 'specs_data':specs_data, 'city_data':city_data}
+    context = {'sort':sort,'coach_range': range(total_coach), 'total_coach': total_coach, 'coach_list': coach_list, 'specs_data':specs_data, 'city_data':city_data}
     return render(request, 'coaches.html', context)
 
 def load_more(request):

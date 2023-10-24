@@ -15,7 +15,14 @@
                                 <p>Welcome to Football Coaching registration</p>
                             </div>
                             <div class=DoctorRegister__box>
-                                <div class="DoctorRegister_form-group form-group"><label class=DoctorRegister__box_title>Share code*</label> <input type=tel name=shareCode class="DoctorRegister__box__input DoctorRegister__box__input_ltr" placeholder=""></div>
+                                <div class="DoctorRegister_form-group form-group">
+                                    <label class=DoctorRegister__box_title>Gender*</label> 
+                                    <select name=gender id=Gender-id onmousedown=ChangeSubCategoryGender() class="DoctorRegister__box__input DoctorRegister__box__input_ltr">
+                                        <option id=please-choose value=0>Please choose</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
                                 <div class="DoctorRegister_form-group form-group">
                                     <label class=DoctorRegister__box_title>Speciality*</label> 
                                     <select name=CategorySpeciality id=CategorySpeciality-id onmousedown=ChangeSubCategory() class="DoctorRegister__box__input DoctorRegister__box__input_ltr">
@@ -52,10 +59,14 @@
         var CategorySpecialitySelector = $(curObj).closest('.DoctorRegister__box').find('select[name=CategorySpeciality]');
         showErrorForInput(CategorySpecialitySelector, 'Invalid speciality');
     {% endif %}
-
+    
     function ChangeSubCategory() {
         $('#please-choose').remove()
         $('#CategorySpeciality-id').innerHTML("<option id=please-choose disabled=disabled value=0>Please choose</option>")
+    }
+    function ChangeSubCategoryGender() {
+        $('#please-choose').remove()
+        $('#Gender-id').innerHTML("<option id=please-choose disabled=disabled value=0>Please choose</option>")
     }
 
     function showErrorForInput(inputSelectorObj, message) {
@@ -79,13 +90,13 @@
         
         var form_valid = true;
 
-        var shareCodeSelector = $(curObj).closest('.DoctorRegister__box').find('input[name=shareCode]');
-        var shareCode = shareCodeSelector.val();
-        if (!shareCode) {
-            showErrorForInput(shareCodeSelector, 'Enter your share code');
+        var CategorySpecialitySelector = $(curObj).closest('.DoctorRegister__box').find('select[name=gender]');
+        var CategorySpeciality = CategorySpecialitySelector.val();
+        if (CategorySpeciality == 0) {
+            showErrorForInput(CategorySpecialitySelector, 'Choose your gender');
             var form_valid = false;
         }
-        else {hideErrorForInput(shareCodeSelector);}
+        else {hideErrorForInput(CategorySpecialitySelector);}
 
         var CategorySpecialitySelector = $(curObj).closest('.DoctorRegister__box').find('select[name=CategorySpeciality]');
         var CategorySpeciality = CategorySpecialitySelector.val();

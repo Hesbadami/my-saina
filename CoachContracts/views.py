@@ -21,11 +21,6 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 User = get_user_model()
 
-# Create your views here.
-with open('CoachContracts/static/CoachContracts/css/test', 'w') as f:
-    f.write("Hello World")
-    captcha_path = os.path.join(BASE_DIR, 'data/')
-
 @login_required(login_url='registerlogin')
 def register(request):
     image = ImageCaptcha()
@@ -62,10 +57,10 @@ def register(request):
         coach_req, created = coach_requests.objects.get_or_create(coach_user=request.user)
         
         if created:
-            coach_req.coach_sharecode = request.POST['shareCode']
             coach_req.coach_specialty = expertise.objects.get(expertise_name=request.POST['CategorySpeciality'])
             coach_req.coach_city = request.POST['cityTitle']
             coach_req.coach_experience = request.POST['CoachingYear']
+            coach_req.coach_gender = request.POST['gender']
             coach_req.save()
 
         return redirect('coach_register_successfull')

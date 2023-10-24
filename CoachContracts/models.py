@@ -19,7 +19,11 @@ class captcha(models.Model):
 
 class coach_requests(models.Model):
     coach_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    coach_sharecode = models.CharField(max_length=100, null=True)
+    genders = ((
+        ("Male", "Male"),
+        ("Female", "Female")
+    ))
+    coach_gender = models.CharField(max_length=50, choices=genders, null=True)
     coach_specialty = models.ForeignKey(expertise, on_delete=models.CASCADE, null=True)
     coach_city = models.CharField(max_length=50, null=True)
     coach_experience = models.IntegerField(null=True)

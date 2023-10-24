@@ -35,4 +35,4 @@ class Coach(models.Model):
         ("Female", "Female")
     )
     coach_gender = models.CharField(max_length=50, choices=genders, default="Male")
-    coach_rating = models.FloatField(null=True)
+    coach_rating = models.FloatField(default=0)
