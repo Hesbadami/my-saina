@@ -134,19 +134,125 @@
                     <div class="menu_back_drop_overlay" style="top:0;z-index:-30;display:none"></div>
                     <div style="z-index:20">
                         <input id="search-input" class="srch-input" placeholder="Search for coach, position, area"> <i style="display:none;cursor:pointer;justify-content:center;align-items:center;padding:0" class="search-typing-icon fa fa-close"></i> <i style="display:flex;cursor:pointer;justify-content:center;align-items:center;padding:0;margin:6px 0" class="search-icon fa fa-search"></i>
-                        <div style="display:none" class="show-search-result"></div>
+                        <div id="serach-output" style="display: none;" class="show-search-result">
+                            <ul class="search-recommendation" id="imam-search-result">
+                            </ul>
+                            <ul>
+                                <li onclick="ecommerceSearchEventHandler(false,'q{qtitleq}q',true)" class="MoreInformation">
+                                    <a class="category-recommendation-link fill-btn-transition md-drsaina-btn rounded-btn" id="template-more-search" href="/coaching/search?keyword=سلام">
+                                        <div style="display:flex">
+                                            <div class="MoreInformation_icon"><i class="fa fa-search"></i></div>
+                                            <div class="MoreInformation_desc">
+                                                <h5 class="MoreInformation_desc_Text">Search <span class="MoreInformation_desc_Text_Search">Goalkeeping</span> In coaches and specialities</h5>
+                                            </div>
+                                        </div>
+                                        <i class="icon icon-arrow-left"></i> 
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <script>
+                            $('#search-input').on('input', function(e) {
+                                if (true) {
+                                    var _searchVal = e.target.value
+                                    const search_container = $('#imam-search-result')[0];
+                                    search_container.innerHTML = ''
+                                    if (!_searchVal) {
+                                        return
+                                    }
+                                    var data = {
+                                        'phrase': _searchVal
+                                    };
+                                    $.ajax({
+                                        url: '{% url "landingsearch" %}',
+                                        type: 'GET',
+                                        data: data,
+                                        success: function (response) {
+                                            if(response.coaches !== undefined) {
+                                                const coaches = response.coaches;
+                                                search_container.innerHTML += `
+                                                    <ul class="section_container" id="doctors">
+                                                        <div class="category-container">
+                                                            <h2>Suggested coaches</h2>
+                                                        </div>
+                                                        <ul id="coaches-container" data-flickity='{"cellAlign": "left", "contain": true, "wrapAround": false ,"prevNextButtons" : true ,"pageDots" :false ,"freeScroll": true }' class="doctors-carousel ervices-slider flickity-enabled is-draggable" tabindex="0">
+                                                        </ul>
+                                                    </ul>
+                                                    <ul class="section_container" id="specialities">
+                                                        <div class="category-container">
+                                                            <h2>Specialities</h2>
+                                                        </div>
+                                                        <ul id="suggested-speciality" class="">
+                                                            <li class="search-recommendation-item" onclick="clearInput(this, '{% url 'coaches' %}?spec=Goalkeeping')">
+                                                                <a class="category-recommendation-link fill-btn-transition md-drsaina-btn rounded-btn" title="Goalkeeping">
+                                                                    <div class="category-recommendation-item-info">
+                                                                        <h5>Speciality of <em>Goalkeeping</em></h5>
+                                                                        <h6>91 coaches</h6>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </ul>
+                                                    <ul class="section_container" id="cities">
+                                                        <div class="category-container">
+                                                            <h2>Cities</h2>
+                                                        </div>
+                                                        <ul id="suggested-city" class="">
+                                                            <li class="search-recommendation-item repeaterItem repeatercategories" data-search-id="2_128" data-name="Goalkeeping" onclick="clearInput(this, '{% url 'coaches' %}?spec=Goalkeeping')" data-type="3">
+                                                                <a class="category-recommendation-link fill-btn-transition md-drsaina-btn rounded-btn" title="Goalkeeping">
+                                                                    <div class="category-recommendation-item-info">
+                                                                        <h5>Coaches in <em>London</em></h5>
+                                                                        <h6>91 coaches</h6>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </ul>
+                                                `;
+                                                
+                                                const coaches_container = $('#coaches-container')[0];
+                                                coaches.map(coach => {
+                                                    coaches_container.innerHTML += `<li class="search-recommendation-doctor-item repeaterItem repeaterdoctors is-selected" onclick="clearInput(this, '/coachConsulation/${coach.coach_user__phone}/')">
+                                                            <a class="category-recommendation-link fill-btn-transition md-drsaina-btn rounded-btn" title="${coach.coach_user__full_name}">
+                                                                <div style="display:flex;">
+                                                                    <img class="category-recommendation-item-image" src="{% static 'store/images/avatar.png' %}" data-type="1">
+                                                                    <div class="category-recommendation-item-info">
+                                                                        <h5>${coach.coach_user__full_name}</h5>
+                                                                        <h6>${coach.coach_speciality}</h6>
+                                                                    </div>
+                                                                </div>
+                                                                <i class="fa fa-chevron-right"></i>
+                                                            </a>
+                                                        </li>`;
+                                                });
+                                                
+                                                for (var i = 0, t = $('#coaches-container').length; i < t; i++) {
+                                                    var flkty = Flickity.data($('#coaches-container')[i]);
+                                                    if (!flkty) {
+                                                        new Flickity($('#coaches-container')[i]);
+                                                    }
+                                                }
+                                            };
+                                            $('#serach-output')[0].style.display = "block";
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                        },
+                                    });
+                                }
+                            })
+                        </script>
                         <div style="display:none" class="search-box-opacity">
                             <div class="above-page-fixed">
                                 <div class="above-page-search-title">
                                     <a style="cursor:pointer" class="search-back-arrow icon icon-arrow-right"></a>
-                                    <h4>جست و جو</h4>
+                                    <h4>Search</h4>
                                 </div>
-                                <div class="srch-input-box srch-input-box--mobile"><input class="srch-input" id="search-input-mobile" placeholder="جستجوی پزشک، تخصص، بیماری"> <i style="display:none;cursor:pointer;justify-content:center;align-items:center" class="search-typing-icon fa fa-close"></i></div>
+                                <div class="srch-input-box srch-input-box--mobile"><input class="srch-input" id="search-input-mobile" placeholder="Search for coach name or an speciality"> <i style="display:none;cursor:pointer;justify-content:center;align-items:center" class="search-typing-icon fa fa-close"></i></div>
                             </div>
                             <div style="display:none" class="show-search-result show-search-result--mobile"></div>
                         </div>
                     </div>
-                    <div style="display:none" class="fast-call-journey-in-search"><span class="fast-call-journey-in-search-title">I dont know which specialty to choose!</span> <button class="fast-call-journey-in-search-btn" id="fast-call-journey-in-search-consultation-btn"> <i class="fast-call-widget-icon"></i>Get consultation instantly via text and phone</button></div>
                 </div>
                 <div class="last-question-time">
                     <div class="last-question-time-detail"><i class="fa fa-stopwatch"></i> <span> 6 seconds ago</span></div>
@@ -199,51 +305,197 @@
         </a>
         </li>
     
-</script><script src="./landing_files/uuid.js.download"></script><script>var pageLocation=window.location.pathname;if(pageLocation==='/consultation'){$('.fast-call-journey-in-search').css('display','flex')}
-    var SEARCH_INDEX_TYPE;function generateSearchPageTag(){var currentRoute=window.location.pathname;switch(currentRoute){case'/':return{tag:'home-page-pop',ecommerceEvent:'search_homePage'};case'/consultation':return{tag:'consultation-page-pop',ecommerceEvent:'search_categoryPage'};case'/consultation/search':return{tag:'search-page-pop',ecommerceEvent:noResult?'search_noResultPage':'search_searchResultPage'};default:return'';}}
-    $("#search-input ,#search-input-mobile ").on('keyup',function(e){if((e.key==='Enter'||e.keyCode===13)&&$(".srch-input").val().trim().length>0){window.location.href=`/consultation/search?keyword=${$(".srch-input").val()}`}});let isLoadingPublicSearchClick=false;function sendSelectedSearchItemInformationToServer(data,url){isLoadingPublicSearchClick=true;$.ajax({url:'/api/Search/public-search-click',type:'PUT',data:JSON.stringify(data),contentType:'application/json',success:function(data){window.location.href=url;isLoadingPublicSearchClick=false;},error:function(err){isLoadingPublicSearchClick=false;window.location.href=url;},complete:function(){}})}
-    function clearInput(event,url){if(isLoadingPublicSearchClick)return;var element=$(event);var pos=element.index();var searchValue=$(".srch-input").val();var searchId=element.attr('data-search-id');var searchIndex=element.attr('data-search-index-type');var itemName=element.attr('data-name');var data={id:searchId,keyword:searchValue,position:pos,searchIndexType:Number(SEARCH_INDEX_TYPE)}
-    isLoadingPublicSearchClick=true;sendSelectedSearchItemInformationToServer(data,url)
-    ecommerceSearchEventHandler(false,itemName,false)
-    $(".srch-input").val("");}
-    function userTokenLocalStorageProcess(key){var localStorageItem=localStorage.getItem(key)
-    if(localStorageItem!==null&&localStorageItem!==undefined){return localStorageItem;}else{var guid=uuidv4();localStorage.setItem(key,guid)
-    return guid;}}
-    $(document).ready(function(){$(".srch-input").val("");$(".search-back-arrow").on("click",function(){$(".above-page-search .menu_back_drop_overlay").css('display','none');$(".search-box-opacity").css('display','none');body.style.overflow="auto"});$.fn.initSearchBox=function(url,searchInterVal,schemaBinding){if(!schemaBinding)
-    schemaBinding={type:'t',format:'f',contents:'c'};if(!searchInterVal)
-    searchInterVal=300;if(!url)
-    url="/SainaSearch/";function cleanSearchResult(curObj,textInput){$(curObj).html('<div class="mssg-pad">'+textInput+'</div>');}
-    function bindTemplate(holderObj,type,format,content){var templateSelector=null;templateSelector=$(holderObj).closest('.parentSearchCTRL').find('.template'+type).html();if(!templateSelector){console.log('the type is not supported');}
-    if(templateSelector){var localTemplate=$(templateSelector);var localItemTemplate=$(localTemplate).find('.repeaterItem');if(localItemTemplate.html()){var localItemRawTemplate='';for(var i=0;i<content.length;i++){var rowItem=content[i];localItemRawTemplate+=localItemTemplate.clone()[0].outerHTML;for(var item in rowItem){var strEvaluateTemplate="localItemRawTemplate = localItemRawTemplate.replace(/q{q"+item+"q}q/g,'"+rowItem[item]+"')";eval(strEvaluateTemplate);}}
-    if(localItemRawTemplate){var tempQuery=$("<div>"+localItemRawTemplate+"</div>");tempQuery.find('a[href=""]').remove()
-    localItemRawTemplate=tempQuery.html()
-    localItemRawTemplate=localItemRawTemplate.replace(/data-src/g,'src');$(localTemplate).find('.repeaterItem').replaceWith($(localItemRawTemplate));$(holderObj).append(localTemplate.html());}}}
-    SaveStartingImpressionsListForEnhancedEcommerce();}
-    function bindSearchTemplate(holderObj,type,format,content){SEARCH_INDEX_TYPE=content.searchIndexType;var templateSelector=null;$("#search-result").html('');templateSelector=$(holderObj).closest('.parentSearchCTRL').find('.template'+type).html();if(!templateSelector){console.log('the type is not supported');}
-    if(templateSelector){var data=Object.keys(content);var listOfItems='';for(var x=0;x<data.length;x++){var localTemplate=$(templateSelector);var localItemTemplate=$("#temp-"+data[x].toLowerCase());var template=localItemTemplate.html();if(template){if(content[data[x]].length>0){$("#search-result").append(`<ul class="section_container" id=${data[x]}></ul>`).html();$(`#${data[x]}`).append(`<div class="category-container">
-    
-                                    <img src=${data[x]==="doctors" ? "/themes/_shared/images/specialistIcon.svg" :data[x]==="categories" ? "/themes/_shared/images/expertiseIcon.svg" : "/themes/_shared/images/disease.svg"} width="40px" height="40px" alt="test" id="img"/>
-    
-                                    <h2>${data[x]==="doctors" ? "پزشکان پیشنهادی" : data[x]==="diseases" ?"بیماری‌ها" : "تخصص‌ها"}</h2>
-    
-                                    </div>`);$(`#${data[x]}`).append(`<ul class=${data[x]==="doctors" ? "doctors-carousel" :""}></ul>`);}
-    for(var i=0;i<content[data[x]].length;i++){var copyTemplate=template;var rowItem=content[data[x]][i];for(var item in rowItem){if(item=='title'||item=='fullName'){copyTemplate=copyTemplate.replace(new RegExp('{{originalItem}}','g'),rowItem[item].replace("<em>","").replace("</em>",""));}
-    copyTemplate=copyTemplate.replace(new RegExp('{{'+item+'}}','g'),rowItem[item]);}
-    $(`#${data[x]} ul`).append(copyTemplate);}}}
-    $("#search-result").append($("#MoreInformation").html());$(holderObj).append($("#search-container").html());var elem=document.querySelectorAll('.doctors-carousel');var flktyDesktop=new Flickity(elem[1],{cellAlign:'right',contain:true,rightToLeft:true,freeScroll:true,prevNextButtons:true,wrapAround:false,pageDots:false,groupCells:true});flktyDesktop.on('dragStart',()=>flktyDesktop.slider.childNodes.forEach(slide=>slide.style.pointerEvents="none"));flktyDesktop.on('dragEnd',()=>flktyDesktop.slider.childNodes.forEach(slide=>slide.style.pointerEvents="all"));var flktyMobile=new Flickity(elem[2],{cellAlign:'right',contain:true,rightToLeft:true,freeScroll:true,prevNextButtons:true,wrapAround:false,pageDots:false,groupCells:true});flktyMobile.on('dragStart',()=>flktyMobile.slider.childNodes.forEach(slide=>slide.style.pointerEvents="none"));flktyMobile.on('dragEnd',()=>flktyMobile.slider.childNodes.forEach(slide=>slide.style.pointerEvents="all"));SaveStartingImpressionsListForEnhancedEcommerce();}}
-    function bindAClick(curObj){$(curObj).find('a[data-dontremoveme]:visible').each(function(){$(this).click(function(){var pValue=$(this).attr('data-dontremoveme');if(pValue){$.ajax({url:'/SainaSearchNewLog/',type:'POST',data:{key:pValue}});}});});$(curObj).find('a[data-dontremoveme2]:visible').each(function(){$(this).click(function(e){var pValue=$(this).attr('data-dontremoveme2');var curHref=$(this).attr('href');if(pValue){$.ajax({url:'/SainaSearchNewLogSplit/',type:'POST',data:{key:pValue},success:function(res){window.open(this+"&sid="+res,"_blank");}.bind(curHref)});}
-    e.preventDefault();e.stopPropagation();return false;});});}
-    var request;function doSearch(sUrl,sValue,curCTRL){var userToken=userTokenLocalStorageProcess('userToken');var pageTag=generateSearchPageTag().tag;request=$.ajax({url:sUrl+'?keyword='+sValue+'&userToken='+userToken+'&searchPageTag='+pageTag,type:'GET',success:function(res){if(res&&(res.categories||res.doctors||res.disease)){$(this).html('');bindSearchTemplate(this,"search",'noformat',res);bindAClick($(this).closest('.parentSearchCTRL'));}
-    else if(res&&res.constructor==Array&&res.length>0){$(this).html('');bindTemplate(this,"recd",'noformat',res);bindAClick($(this).closest('.parentSearchCTRL'));}else{cleanSearchResult(this,'موردی که جستجو کردید یافت نشد');}
-    $(this).css('display','block');}.bind(curCTRL),error:function(){cleanSearchResult(this,mainSearchErrorTemplate);$(this).css('display','block');}.bind(curCTRL)});}
-    return this.each(function(){$('body , .search-back-arrow').click(function(){$(this).find('.show-search-result').css('display','none');$(this).find('.search-box-opacity').css('display','none')}.bind(this));$(this).click(function(e){e.stopPropagation();});$(".above-page-search .menu_back_drop_overlay").on('click',function(){$(".above-page-search .menu_back_drop_overlay").css('display','none');$('.show-search-result').css('display','none');$('.search-box-opacity').css('display','none');$('.show-search-result').css('display','none');$(".srch-input").val('');$(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display','none');$(this).closest('.parentSearchCTRL').find('.search-icon').css('display','flex');request.abort();$('.mssg-pad').css('display','none');});$(this).find('.srch-input').click(function(){$(".above-page-search .menu_back_drop_overlay").css('display','block');if(!$(this).find('.srch-input').val()){doSearch("/api/search/DoctorCategories","",$(this).closest('.parentSearchCTRL').find('.show-search-result'));}
-    if($(window).width()<=767){$(this).find('.search-box-opacity').css('display','block');body.style.overflow="hidden"
-    setTimeout(function(){$(this).find('.search-box-opacity').find('input.srch-input').focus();window.scrollTo(0,0)}.bind(this),200);}else{$(this).find('.search-box-opacity').css('display','none');body.style.overflow="unset"}}.bind(this));$(this).find('.search-typing-icon').click(function(){$(this).closest('.parentSearchCTRL').find('input.srch-input').val('');$(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display','none');$(this).closest('.parentSearchCTRL').find('.search-icon').css('display','flex');$(this).closest('.parentSearchCTRL').find('.show-search-result').html('');});var textBox=$(this).find('.srch-input');if(textBox.length>0){textBox.keyup(function(){var curTextThis=this;textBox.each(function(){if(curTextThis!=this){$(this).val($(curTextThis).val())}});clearInterval(this.timeOutInterval);var curValue=$(this).val();if(curValue){$(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display','flex');$(this).closest('.parentSearchCTRL').find('.search-icon').css('display','none');}else{$(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display','none');$(this).closest('.parentSearchCTRL').find('.search-icon').css('display','flex');}
-    if(curValue&&curValue.length>=2){this.timeOutInterval=setTimeout(function(){$(".MoreInformation_desc_Text_Search").html(curValue)
-    $("#template-more-search").attr("href","/consultation/search?keyword="+curValue)
-    $(this)[0].lastSearchWord=curValue;doSearch("/api/search/searchbox",encodeURI(curValue),$(this).closest('.parentSearchCTRL').find('.show-search-result'));}.bind(this),searchInterVal)}else if(!curValue){this.timeOutInterval=setTimeout(function(){$(this)[0].lastSearchWord=curValue;doSearch("/api/search/DoctorCategories","",$(this).closest('.parentSearchCTRL').find('.show-search-result'));}.bind(this),searchInterVal)}});}});}
-    $('.parentSearchCTRL').initSearchBox('/SainaSearchNew/',500,{type:'t',format:'f',contents:'c'});function SaveStartingImpressionsListForEnhancedEcommerce(){var pageName=$("#hidden-main-search-descriptionName").val();if(pageName){$(".show-search-result .search-rslt-list .repeaterItem a[data-sr-page!='bind']").click(function(){var date=new Date();date.setTime(date.getTime()+(15*1000));Cookies.set("main-search-descriptionName",pageName,{expires:date});}).attr("data-sr-page","bind");}}});function ecommerceSearchEventHandler(defaultItems,itemName,moreInformation){var eventName=generateSearchPageTag().ecommerceEvent;var searchValue=$('.srch-input').val()
-    window.dataLayer=window.dataLayer||[];window.dataLayer.push({ecommerce:undefined,'final_search_value':moreInformation?'جستجو در تمامی پزشکان ، تخصص‌ها و بیماری‌ها':itemName.trim(),'written_search_value':defaultItems?'':searchValue.trim(),'event':eventName});}
+</script>
+<script src="./landing_files/uuid.js.download"></script>
+<script>
+    var pageLocation = window.location.pathname;
+if (pageLocation === '/consultation') {
+    $('.fast-call-journey-in-search').css('display', 'flex')
+}
+var SEARCH_INDEX_TYPE;
+
+function generateSearchPageTag() {
+    var currentRoute = window.location.pathname;
+    switch (currentRoute) {
+        case '/':
+            return {
+                tag: 'home-page-pop', ecommerceEvent: 'search_homePage'
+            };
+        case '/consultation':
+            return {
+                tag: 'consultation-page-pop', ecommerceEvent: 'search_categoryPage'
+            };
+        case '/consultation/search':
+            return {
+                tag: 'search-page-pop', ecommerceEvent: noResult ? 'search_noResultPage' : 'search_searchResultPage'
+            };
+        default:
+            return '';
+    }
+}
+$("#search-input ,#search-input-mobile ").on('keyup', function(e) {
+    if ((e.key === 'Enter' || e.keyCode === 13) && $(".srch-input").val().trim().length > 0) {
+        window.location.href = `/consultation/search?keyword=${$(".srch-input").val()}`
+    }
+});
+
+function clearInput(event, url) {
+    if (isLoadingPublicSearchClick) return;
+    var element = $(event);
+    var pos = element.index();
+    var searchValue = $(".srch-input").val();
+    var searchId = element.attr('data-search-id');
+    var searchIndex = element.attr('data-search-index-type');
+    var itemName = element.attr('data-name');
+    var data = {
+        id: searchId,
+        keyword: searchValue,
+        position: pos,
+        searchIndexType: Number(SEARCH_INDEX_TYPE)
+    }
+    isLoadingPublicSearchClick = true;
+    ecommerceSearchEventHandler(false, itemName, false)
+    $(".srch-input").val("");
+}
+
+$(document).ready(function() {
+    $(".srch-input").val("");
+    $(".search-back-arrow").on("click", function() {
+        $(".above-page-search .menu_back_drop_overlay").css('display', 'none');
+        $(".search-box-opacity").css('display', 'none');
+    });
+    $.fn.initSearchBox = function(url, searchInterVal, schemaBinding) {
+        if (!schemaBinding)
+            schemaBinding = {
+                type: 't',
+                format: 'f',
+                contents: 'c'
+            };
+        if (!searchInterVal)
+            searchInterVal = 300;
+
+        function cleanSearchResult(curObj, textInput) {
+            $(curObj).html('<div class="mssg-pad">' + textInput + '</div>');
+        }
+
+        function bindTemplate(holderObj, type, format, content) {
+            var templateSelector = null;
+            templateSelector = $(holderObj).closest('.parentSearchCTRL').find('.template' + type).html();
+            if (!templateSelector) {
+                console.log('the type is not supported');
+            }
+        }
+
+        function bindSearchTemplate(holderObj, type, format, content) {
+            SEARCH_INDEX_TYPE = content.searchIndexType;
+            var templateSelector = null;
+            $("#search-result").html('');
+            templateSelector = $(holderObj).closest('.parentSearchCTRL').find('.template' + type).html();
+            if (!templateSelector) {
+                console.log('the type is not supported');
+            }
+        }
+
+        return this.each(function() {
+            $('body , .search-back-arrow').click(function() {
+                $(this).find('.show-search-result').css('display', 'none');
+                $(this).find('.search-box-opacity').css('display', 'none')
+            }.bind(this));
+            $(this).click(function(e) {
+                e.stopPropagation();
+            });
+            $(".above-page-search .menu_back_drop_overlay").on('click', function() {
+                $(".above-page-search .menu_back_drop_overlay").css('display', 'none');
+                $('.show-search-result').css('display', 'none');
+                $('.search-box-opacity').css('display', 'none');
+                $('.show-search-result').css('display', 'none');
+                $(".srch-input").val('');
+                $(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display', 'none');
+                $(this).closest('.parentSearchCTRL').find('.search-icon').css('display', 'flex');
+                $('.mssg-pad').css('display', 'none');
+            });
+            $(this).find('.srch-input').click(function() {
+                $(".above-page-search .menu_back_drop_overlay").css('display', 'block');
+                if ($(window).width() <= 767) {
+                    $(this).find('.search-box-opacity').css('display', 'block');
+                    setTimeout(function() {
+                        $(this).find('.search-box-opacity').find('input.srch-input').focus();
+                        window.scrollTo(0, 0)
+                    }.bind(this), 200);
+                } else {
+                    $(this).find('.search-box-opacity').css('display', 'none');
+                }
+            }.bind(this));
+            $(this).find('.search-typing-icon').click(function() {
+                $(this).closest('.parentSearchCTRL').find('input.srch-input').val('');
+                $(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display', 'none');
+                $(this).closest('.parentSearchCTRL').find('.search-icon').css('display', 'flex');
+                $(this).closest('.parentSearchCTRL').find('.show-search-result').html('');
+            });
+            var textBox = $(this).find('.srch-input');
+            if (textBox.length > 0) {
+                textBox.keyup(function() {
+                    var curTextThis = this;
+                    textBox.each(function() {
+                        if (curTextThis != this) {
+                            $(this).val($(curTextThis).val())
+                        }
+                    });
+                    clearInterval(this.timeOutInterval);
+                    var curValue = $(this).val();
+                    if (curValue) {
+                        $(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display', 'flex');
+                        $(this).closest('.parentSearchCTRL').find('.search-icon').css('display', 'none');
+                    } else {
+                        $(this).closest('.parentSearchCTRL').find('.search-typing-icon').css('display', 'none');
+                        $(this).closest('.parentSearchCTRL').find('.search-icon').css('display', 'flex');
+                    }
+                    if (curValue && curValue.length >= 2) {
+                        this.timeOutInterval = setTimeout(function() {
+                            $(".MoreInformation_desc_Text_Search").html(curValue)
+                            $("#template-more-search").attr("href", "/consultation/search?keyword=" + curValue)
+                            $(this)[0].lastSearchWord = curValue;
+                        }.bind(this), searchInterVal)
+                    } else if (!curValue) {
+                        this.timeOutInterval = setTimeout(function() {
+                            $(this)[0].lastSearchWord = curValue;
+                        }.bind(this), searchInterVal)
+                    }
+                });
+            }
+        });
+    }
+    $('.parentSearchCTRL').initSearchBox('/SainaSearchNew/', 500, {
+        type: 't',
+        format: 'f',
+        contents: 'c'
+    });
+
+    function SaveStartingImpressionsListForEnhancedEcommerce() {
+        var pageName = $("#hidden-main-search-descriptionName").val();
+        if (pageName) {
+            $(".show-search-result .search-rslt-list .repeaterItem a[data-sr-page!='bind']").click(function() {
+                var date = new Date();
+                date.setTime(date.getTime() + (15 * 1000));
+                Cookies.set("main-search-descriptionName", pageName, {
+                    expires: date
+                });
+            }).attr("data-sr-page", "bind");
+        }
+    }
+});
+
+function ecommerceSearchEventHandler(defaultItems, itemName, moreInformation) {
+    var eventName = generateSearchPageTag().ecommerceEvent;
+    var searchValue = $('.srch-input').val()
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        ecommerce: undefined,
+        'final_search_value': moreInformation ? 'Search all coaches, specialities and cities' : itemName.trim(),
+        'written_search_value': defaultItems ? '' : searchValue.trim(),
+        'event': eventName
+    });
+}
 </script>
 <section id="services" class="section" style="padding-bottom:0">
     <div class="container">

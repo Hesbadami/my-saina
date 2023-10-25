@@ -21,7 +21,10 @@ def coaches(request):
 
     if request.method == 'GET':
         
-        if (('justFemaleR' in request.GET) ^ ('justMaleR' in request.GET)) or 'city' in request.GET or 'spec' in request.GET:
+        if ('justFemaleR' in request.GET) and ('justMaleR' in request.GET):
+            coach_list = Coach.objects.none()
+
+        elif (('justFemaleR' in request.GET) or ('justMaleR' in request.GET)) or 'city' in request.GET or 'spec' in request.GET:
             condition = {}
 
             if 'city' in request.GET:
@@ -35,8 +38,6 @@ def coaches(request):
 
             coach_list = Coach.objects.filter(**condition).all()
 
-        elif ('justFemaleR' in request.GET) and ('justMaleR' in request.GET):
-            coach_list = Coach.objects.none()
         else:
             coach_list = Coach.objects.all()
 
@@ -72,7 +73,6 @@ def coaches(request):
     return render(request, 'coaches.html', context)
 
 def load_more(request):
-    print(request.GET.values)
     offset = request.GET.get('offset')
     offset_int = int(offset)
     limit = 10

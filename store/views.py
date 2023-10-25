@@ -2,7 +2,7 @@ from django.db.models.functions import Now
 from django.shortcuts import render, redirect
 from django.urls import resolve
 from django.views.generic import TemplateView
-
+from django.http import JsonResponse
 from ecommerce.settings import STRIPE_SECRET_KEY
 from .models import *
 from django.contrib.auth import get_user_model, authenticate, login, logout
@@ -13,6 +13,8 @@ import stripe
 from django.conf import settings
 from random import randint
 from datetime import datetime, timezone, timedelta
+from django.db.models import Q
+from coaching.models import Coach, expertise
 from django.views import View
 import secrets
 import string
@@ -20,12 +22,11 @@ from twilio.rest import Client
 
 User = get_user_model()
 
-twilio_account_sid = "AC5537bc9eccc68e9b994ea838e3a9036b"
-twilio_auth_token = "efcd016ff78afd5e05727ac1b4fe5e63"
-twilio_verify_sid = "VAab9851b6895dfdcf74db8262f15f768f"
-client = Client(twilio_account_sid, twilio_auth_token)
-
 def sendsms(phone):
+    twilio_account_sid = "AC5537bc9eccc68e9b994ea838e3a9036b"
+    twilio_auth_token = "efcd016ff78afd5e05727ac1b4fe5e63"
+    twilio_verify_sid = "VAab9851b6895dfdcf74db8262f15f768f"
+    client = Client(twilio_account_sid, twilio_auth_token)
     otp = randint(1e5, 1e6)
     obj, created = OTP.objects.get_or_create(phonenumber=phone)
     if not created:
@@ -223,3 +224,31 @@ class StripeCheckoutSession(View):
 
 class SuccessView(TemplateView):
     template_name = "success.html"
+
+def search(request):
+    phrase = request.GET.get('phrase')
+    data = {}
+    coaches = list(
+        Coach.objects.filter(
+        Q(coach_user__full_name__icontains = phrase) | \
+        Q(coach_speciality__expertise_name__icontains = phrase) | \
+        Q(coach_city__icontains = phrase)
+    ).values(
+        'coach_user__phone',
+        'coach_user__full_name',
+        'coach_speciality'
+    )[:10]
+    )
+
+    if len(coaches):
+        data['coaches'] = coaches
+    
+    city_count = Coach.objects.filter(coach_city__icontains = phrase).count()
+    if not city_count:
+        data['city_count'] = city_count
+
+    spec_count = Coach.objects.filter(coach_speciality__expertise_name__icontains = phrase).count()
+    if not spec_count:
+        data['spec_count'] = spec_count
+    
+    return JsonResponse(data=data)
